@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nara Origami Originals</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #000000;
+      color: #E8E8E8;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grid texture background - mimics the reference exactly */
+    .grid-bg {
+      background-color: #000000;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Radial vignette over grid */
+    .grid-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, transparent 0%, rgba(0,0,0,0.82) 100%);
+      pointer-events: none;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-link {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #9A9A9A;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: #E8E8E8; }
+
+    /* Metallic CTA button */
+    .btn-metal {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #0A0A0A;
+      background: linear-gradient(145deg, #D8D8D8 0%, #F0F0F0 40%, #B8B8B8 100%);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    .btn-metal:hover {
+      background: linear-gradient(145deg, #E8E8E8 0%, #FFFFFF 40%, #C8C8C8 100%);
+      box-shadow: 0 0 18px rgba(255,255,255,0.12);
+    }
+
+    /* Ghost CTA button */
+    .btn-ghost {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #E8E8E8;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.22);
+      padding: 14px 32px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.45);
+      box-shadow: 0 0 24px rgba(255,255,255,0.05);
+    }
+
+    /* Trust badge pill */
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 6px 16px 6px 10px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #9A9A9A;
+      letter-spacing: 0.06em;
+    }
+    .trust-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #C8C8C8;
+    }
+
+    /* ── HERO ── */
+    .hero-title {
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      color: #F2F2F2;
+    }
+
+    /* Metallic text shimmer on headline */
+    .hero-title span.metal {
+      background: linear-gradient(135deg, #FFFFFF 0%, #A8A8A8 50%, #F0F0F0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Feature check items */
+    .feat-check {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: #7A7A7A;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .feat-check::before {
+      content: '';
+      width: 14px; height: 14px;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: block;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* ── LOGO STRIP ── */
+    .logo-strip {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .logo-item {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      transition: color 0.2s;
+    }
+    .logo-item:hover { color: rgba(255,255,255,0.45); }
+
+    /* ── ECOSYSTEM CARDS ── */
+    .eco-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 36px 32px;
+      transition: background 0.25s, border-color 0.25s;
+      position: relative;
+    }
+    .eco-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 32px; height: 1px;
+      background: rgba(255,255,255,0.35);
+      transition: width 0.3s;
+    }
+    .eco-card:hover {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.14);
+    }
+    .eco-card:hover::before { width: 100%; }
+
+    .eco-num {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      color: #555555;
+      text-transform: uppercase;
+    }
+    .eco-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #D0D0D0;
+      margin: 12px 0 8px;
+    }
+    .eco-body {
+      font-size: 0.76rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #5E5E5E;
+    }
+
+    /* ── FEATURES ── */
+    .feat-row {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 0;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .feat-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    @media(max-width:640px) {
+      .feat-row { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    /* ── EMAIL SECTION ── */
+    .email-in {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-right: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: #E8E8E8;
+      letter-spacing: 0.04em;
+      padding: 14px 20px;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .email-in::placeholder { color: #404040; }
+    .email-in:focus { border-color: rgba(255,255,255,0.22); }
+
+    /* ── SECTION LABEL ── */
+    .sec-label {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #444444;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.on { opacity: 1; transform: none; }
+
+    /* ── PAGE LOAD ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fu { animation: fadeUp 0.8s ease both; }
+    .fu1 { animation-delay: 0.05s; }
+    .fu2 { animation-delay: 0.2s; }
+    .fu3 { animation-delay: 0.35s; }
+    .fu4 { animation-delay: 0.5s; }
+    .fu5 { animation-delay: 0.65s; }
+
+    /* Horizontal rule divider */
+    .hr { width: 100%; height: 1px; background: rgba(255,255,255,0.06); }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       NAV
+  ══════════════════════════════════════ -->
+  <nav>
+    <div class="max-w-6xl mx-auto px-6 md:px-10 py-4 flex items-center justify-between gap-8">
+
+      <a href="#" class="font-bold text-white" style="font-size:0.8rem; letter-spacing:0.06em; white-space:nowrap;">
+        Nara Origami Originals
+      </a>
+
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#ecosystem" class="nav-link">Ecosystem</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#community" class="nav-link">Community</a>
+        <a href="https://naraori.com" target="_blank" rel="noopener" class="nav-link">naraori.com</a>
+      </div>
+
+      <button class="btn-metal">Get Early Access &rarr;</button>
+
+    </div>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════
+       HERO
+  ══════════════════════════════════════ -->
+  <section class="grid-bg relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-20">
+
+    <!-- Trust pill -->
+    <div class="trust-pill fu fu1 mb-8">
+      <span class="trust-dot"></span>
+      <span>A Complete Origami Ecosystem</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="hero-title fu fu2 mb-6 max-w-4xl">
+      <span class="metal">Origami,</span><br/>Reimagined.
+    </h1>
+
+    <!-- Subline -->
+    <p class="fu fu3 mb-10 max-w-md" style="font-size:0.85rem; font-weight:300; color:#606060; line-height:1.8; letter-spacing:0.02em;">
+      Papers, kits, original artworks, and community tools built for artists, folders, collectors, and learners.
+    </p>
+
+    <!-- CTA row -->
+    <div class="fu fu4 flex flex-col sm:flex-row items-center gap-4 mb-8">
+      <button class="btn-ghost">Get Early Access &rarr;</button>
+    </div>
+
+    <!-- Feature checks -->
+    <div class="fu fu5 flex flex-col sm:flex-row items-center gap-6">
+      <span class="feat-check">Limited early access</span>
+      <span class="feat-check">No commitment required</span>
+      <span class="feat-check">Ships worldwide</span>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       LOGO / PARTNER STRIP
+  ══════════════════════════════════════ -->
+  <div class="logo-strip py-8 px-6 reveal">
+    <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-10 md:gap-16">
+      <span class="logo-item">Nara Papers</span>
+      <span class="logo-item">Nara Kits</span>
+      <span class="logo-item">Nara Originals</span>
+      <span class="logo-item">Nara Exhibition</span>
+      <span class="logo-item">naraori.com</span>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       ECOSYSTEM CARDS
+  ══════════════════════════════════════ -->
+  <section id="ecosystem" class="px-6 md:px-10 py-28 max-w-6xl mx-auto">
+
+    <div class="reveal mb-16">
+      <p class="sec-label mb-4">The Ecosystem</p>
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:700; color:#D0D0D0; line-height:1.15; letter-spacing:-0.015em;">
+        Every tool the folder needs.
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 reveal">
+
+      <div class="eco-card">
+        <span class="eco-num">01</span>
+        <p class="eco-title">Nara Papers</p>
+        <p class="eco-body">Treated papers, tissue foil, dyed papers, and experimental materials for every folding discipline.</p>
+      </div>
+
+      <div class="eco-card">
+        <span class="eco-num">02</span>
+        <p class="eco-title">Nara Kits</p>
+        <p class="eco-body">Beginner through advanced kits designed as guided creative progressions, not simple craft sets.</p>
+      </div>
+
+      <div class="eco-card">
+        <span class="eco-num">03</span>
+        <p class="eco-title">Nara Originals</p>
+        <p class="eco-body">Original physical origami artworks created by NARA (Abhijeet S. Vashistha). Limited editions.</p>
+      </div>
+
+      <div class="eco-card">
+        <span class="eco-num">04</span>
+        <p class="eco-title">Nara Exhibition</p>
+        <p class="eco-body">A curated gallery of folds created by artists and customers using Nara Origami Originals materials.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FEATURES (horizontal rows)
+  ══════════════════════════════════════ -->
+  <section id="about" class="px-6 md:px-10 py-10 max-w-6xl mx-auto reveal">
+
+    <div class="mb-10">
+      <p class="sec-label mb-4">Why Nara</p>
+    </div>
+
+    <div class="feat-row">
+      <div>
+        <p class="eco-num mb-3">Personalization</p>
+        <h3 style="font-size:1.1rem; font-weight:700; color:#CCCCCC; letter-spacing:-0.01em;">Find Your Paper.</h3>
+      </div>
+      <p style="font-size:0.8rem; font-weight:300; color:#555555; line-height:1.85;">
+        Select your folding style, model type, complexity, and experience level. Receive personalized paper and kit suggestions. The right material for every fold, without the guesswork.
+      </p>
+    </div>
+
+    <div class="feat-row">
+      <div>
+        <p class="eco-num mb-3">Community</p>
+        <h3 id="community" style="font-size:1.1rem; font-weight:700; color:#CCCCCC; letter-spacing:-0.01em;">Share Your Fold.</h3>
+      </div>
+      <p style="font-size:0.8rem; font-weight:300; color:#555555; line-height:1.85;">
+        Submit folds created using Nara materials to be featured in the curated Exhibition gallery. An artistic exchange within the origami community, built into the platform.
+      </p>
+    </div>
+
+    <div class="feat-row">
+      <div>
+        <p class="eco-num mb-3">Vision</p>
+        <h3 style="font-size:1.1rem; font-weight:700; color:#CCCCCC; letter-spacing:-0.01em;">Beyond Hobby Culture.</h3>
+      </div>
+      <p style="font-size:0.8rem; font-weight:300; color:#555555; line-height:1.85;">
+        Nara Origami Originals is designed to feel like a creative studio, not a craft store. Quality, presentation, and a stronger origami culture at the center of everything.
+      </p>
+    </div>
+
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       EMAIL CAPTURE
+  ══════════════════════════════════════ -->
+  <section class="px-6 md:px-10 py-28 reveal">
+    <div class="max-w-xl mx-auto text-center">
+
+      <p class="sec-label mb-6">Early Access</p>
+      <h2 style="font-size:clamp(1.6rem,3vw,2.4rem); font-weight:700; color:#D0D0D0; line-height:1.2; letter-spacing:-0.015em; margin-bottom:10px;">
+        Be first to access the work.
+      </h2>
+      <p style="font-size:0.78rem; font-weight:300; color:#484848; line-height:1.8; margin-bottom:36px;">
+        One notification when the studio opens. No marketing noise.
+      </p>
+
+      <div class="flex max-w-sm mx-auto">
+        <input type="email" placeholder="your@email.com" class="email-in" id="emailInput" />
+        <button class="btn-metal" id="emailBtn" style="border-left:none; flex-shrink:0;">
+          Notify Me &rarr;
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <div class="hr"></div>
+  <footer class="px-6 md:px-10 py-10 max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+
+    <div>
+      <p style="font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#3A3A3A;">
+        Nara Origami Originals
+      </p>
+      <a href="https://naraori.com" target="_blank" rel="noopener"
+         style="font-size:0.65rem; font-weight:400; color:#333333; letter-spacing:0.08em;">naraori.com</a>
+    </div>
+
+    <div class="flex gap-8">
+      <a href="#ecosystem" class="nav-link" style="font-size:0.65rem;">Ecosystem</a>
+      <a href="#about" class="nav-link" style="font-size:0.65rem;">About</a>
+      <a href="#community" class="nav-link" style="font-size:0.65rem;">Community</a>
+    </div>
+
+    <p style="font-size:0.62rem; color:#2C2C2C; letter-spacing:0.06em;">
+      2025 Nara Origami Originals. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <script>
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Email capture
+    // !! SWAP: Replace stub with your Formspree / Mailchimp endpoint !!
+    const emailBtn = document.getElementById('emailBtn');
+    const emailInput = document.getElementById('emailInput');
+    if (emailBtn && emailInput) {
+      emailBtn.addEventListener('click', () => {
+        const val = emailInput.value.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+          emailInput.style.borderColor = 'rgba(255,255,255,0.3)';
+          emailInput.focus(); return;
+        }
+        emailInput.value = '';
+        emailInput.placeholder = 'Registered. Thank you.';
+        emailBtn.textContent = 'Done';
+        emailBtn.style.background = 'rgba(255,255,255,0.08)';
+        emailBtn.style.color = '#D0D0D0';
+        emailBtn.style.border = '1px solid rgba(255,255,255,0.12)';
+      });
+    }
+  </script>
+
+</body>
+</html>
