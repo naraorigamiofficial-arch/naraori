@@ -194,11 +194,8 @@
         rgba(0,0,0,1) 50%,
         rgba(0,0,0,0.0) 95%
       );
-      mask-image: linear-gradient(
-        to left,
-        rgba(0,0,0,1) 50%,
-        rgba(0,0,0,0.0) 95%
-      );
+        mask-image: linear-gradient(to right, transparent 0%, black 25%);
+
       filter: brightness(0.95) contrast(1.05) grayscale(1);
       animation: warriorFade 1.6s cubic-bezier(0.23,1,0.32,1) both;
       animation-delay: 0.5s;
@@ -321,19 +318,6 @@
 </head>
 <body>
 
-  <!-- ── NAV ── -->
-  <nav>
-    <div class="nav-inner">
-      <a href="#" class="nav-logo">Nara Origami Originals</a>
-      <div class="nav-links">
-        <a href="#" class="nav-link">Papers</a>
-        <a href="#" class="nav-link">About</a>
-        <a href="https://naraori.com" target="_blank" rel="noopener" class="nav-link">naraori.com</a>
-      </div>
-      <button class="btn-metal">Buy Papers &rarr;</button>
-    </div>
-  </nav>
-
   <!-- ── HERO ── -->
   <section class="hero-section grid-bg">
 
@@ -355,12 +339,6 @@
         <button class="btn-ghost">Buy Papers &rarr;</button>
         <button class="btn-about">About</button>
       </div>
-
-      <div class="fu fu5" style="display:flex;flex-wrap:wrap;align-items:center;gap:20px;">
-        <span class="feat-check">Limited early access</span>
-        <span class="feat-check">No commitment required</span>
-        <span class="feat-check">Ships worldwide</span>
-      </div>
     </div>
 
     <div class="hero-right">
@@ -372,39 +350,6 @@
     </div>
 
   </section>
-
-  <!-- ── LOGO STRIP ── -->
-  <div class="logo-strip">
-    <div class="logo-strip-inner">
-      <span class="logo-item">Papers</span>
-      <span class="logo-item">Kits</span>
-      <span class="logo-item">Originals</span>
-      <span class="logo-item">Exhibition</span>
-      <span class="logo-item">naraori.com</span>
-    </div>
-  </div>
-
-  <!-- ── FOOTER ── -->
-  <div class="hr-div"></div>
-  <footer>
-    <div>
-      <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#AAAAAA;">
-        Nara Origami Originals
-      </p>
-      <a href="https://naraori.com" target="_blank" rel="noopener"
-         style="font-size:0.65rem;font-weight:400;color:#CCCCCC;letter-spacing:0.08em;text-decoration:none;">naraori.com</a>
-    </div>
-
-    <div style="display:flex;gap:32px;">
-      <a href="#" class="nav-link" style="font-size:0.65rem;">Papers</a>
-      <a href="#" class="nav-link" style="font-size:0.65rem;">About</a>
-    </div>
-
-    <p style="font-size:0.62rem;color:#CCCCCC;letter-spacing:0.06em;">
-      2025 Nara Origami Originals. All rights reserved.
-    </p>
-  </footer>
-
   <script>
     /* 3D TILT — removed, no cards present */
   </script>
