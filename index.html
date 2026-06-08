@@ -316,6 +316,85 @@
     }
     .pack-option.disabled .pack-cta { color: #ccc; border-color: #ddd; }
 
+    /* Navigation Bar Core Wrapper */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #ffffff; /* Change to #0a0a0a if your main background is pitch black */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* White mode divider line */
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); -> Use this instead if background is dark */
+  z-index: 1000; /* Ensures the nav bar stays layered on top when scrolling */
+}
+
+/* Centered Flex Container matching layout margins */
+.navbar-container {
+  max-width: 1200px; /* Adjust to match your design's max width */
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand Typography */
+.nav-brand {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #111111; /* Change to #ffffff if dark mode */
+}
+
+/* Links Grouping */
+.nav-links {
+  display: flex;
+  gap: 32px; /* Space between each nav link item */
+}
+
+/* Individual Link Design */
+.nav-item {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #666666; /* Slightly muted color stop for unselected items */
+  position: relative;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+
+/* Hover States and Active Links Color */
+.nav-item:hover,
+.nav-item.active {
+  color: #111111; /* Sharp dark text color highlight. Change to #ffffff if dark mode */
+}
+
+/* Sleek sliding baseline underline hover indicator */
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: #111111; /* Underline accent color matching layout */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
     /* Modal and Order Overlay Layout Frameworks */
     .modal-overlay {
       display: none;
@@ -510,7 +589,18 @@
   </style>
 </head>
 <body>
-
+<nav class="navbar">
+  <div class="navbar-container">
+    <a href="#" class="nav-brand">NARA ORIGAMI</a>
+    
+    <div class="nav-links">
+      <a href="#" class="nav-item active">Home</a>
+      <a href="#paper-shop" class="nav-item">Paper Gallery</a>
+      <a href="#model-gallery" class="nav-item">Model Gallery</a>
+      <a href="#about" class="nav-item">About</a>
+    </div>
+  </div>
+</nav>
   <section class="hero-section grid-bg">
     <div class="hero-left">
       <div class="trust-pill fu fu1" style="margin-bottom:36px;">
