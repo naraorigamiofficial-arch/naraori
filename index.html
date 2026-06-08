@@ -12,16 +12,111 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background: #FFFFFF;
-      color: #0A0A0A;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-      /* Account for a fixed navbar top layout height if used */
-      padding-top: 70px; 
-    }
+  body {
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 50px;
+    font-family: 'Inter', sans-serif;
+  }
 
+/* The Main Floating Pill */
+ .floating-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1c1c1c;
+    padding: 8px 8px;
+    border-radius: 60px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: max-content;
+    margin: 0 auto;
+    gap: 32px;
+    
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    
+    /* 🟢 NEW: Tells the navbar to take 0.3 seconds to smoothly animate */
+    transition: top 0.3s ease-in-out; 
+}
+
+/* 🟢 NEW: The class we will apply to push the navbar out of view */
+.floating-navbar.hidden {
+    top: -100px; 
+}
+  /* Left Logo Circle */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    color: #1c1c1c;
+    flex-shrink: 0;
+  }
+
+  /* SVG Icon inside the logo circle */
+  .nav-logo svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  /* Center Navigation Links Container */
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0 24px; /* The backup margin */
+  padding: 0;
+  gap: 28px;
+}
+
+/* 🟢 THE MISSING RULE: This colors the text and removes the blue underline */
+.nav-links li a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+}
+
+/* 🟢 The hover effect */
+.nav-links li a:hover {
+  color: #ffffff;
+}
+
+  /* 2. Protect the logo from squishing */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    color: #1c1c1c;
+    flex-shrink: 0; /* 🟢 NEW: Prevents it from collapsing into the text */
+  }
+
+  /* 3. Protect the email button from squishing */
+  .nav-contact-btn {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    color: #1c1c1c;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-size: 14.5px;
+    font-weight: 500;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    flex-shrink: 0; /* 🟢 NEW: Prevents it from collapsing into the text */
+  }
     /* Grid texture overlay */
     .grid-bg { position: relative; }
     .grid-bg::after {
@@ -316,85 +411,6 @@
     }
     .pack-option.disabled .pack-cta { color: #ccc; border-color: #ddd; }
 
-    /* Navigation Bar Core Wrapper */
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  background-color: #ffffff; /* Change to #0a0a0a if your main background is pitch black */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08); /* White mode divider line */
-  /* border-bottom: 1px solid rgba(255, 255, 255, 0.1); -> Use this instead if background is dark */
-  z-index: 1000; /* Ensures the nav bar stays layered on top when scrolling */
-}
-
-/* Centered Flex Container matching layout margins */
-.navbar-container {
-  max-width: 1200px; /* Adjust to match your design's max width */
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Brand Typography */
-.nav-brand {
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #111111; /* Change to #ffffff if dark mode */
-}
-
-/* Links Grouping */
-.nav-links {
-  display: flex;
-  gap: 32px; /* Space between each nav link item */
-}
-
-/* Individual Link Design */
-.nav-item {
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #666666; /* Slightly muted color stop for unselected items */
-  position: relative;
-  padding: 6px 0;
-  transition: color 0.2s ease;
-}
-
-/* Hover States and Active Links Color */
-.nav-item:hover,
-.nav-item.active {
-  color: #111111; /* Sharp dark text color highlight. Change to #ffffff if dark mode */
-}
-
-/* Sleek sliding baseline underline hover indicator */
-.nav-item::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1.5px;
-  background-color: #111111; /* Underline accent color matching layout */
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-.nav-item:hover::after,
-.nav-item.active::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
     /* Modal and Order Overlay Layout Frameworks */
     .modal-overlay {
       display: none;
@@ -586,40 +602,39 @@
     .price-table tr:last-child td { border-bottom: none; }
     .price-table td:first-child { font-weight: 500; color: #111; }
     .info-tag { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: 1.5px solid #e8e8e8; color: #888; padding: 5px 10px; }
-  </style>
+</style>
 </head>
 <body>
-<nav class="navbar">
-  <div class="navbar-container">
-    <a href="#" class="nav-brand">NARA ORIGAMI</a>
-    
-    <div class="nav-links">
-      <a href="#" class="nav-item active">Home</a>
-      <a href="#paper-shop" class="nav-item">Paper Gallery</a>
-      <a href="#model-gallery" class="nav-item">Model Gallery</a>
-      <a href="#about" class="nav-item">About</a>
+
+  <nav class="floating-navbar">
+    <!-- White Logo Circle with Planet SVG -->
+    <div class="nav-logo">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+      </svg>
     </div>
-  </div>
-</nav>
+
+    <!-- Center Links -->
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Paper Gallery</a></li>
+      <li><a href="#">Model gallery</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+
+    <!-- White Email Button -->
+    <a href="mailto:sioa.Naraorigami.official@gmail.com" class="nav-contact-btn">
+      Naraorigami.official@gmail.com
+    </a>
+  </nav>
   <section class="hero-section grid-bg">
     <div class="hero-left">
-      <div class="trust-pill fu fu1" style="margin-bottom:36px;">
-        <span class="trust-dot"></span>
-        <span>Nara Origami Originals</span>
-      </div>
 
       <h1 class="hero-title fu fu2" style="text-align:left;">
         <span class="metal">Want to create</span><br/>something<br/>extraordinary?
       </h1>
 
-      <p class="hero-sub fu fu3" style="text-align:left; margin-left:0;">
-        The foundation of every great model starts with great paper.
-      </p>
 
-      <div class="fu fu4 cta-row" style="margin-bottom:36px;">
-        <a href="#paper-shop" class="btn-ghost">Buy Papers &rarr;</a>
-        <a href="#about" class="btn-about">About</a>
-      </div>
     </div>
 
     <div class="hero-right">
@@ -941,6 +956,26 @@
   </div>
 
   <script>
+  
+  let lastScrollTop = 0;
+  const navbar = document.querySelector('.floating-navbar');
+
+  window.addEventListener('scroll', function() {
+    // Get the current scroll position
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // If scrolling down AND we are past the top 50 pixels of the page
+    if (scrollTop > lastScrollTop && scrollTop > 50) {
+      navbar.classList.add('hidden');
+    } else {
+      // If scrolling up
+      navbar.classList.remove('hidden');
+    }
+    
+    // Update the last scroll position for the next calculation
+    lastScrollTop = scrollTop;
+  });
+
     const PRICING = {
       starter: {
         "10":   { "20":200, "30":300, "50":500, "70":700, "140":1400 },
@@ -1134,4 +1169,4 @@
     }
   </script>
 </body>
-</html>
+ </html>
