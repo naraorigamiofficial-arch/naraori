@@ -229,6 +229,7 @@
       outline: none;
       transition: border-color 0.15s;
       width: 100%;
+      height: 42px;
     }
     select:focus { border-color: #111; }
 
@@ -260,10 +261,11 @@
       font-family: 'Montserrat', sans-serif;
       font-size: 0.7rem; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 10px 16px;
+      padding: 10px 14px;
       transition: opacity 0.2s;
       white-space: nowrap;
       align-self: flex-end;
+      height: 42px;
     }
     .add-btn:hover { opacity: 0.7; }
 
@@ -338,9 +340,74 @@
       color: #999; line-height: 1.7;
     }
 
-    @media (max-width: 420px) {
-      .builder-row { grid-template-columns: 1fr 1fr; }
-      .add-btn { grid-column: span 2; }
+    .info-btn {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid #bbb;
+      background: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 600;
+      color: #aaa; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .info-btn:hover { border-color: #111; color: #111; }
+
+    /* Info modal (pricing list) */
+    .info-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .info-modal-overlay.open { display: flex; }
+
+    .info-modal {
+      background: #fff;
+      max-width: 480px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: relative;
+    }
+
+    .size-section { display: flex; flex-direction: column; gap: 10px; }
+    .size-label {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: #111;
+    }
+    .price-table {
+      width: 100%; border-collapse: collapse; font-size: 0.82rem;
+    }
+    .price-table th {
+      text-align: left; font-weight: 600;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #aaa;
+      padding: 0 0 8px; border-bottom: 1px solid #e8e8e8;
+    }
+    .price-table th:last-child, .price-table td:last-child { text-align: right; }
+    .price-table td {
+      padding: 9px 0; color: #333; font-weight: 400;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table td:first-child { font-weight: 500; color: #111; }
+
+    .info-tag {
+      display: inline-block;
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1.5px solid #e8e8e8; color: #888;
+      padding: 5px 10px;
     }
   </style>
 </head>
@@ -362,14 +429,20 @@
             <span class="pack-level">Beginner</span>
             <span class="pack-name">Starter Pack</span>
           </div>
-          <span class="pack-cta">View Pricing</span>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="info-btn" onclick="event.stopPropagation();openInfo('starter')" title="View full pricing list">i</button>
+            <span class="pack-cta">View Pricing</span>
+          </div>
         </div>
         <div class="pack-option" onclick="openModal('artist')">
           <div class="pack-left">
             <span class="pack-level">Experienced</span>
             <span class="pack-name">Artist Pack</span>
           </div>
-          <span class="pack-cta">View Pricing</span>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="info-btn" onclick="event.stopPropagation();openInfo('artist')" title="View full pricing list">i</button>
+            <span class="pack-cta">View Pricing</span>
+          </div>
         </div>
         <div class="pack-option disabled">
           <div class="pack-left">
@@ -501,6 +574,146 @@
     </div>
   </div>
 
+  <!-- Starter Info Modal -->
+  <div class="info-modal-overlay" id="starterInfo">
+    <div class="info-modal">
+      <button class="modal-close" onclick="closeInfo('starterInfo')">Close</button>
+      <div>
+        <div class="modal-subtitle">Beginner</div>
+        <div class="modal-title">Starter Pack — Full Pricing</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="info-tag">Double Tissue Paper</span>
+        <span class="info-tag">Red · Black · White</span>
+      </div>
+
+      <div class="size-section">
+        <div class="size-label">10 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>20</td><td>200</td></tr>
+            <tr><td>30</td><td>300</td></tr>
+            <tr><td>50</td><td>500</td></tr>
+            <tr><td>70</td><td>700</td></tr>
+            <tr><td>140</td><td>1,400</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="size-section">
+        <div class="size-label">15 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>20</td><td>270</td></tr>
+            <tr><td>30</td><td>390</td></tr>
+            <tr><td>50</td><td>600</td></tr>
+            <tr><td>100</td><td>1,100</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="size-section">
+        <div class="size-label">20 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>25</td><td>800</td></tr>
+            <tr><td>50</td><td>1,500</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="size-section">
+        <div class="size-label">25 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>5</td><td>600</td></tr>
+            <tr><td>10</td><td>1,100</td></tr>
+            <tr><td>25</td><td>2,100</td></tr>
+            <tr><td>50</td><td>3,300</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="size-section">
+        <div class="size-label">37.5 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>5</td><td>800</td></tr>
+            <tr><td>10</td><td>1,800</td></tr>
+            <tr><td>25</td><td>3,400</td></tr>
+            <tr><td>50</td><td>5,400</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Artist Info Modal -->
+  <div class="info-modal-overlay" id="artistInfo">
+    <div class="info-modal">
+      <button class="modal-close" onclick="closeInfo('artistInfo')">Close</button>
+      <div>
+        <div class="modal-subtitle">Experienced</div>
+        <div class="modal-title">Artist Pack — Full Pricing</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="info-tag">Double Tissue Paper</span>
+        <span class="info-tag">Red · Black · White</span>
+      </div>
+
+      <div class="size-section">
+        <div class="size-label">50 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>5</td><td>1,500</td></tr>
+            <tr><td>6</td><td>1,750</td></tr>
+            <tr><td>10</td><td>2,800</td></tr>
+            <tr><td>12</td><td>3,200</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="size-section">
+        <div class="size-label">70 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>1,350</td></tr>
+            <tr><td>5</td><td>3,000</td></tr>
+            <tr><td>6</td><td>3,500</td></tr>
+            <tr><td>10</td><td>5,500</td></tr>
+            <tr><td>12</td><td>6,200</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="size-section">
+        <div class="size-label">100 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>1,400</td></tr>
+            <tr><td>2</td><td>2,600</td></tr>
+            <tr><td>3</td><td>3,750</td></tr>
+            <tr><td>4</td><td>4,800</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="size-section">
+        <div class="size-label">150 cm</div>
+        <table class="price-table">
+          <thead><tr><th>Qty (sheets)</th><th>Price (Rs.)</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>3,500</td></tr>
+            <tr><td>2</td><td>6,600</td></tr>
+            <tr><td>3</td><td>9,300</td></tr>
+            <tr><td>4</td><td>11,800</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <script>
     const PRICING = {
       starter: {
@@ -519,6 +732,22 @@
     };
 
     const carts = { starter: [], artist: [] };
+
+    function openInfo(type) {
+      document.getElementById(type + 'Info').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeInfo(id) {
+      document.getElementById(id).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.info-modal-overlay').forEach(o => {
+      o.addEventListener('click', function(e) {
+        if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+      });
+    });
 
     function togglePacks() {
       document.getElementById('packPanel').classList.toggle('open');
@@ -652,7 +881,7 @@
       const total = items.reduce((s, i) => s + i.price, 0);
       const body = `Hi,\n\nI would like to place an order for the following treated double tissue paper:\n\nPack: ${packName}\n\n${list}\n\nTotal: Rs. ${total.toLocaleString('en-IN')}\n\nPlease let me know next steps.\n\nThank you.`;
 
-      const mailto = `mailto:naraorigami.official@gmail.com?subject=Paper Order - ${packName}&body=${encodeURIComponent(body)}`;
+      const mailto = `mailto:your@email.com?subject=Paper Order - ${packName}&body=${encodeURIComponent(body)}`;
       btn.classList.remove('disabled');
       btn.onclick = function(e) { e.preventDefault(); window.location.href = mailto; };
     }
