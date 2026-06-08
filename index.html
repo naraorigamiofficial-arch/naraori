@@ -516,7 +516,7 @@
       <button class="btn btn-primary" onclick="togglePacks()">Buy Paper</button>
       <a href="#" class="btn btn-secondary">About</a>
     </div>
-<wbr>21e </wbr>
+
     <div class="pack-panel" id="packPanel">
       <div class="pack-panel-inner">
         <div class="pack-question">Which level are you at?</div>
@@ -527,7 +527,7 @@
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <button class="info-btn" onclick="event.stopPropagation();openInfo('starter')" title="View full pricing list">i</button>
-            <span class="pack-cta">View Pricing</span>
+            <span class="pack-cta">Order Now</span>
           </div>
         </div>
         <div class="pack-option" onclick="openModal('artist')">
@@ -537,7 +537,7 @@
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <button class="info-btn" onclick="event.stopPropagation();openInfo('artist')" title="View full pricing list">i</button>
-            <span class="pack-cta">View Pricing</span>
+            <span class="pack-cta">Order Now</span>
           </div>
         </div>
         <div class="pack-option disabled">
@@ -1051,7 +1051,7 @@
         ).join('\n');
 
         const body = `Hi,\n\nI would like to place an order for the following treated double tissue paper:\n\n${list}\n\nSubtotal: Rs. ${total.toLocaleString('en-IN')}\nShipping: ${shipping === 0 ? 'Free' : 'Rs. 140'}\nGrand Total: Rs. ${grandTotal.toLocaleString('en-IN')}\n\nPlease let me know next steps.\n\nThank you.`;
-        const mailto = `mailto:your@email.com?subject=Paper Order&body=${encodeURIComponent(body)}`;
+        const mailto = `mailto:naraorigami.official@gmail.com?subject=Paper Order&body=${encodeURIComponent(body)}`;
 
         btn.classList.remove('disabled');
         btn.onclick = function(e) { e.preventDefault(); window.location.href = mailto; };
