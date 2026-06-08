@@ -402,12 +402,108 @@
     .price-table tr:last-child td { border-bottom: none; }
     .price-table td:first-child { font-weight: 500; color: #111; }
 
+    .cart-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .switch-pack-btn {
+      background: none;
+      border: 1px solid #ccc;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .switch-pack-btn:hover { border-color: #111; color: #111; }
+
     .info-tag {
       display: inline-block;
       font-size: 0.68rem; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase;
       border: 1.5px solid #e8e8e8; color: #888;
       padding: 5px 10px;
+    }
+
+    .shipping-toggle {
+      background: none;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #aaa;
+      cursor: pointer;
+      padding: 0;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .shipping-toggle.visible { display: flex; }
+    .shipping-toggle:hover { color: #111; }
+    .shipping-toggle .arrow { font-size: 0.6rem; transition: transform 0.2s; }
+    .shipping-toggle.open .arrow { transform: rotate(180deg); }
+
+    .shipping-note {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.35s ease, opacity 0.25s ease;
+      opacity: 0;
+    }
+    .shipping-note.visible {
+      max-height: 200px;
+      opacity: 1;
+    }
+
+    .shipping-inner {
+      border: 1px solid #e8e8e8;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .shipping-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.82rem;
+    }
+    .shipping-row .label { color: #888; font-weight: 400; }
+    .shipping-row .value { font-weight: 600; color: #111; font-size: 0.82rem; }
+    .shipping-row .value.free { color: #555; }
+
+    .shipping-divider {
+      border: none;
+      border-top: 1px solid #f0f0f0;
+      margin: 0;
+    }
+
+    .shipping-grand {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #111;
+    }
+
+    .shipping-intl {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: #aaa;
+      line-height: 1.7;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 10px;
     }
   </style>
 </head>
@@ -418,9 +514,9 @@
     <p class="body">The foundation of every great model starts with great paper.</p>
     <div class="buttons">
       <button class="btn btn-primary" onclick="togglePacks()">Buy Paper</button>
-      <a href="#" class="btn btn-secondary">Who is Nara?</a>
+      <a href="#" class="btn btn-secondary">About</a>
     </div>
-
+<wbr>21e </wbr>
     <div class="pack-panel" id="packPanel">
       <div class="pack-panel-inner">
         <div class="pack-question">Which level are you at?</div>
@@ -465,9 +561,10 @@
         <div class="modal-subtitle">Beginner</div>
         <div class="modal-title">Starter Pack</div>
       </div>
-      <p class="modal-desc">
+
+      <!--<p class="modal-desc">
         Want to see what the paper looks like? <a href="#" style="color:#111;font-weight:600;">Check it out here.</a> Want to see what it folds into? <a href="#" style="color:#111;font-weight:600;">See the models.</a>
-      </p>
+      </p>-->
 
       <div class="builder" id="starterBuilder">
         <div class="builder-row">
@@ -503,11 +600,38 @@
       </div>
 
       <div class="cart" id="starterCart">
-        <div class="cart-header">Your Order</div>
+        <div class="cart-header-row">
+          <span class="cart-header">Your Order</span>
+          <button class="switch-pack-btn" onclick="closeModal('starterModal');openModal('artist')">+ Add from Artist Pack</button>
+        </div>
         <div class="cart-empty" id="s-empty">No items added yet.</div>
         <div id="s-items"></div>
         <div class="cart-total" id="s-total" style="display:none">
           <span>Total</span><span id="s-total-val"></span>
+        </div>
+      </div>
+
+      <button class="shipping-toggle" id="s-shipping-toggle" onclick="toggleShipping('s')">
+        Shipping and delivery <span class="arrow">&#9660;</span>
+      </button>
+      <div class="shipping-note" id="s-shipping-note">
+        <div class="shipping-inner">
+          <div class="shipping-row">
+            <span class="label">Subtotal</span>
+            <span class="value" id="s-subtotal-val"></span>
+          </div>
+          <div class="shipping-row">
+            <span class="label">Shipping</span>
+            <span class="value" id="s-shipping-val"></span>
+          </div>
+          <hr class="shipping-divider" />
+          <div class="shipping-grand">
+            <span>Grand Total</span>
+            <span id="s-grand-val"></span>
+          </div>
+          <div class="shipping-intl">
+            International buyers: prices are the same. Shipping is free for orders above $200 USD. A flat $30 USD fee applies below that.
+          </div>
         </div>
       </div>
 
@@ -561,11 +685,38 @@
       </div>
 
       <div class="cart" id="artistCart">
-        <div class="cart-header">Your Order</div>
+        <div class="cart-header-row">
+          <span class="cart-header">Your Order</span>
+          <button class="switch-pack-btn" onclick="closeModal('artistModal');openModal('starter')">+ Add from Starter Pack</button>
+        </div>
         <div class="cart-empty" id="a-empty">No items added yet.</div>
         <div id="a-items"></div>
         <div class="cart-total" id="a-total" style="display:none">
           <span>Total</span><span id="a-total-val"></span>
+        </div>
+      </div>
+
+      <button class="shipping-toggle" id="a-shipping-toggle" onclick="toggleShipping('a')">
+        Shipping and delivery <span class="arrow">&#9660;</span>
+      </button>
+      <div class="shipping-note" id="a-shipping-note">
+        <div class="shipping-inner">
+          <div class="shipping-row">
+            <span class="label">Subtotal</span>
+            <span class="value" id="a-subtotal-val"></span>
+          </div>
+          <div class="shipping-row">
+            <span class="label">Shipping</span>
+            <span class="value" id="a-shipping-val"></span>
+          </div>
+          <hr class="shipping-divider" />
+          <div class="shipping-grand">
+            <span>Grand Total</span>
+            <span id="a-grand-val"></span>
+          </div>
+          <div class="shipping-intl">
+            International buyers: prices are the same. Shipping is free for orders above $200 USD. A flat $30 USD fee applies below that.
+          </div>
         </div>
       </div>
 
@@ -731,7 +882,7 @@
       }
     };
 
-    const carts = { starter: [], artist: [] };
+    const sharedCart = [];
 
     function openInfo(type) {
       document.getElementById(type + 'Info').classList.add('open');
@@ -817,73 +968,94 @@
       }
 
       const price = PRICING[type][size][qty];
-      carts[type].push({ size, colour, qty: parseInt(qty), price });
-      renderCart(type);
-      updateSendBtn(type);
+      sharedCart.push({ size, colour, qty: parseInt(qty), price, pack: type });
+      renderCarts();
+      updateSendBtns();
     }
 
-    function removeFromCart(type, idx) {
-      carts[type].splice(idx, 1);
-      renderCart(type);
-      updateSendBtn(type);
+    function removeFromCart(idx) {
+      sharedCart.splice(idx, 1);
+      renderCarts();
+      updateSendBtns();
     }
 
-    function renderCart(type) {
-      const p = type === 'starter' ? 's' : 'a';
-      const items = carts[type];
-      const container = document.getElementById(p + '-items');
-      const empty     = document.getElementById(p + '-empty');
-      const totalEl   = document.getElementById(p + '-total');
-      const totalVal  = document.getElementById(p + '-total-val');
+    function renderCarts() {
+      ['s', 'a'].forEach(p => {
+        const container = document.getElementById(p + '-items');
+        const empty     = document.getElementById(p + '-empty');
+        const totalEl   = document.getElementById(p + '-total');
+        const totalVal  = document.getElementById(p + '-total-val');
 
-      container.innerHTML = '';
-      if (items.length === 0) {
-        empty.style.display = 'block';
-        totalEl.style.display = 'none';
-        return;
-      }
-      empty.style.display = 'none';
+        container.innerHTML = '';
+        if (sharedCart.length === 0) {
+          empty.style.display = 'block';
+          totalEl.style.display = 'none';
+          return;
+        }
+        empty.style.display = 'none';
 
-      let total = 0;
-      items.forEach((item, i) => {
-        total += item.price;
-        const row = document.createElement('div');
-        row.className = 'cart-item';
-        row.innerHTML = `
-          <span class="cart-item-info"><strong>${item.size} cm</strong> · ${item.colour} · ${item.qty} sheets</span>
-          <span style="display:flex;align-items:center;gap:4px">
-            <span class="cart-item-price">Rs. ${item.price.toLocaleString('en-IN')}</span>
-            <button class="cart-item-remove" onclick="removeFromCart('${type}', ${i})">x</button>
-          </span>`;
-        container.appendChild(row);
+        let total = 0;
+        sharedCart.forEach((item, i) => {
+          total += item.price;
+          const packLabel = item.pack === 'starter' ? 'Starter' : 'Artist';
+          const row = document.createElement('div');
+          row.className = 'cart-item';
+          row.innerHTML = `
+            <span class="cart-item-info"><strong>${item.size} cm</strong> · ${item.colour} · ${item.qty} sheets <span style="color:#aaa;font-weight:400;font-size:0.75rem;">(${packLabel})</span></span>
+            <span style="display:flex;align-items:center;gap:4px">
+              <span class="cart-item-price">Rs. ${item.price.toLocaleString('en-IN')}</span>
+              <button class="cart-item-remove" onclick="removeFromCart(${i})">x</button>
+            </span>`;
+          container.appendChild(row);
+        });
+
+        totalEl.style.display = 'flex';
+        totalVal.textContent = 'Rs. ' + total.toLocaleString('en-IN');
       });
-
-      totalEl.style.display = 'flex';
-      totalVal.textContent = 'Rs. ' + total.toLocaleString('en-IN');
     }
 
-    function updateSendBtn(type) {
-      const p = type === 'starter' ? 's' : 'a';
-      const btn = document.getElementById(p + '-send-btn');
-      const items = carts[type];
-      if (items.length === 0) {
-        btn.classList.add('disabled');
-        btn.removeAttribute('href');
-        btn.onclick = null;
-        return;
-      }
+    function toggleShipping(p) {
+      const btn   = document.getElementById(p + '-shipping-toggle');
+      const panel = document.getElementById(p + '-shipping-note');
+      btn.classList.toggle('open');
+      panel.classList.toggle('visible');
+    }
 
-      const packName = type === 'starter' ? 'Starter Pack' : 'Artist Pack';
-      let list = items.map(i =>
-        `- ${i.size} cm | ${i.colour} | ${i.qty} sheets | Rs. ${i.price.toLocaleString('en-IN')}`
-      ).join('\n');
+    function updateSendBtns() {
+      ['s', 'a'].forEach(p => {
+        const btn       = document.getElementById(p + '-send-btn');
+        const toggleBtn = document.getElementById(p + '-shipping-toggle');
+        const panel     = document.getElementById(p + '-shipping-note');
 
-      const total = items.reduce((s, i) => s + i.price, 0);
-      const body = `Hi,\n\nI would like to place an order for the following treated double tissue paper:\n\nPack: ${packName}\n\n${list}\n\nTotal: Rs. ${total.toLocaleString('en-IN')}\n\nPlease let me know next steps.\n\nThank you.`;
+        if (sharedCart.length === 0) {
+          btn.classList.add('disabled');
+          btn.onclick = null;
+          toggleBtn.classList.remove('visible', 'open');
+          panel.classList.remove('visible');
+          return;
+        }
 
-      const mailto = `mailto:your@email.com?subject=Paper Order - ${packName}&body=${encodeURIComponent(body)}`;
-      btn.classList.remove('disabled');
-      btn.onclick = function(e) { e.preventDefault(); window.location.href = mailto; };
+        const total      = sharedCart.reduce((s, i) => s + i.price, 0);
+        const shipping   = total >= 2000 ? 0 : 140;
+        const grandTotal = total + shipping;
+
+        document.getElementById(p + '-subtotal-val').textContent = 'Rs. ' + total.toLocaleString('en-IN');
+        document.getElementById(p + '-shipping-val').textContent = shipping === 0 ? 'Free' : 'Rs. 140';
+        document.getElementById(p + '-shipping-val').className   = 'value' + (shipping === 0 ? ' free' : '');
+        document.getElementById(p + '-grand-val').textContent    = 'Rs. ' + grandTotal.toLocaleString('en-IN');
+
+        toggleBtn.classList.add('visible');
+
+        const list = sharedCart.map(i =>
+          `- ${i.size} cm | ${i.colour} | ${i.qty} sheets | Rs. ${i.price.toLocaleString('en-IN')} (${i.pack === 'starter' ? 'Starter Pack' : 'Artist Pack'})`
+        ).join('\n');
+
+        const body = `Hi,\n\nI would like to place an order for the following treated double tissue paper:\n\n${list}\n\nSubtotal: Rs. ${total.toLocaleString('en-IN')}\nShipping: ${shipping === 0 ? 'Free' : 'Rs. 140'}\nGrand Total: Rs. ${grandTotal.toLocaleString('en-IN')}\n\nPlease let me know next steps.\n\nThank you.`;
+        const mailto = `mailto:your@email.com?subject=Paper Order&body=${encodeURIComponent(body)}`;
+
+        btn.classList.remove('disabled');
+        btn.onclick = function(e) { e.preventDefault(); window.location.href = mailto; };
+      });
     }
   </script>
 </body>
