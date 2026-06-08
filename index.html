@@ -254,6 +254,37 @@
       .hero-left { padding: 60px 24px; align-items: center; text-align: center; flex: none; }
       .hero-right { flex: none; height: 400px; width: 100%; border-left: none; border-top: 1px solid rgba(0,0,0,0.08); }
       .hero-warrior { left: 10%; width: 90%; height: 100%; }
+    } 
+
+    .hero-warrior-cp {
+      position: absolute;
+      bottom: -40%;
+      left: -35%;
+      width: 170%;
+      height: 140%;
+      object-fit: contain;
+      object-position: bottom center;
+      opacity: 0;
+      -webkit-mask-image: linear-gradient(
+        to left,
+        rgba(0,0,0,1) 50%,
+        rgba(0,0,0,0.0) 95%
+      );
+      mask-image: linear-gradient(to right, transparent 0%, black 25%);
+      filter: brightness(0.95) contrast(1.05) grayscale(1);
+      animation: warriorFade 1.6s cubic-bezier(0.23,1,0.32,1) both;
+      animation-delay: 0.5s;
+    }
+    @keyframes warriorFade {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to   { opacity: 0.6; transform: translateY(0) scale(1); }
+    }
+
+    @media(max-width: 768px) {
+      .hero-section { flex-direction: column; }
+      .hero-left { padding: 60px 24px; align-items: center; text-align: center; flex: none; }
+      .hero-right { flex: none; height: 400px; width: 100%; border-left: none; border-top: 1px solid rgba(0,0,0,0.08); }
+      .hero-warrior-cp { left: 10%; width: 90%; height: 100%; }
     }
 
     .hero-title {
@@ -410,6 +441,56 @@
       white-space: nowrap;
     }
     .pack-option.disabled .pack-cta { color: #ccc; border-color: #ddd; }
+
+    /* Container section for the CP feature layout */
+.cp-showcase-section {
+  width: 100%;
+  padding: 120px 0; /* Creates an elegant gap between the Hero and the Store */
+  display: flex;
+  justify-content: flex-start; /* Aligns everything to the left side of the screen */
+  overflow: hidden; /* Prevents tilted corners from creating horizontal scrolling bugs */
+}
+
+/* Bounds the CP to a fixed area on the left */
+.cp-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 80px; /* Aligns perfectly with your hero text margins */
+}
+
+/* The tilted blueprint styling */
+.tilted-cp {
+  width: 450px; /* Adjust size based on how large you want it to appear */
+  height: 450px;
+  object-fit: contain;
+  
+  /* Artistic layout tilt and slight depth shadow */
+  transform: rotate(-8deg) scale(1.02); 
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05); 
+  
+  /* Smoothly blends the edges into your background grid */
+  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(circle, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+  
+  /* Keeps the black vector lines crisp and clear */
+  filter: contrast(1.1) brightness(1.0);
+  opacity: 0.85;
+  
+  transition: transform 0.5s ease;
+}
+
+/* Subtle interactive lifting effect when hovered */
+.tilted-cp:hover {
+  transform: rotate(-5deg) scale(1.05);
+}
+
+/* Responsive adjustment for phones */
+@media(max-width: 768px) {
+  .cp-showcase-section { padding: 60px 0; justify-content: center; }
+  .cp-container { padding: 0 24px; display: flex; justify-content: center; }
+  .tilted-cp { width: 300px; height: 300px; transform: rotate(-4deg); }
+}
 
     /* Modal and Order Overlay Layout Frameworks */
     .modal-overlay {
@@ -639,8 +720,19 @@
 
     <div class="hero-right">
       <img class="hero-warrior" src="wkkk.png" alt="Origami warrior sculpture" />
+    </div>     
+
+    <section class="hero-section grid-bg">
+    </section>
+
+  <section class="cp-showcase-section grid-bg">
+    <div class="cp-container">
+      <img class="tilted-cp" src="wkkk.png" alt="Warrior Crease Pattern" />
     </div>
-  </section> <section class="paper-shop-section" id="paper-shop">
+  </section>
+
+  <section class="paper-shop-section" id="paper-shop">
+    </section> <section class="paper-shop-section" id="paper-shop">
     <span class="brand">Nara Origami Originals</span>
     <h1 style="font-size: 2rem; font-weight: 700; line-height: 1.2;">Paper Collections</h1>
     <p class="body" style="font-size: 0.85rem; color: #666; line-height: 1.6;">Select from handcrafted premium double tissue sheets optimized for high-level complex structures.</p>
