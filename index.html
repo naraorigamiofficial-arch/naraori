@@ -208,8 +208,25 @@
 
     @media(max-width: 768px) {
       .hero-section { flex-direction: column; }
-      .hero-left { padding: 120px 24px 40px; align-items: center; text-align: center; flex: none; }
-      .hero-right { flex: none; height: 400px; width: 100%; border-left: none; border-top: 1px solid rgba(0,0,0,0.08); }
+      .hero-left { 
+      padding: 120px 24px 10px; 
+      align-items: center; 
+      text-align: center; 
+      flex: none; 
+      
+      /* 🟢 NEW: Forces the text and buttons to stay safely above the image */
+      z-index: 10; 
+    }
+    
+    .hero-right { 
+      flex: none; 
+      height: 450px; /* Slightly taller so he doesn't look squished */
+      width: 100%; 
+      border: none; 
+      
+      /* 🟢 NEW: Pushes the warrior down, away from the text */
+      margin-top: 40px; 
+    }
       
       /* 🟢 UPDATED: Mobile-only warrior positioning */
       .hero-warrior { 
