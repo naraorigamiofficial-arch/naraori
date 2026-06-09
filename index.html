@@ -315,13 +315,12 @@
       }
 
       /* 2. Navbar pill — full width, properly centred */
+     /* 2. Navbar pill — Hugs the content, removes empty space */
       .floating-navbar {
-        width: calc(100vw - 32px); /* 16px margin each side */
-        max-width: 480px;
-        top: 14px;
-        gap: 12px;
-        padding: 6px 6px 6px 12px;
-        /* override desktop width:max-content */
+        width: max-content; /* 🟢 Let it shrink to perfectly fit the logo and button */
+        top: 16px;
+        gap: 16px;
+        padding: 6px 8px;
         min-width: 0;
       }
 
@@ -344,48 +343,17 @@
       }
       .nav-label-full  { display: none; }
       .nav-label-short { display: inline; }
+      
+      /* ... skip down to section 4 ... */
 
-      /* 3. Hero stacks vertically */
-      .hero-section {
-        flex-direction: column;
-        min-height: 100svh;
-      }
-
-      .hero-left {
-        flex: none;
-        padding: 100px 24px 12px;
-        align-items: center;
-        text-align: center;
-      }
-
-      .hero-title {
-        font-size: clamp(2.2rem, 10vw, 3.2rem);
-        text-align: center;
-        margin-bottom: 16px;
-      }
-
-      .hero-sub {
-        text-align: center;
-        max-width: 100%;
-        font-size: 0.8rem;
-        margin-bottom: 24px;
-      }
-
-      .cta-row {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      /* 4. Image panel — just tall enough to show the figure */
+      /* 4. Image panel — Make it tall enough to show the figure */
       .hero-right {
         flex: none;
         width: 100%;
-        height: clamp(200px, 48vw, 300px);
-        min-height: 0;
+        min-height: 450px; /* 🟢 Give the warrior plenty of vertical room */
         position: relative;
         overflow: hidden;
-        border-top: 1px solid rgba(0,0,0,0.08);
+        border-top: none;
       }
 
       .hero-warrior {
@@ -393,13 +361,14 @@
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 80%;
-        height: 130%;
+        width: 90%; /* Let it breathe nicely in the center */
+        height: 100%;
         object-fit: contain;
         object-position: bottom center;
-        opacity: 0;
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
-        mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
+        
+        /* 🟢 Disable the bottom fade mask entirely on phones so the whole image is visible */
+        -webkit-mask-image: none;
+        mask-image: none;
       }
 
       /* 5. Scroll story text — tighter on phones */
