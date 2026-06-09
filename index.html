@@ -6,199 +6,106 @@
   <title>Nara Origami Originals</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght=200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-  body {
-    background-color: #f5f5f5;
-    margin: 0;
-    padding: 50px;
-    font-family: 'Inter', sans-serif;
-  }
+    body {
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 50px;
+      font-family: 'Montserrat', sans-serif;
+    }
 
-/* The Main Floating Pill */
- .floating-navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #1c1c1c;
-    padding: 8px 8px;
-    border-radius: 60px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), 0 5px 15px rgba(0, 0, 0, 0.1);
-    width: max-content;
-    margin: 0 auto;
-    gap: 32px;
-    
-    position: fixed;
-    top: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    
-    /* 🟢 NEW: Tells the navbar to take 0.3 seconds to smoothly animate */
-    transition: top 0.3s ease-in-out; 
-}
+    /* ── FLOATING NAVBAR ── */
+    .floating-navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #1c1c1c;
+      padding: 8px 8px;
+      border-radius: 60px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25), 0 5px 15px rgba(0,0,0,0.1);
+      width: max-content;
+      margin: 0 auto;
+      gap: 32px;
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      transition: top 0.3s ease-in-out;
+    }
+    .floating-navbar.hidden { top: -100px; }
 
-/* 🟢 NEW: The class we will apply to push the navbar out of view */
-.floating-navbar.hidden {
-    top: -100px; 
-}
-  /* Left Logo Circle */
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    color: #1c1c1c;
-    flex-shrink: 0;
-  }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      color: #1c1c1c;
+      flex-shrink: 0;
+    }
+    .nav-logo svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
 
-  /* SVG Icon inside the logo circle */
-  .nav-logo svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-  }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      margin: 0 24px;
+      padding: 0;
+      gap: 28px;
+    }
+    .nav-links li a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 14.5px;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      transition: color 0.2s ease;
+    }
+    .nav-links li a:hover { color: #ffffff; }
 
-  /* Center Navigation Links Container */
-.nav-links {
-  display: flex;
-  list-style: none;
-  margin: 0 24px; /* The backup margin */
-  padding: 0;
-  gap: 28px;
-}
+    .nav-contact-btn {
+      display: flex;
+      align-items: center;
+      background-color: #ffffff;
+      color: #1c1c1c;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 14.5px;
+      font-weight: 500;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
 
-/* 🟢 THE MISSING RULE: This colors the text and removes the blue underline */
-.nav-links li a {
-  color: #e0e0e0;
-  text-decoration: none;
-  font-size: 14.5px;
-  font-weight: 400;
-  letter-spacing: 0.3px;
-  transition: color 0.2s ease;
-}
-
-/* 🟢 The hover effect */
-.nav-links li a:hover {
-  color: #ffffff;
-}
-
-  /* 2. Protect the logo from squishing */
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    background-color: #ffffff;
-    border-radius: 50%;
-    color: #1c1c1c;
-    flex-shrink: 0; /* 🟢 NEW: Prevents it from collapsing into the text */
-  }
-
-  /* 3. Protect the email button from squishing */
-  .nav-contact-btn {
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-    color: #1c1c1c;
-    text-decoration: none;
-    padding: 12px 24px;
-    border-radius: 40px;
-    font-size: 14.5px;
-    font-weight: 500;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-    flex-shrink: 0; /* 🟢 NEW: Prevents it from collapsing into the text */
-  }
-    /* Grid texture overlay */
+    /* ── GRID BACKGROUND ── */
     .grid-bg { position: relative; }
-    /* 🟢 UPDATED: Grid texture overlay locked to the entire screen */
-.grid-bg::after {
-  content: '';
-  position: fixed; /* Locks it to the camera, not the page */
-  top: 0; left: 0; width: 100vw; height: 100vh;
-  background-image:
-    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-  z-index: -1; /* Pushes it behind absolutely everything */
-}
+    .grid-bg::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image:
+        linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: -1;
+    }
 
     nav, section, .logo-strip, footer, .hr-div {
       position: relative;
       z-index: 10;
-    }
-
-    /* Ghost CTA */
-    .btn-ghost {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: #0A0A0A;
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.22);
-      padding: 14px 32px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      transition: background 0.2s, border-color 0.2s;
-      white-space: nowrap;
-      border-radius: 0;
-    }
-    .btn-ghost:hover {
-      background: rgba(0,0,0,0.04);
-      border-color: rgba(0,0,0,0.45);
-    }
-
-    /* About ghost */
-    .btn-about {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: #0A0A0A;
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.18);
-      border-left: none;
-      padding: 14px 32px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      transition: background 0.2s;
-      white-space: nowrap;
-      border-radius: 0;
-    }
-    .btn-about:hover { background: rgba(0,0,0,0.04); }
-
-    /* Trust pill */
-    .trust-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.1);
-      padding: 6px 16px 6px 10px;
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: #606060;
-      letter-spacing: 0.06em;
-      border-radius: 0;
-    }
-    .trust-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #303030;
     }
 
     /* ── HERO ── */
@@ -234,11 +141,7 @@
       object-fit: contain;
       object-position: bottom center;
       opacity: 0;
-      -webkit-mask-image: linear-gradient(
-        to left,
-        rgba(0,0,0,1) 50%,
-        rgba(0,0,0,0.0) 95%
-      );
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0.0) 95%);
       mask-image: linear-gradient(to right, transparent 0%, black 25%);
       filter: brightness(0.95) contrast(1.05) grayscale(1);
       animation: warriorFade 1.6s cubic-bezier(0.23,1,0.32,1) both;
@@ -249,67 +152,6 @@
       to   { opacity: 0.9; transform: translateY(0) scale(1); }
     }
 
-    @media(max-width: 768px) {
-      .hero-section { flex-direction: column; }
-      .hero-left { padding: 60px 24px; align-items: center; text-align: center; flex: none; }
-      .hero-right { flex: none; height: 400px; width: 100%; border-left: none; border-top: 1px solid rgba(0,0,0,0.08); }
-      .hero-warrior { left: 10%; width: 90%; height: 100%; }
-    } 
-
-  /* 1. The Scroll Indicator Track */
-.scroll-indicator {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 60px;
-  background: rgba(0, 0, 0, 0.15); /* Faint grey track */
-  z-index: 10;
-  
-  /* Smooth fade out when JS hides it */
-  transition: opacity 0.4s ease;
-}
-
-/* 2. The Dropping Black Line */
-.scroll-indicator::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #0A0A0A; /* Solid black */
-  
-  /* The infinite animation loop */
-  animation: scrollDrop 1.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-}
-
-/* 3. Hide class for when the user starts scrolling */
-.scroll-indicator.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* 4. The Animation Keyframes */
-@keyframes scrollDrop {
-  0% {
-    transform-origin: top;
-    transform: scaleY(0);
-  }
-  50% {
-    transform-origin: top;
-    transform: scaleY(1);
-  }
-  50.1% {
-    transform-origin: bottom;
-    transform: scaleY(1);
-  }
-  100% {
-    transform-origin: bottom;
-    transform: scaleY(0);
-  }
-}
     .hero-title {
       font-size: clamp(2.8rem, 7vw, 6rem);
       font-weight: 800;
@@ -350,341 +192,307 @@
       align-items: stretch;
     }
 
-    /* Isolated layout element style for your paper shop section */
+    /* ── SCROLL INDICATOR ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 60px;
+      background: rgba(0,0,0,0.15);
+      z-index: 10;
+      transition: opacity 0.4s ease;
+    }
+    .scroll-indicator::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #0A0A0A;
+      animation: scrollDrop 1.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+    }
+    .scroll-indicator.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    @keyframes scrollDrop {
+      0%    { transform-origin: top;    transform: scaleY(0); }
+      50%   { transform-origin: top;    transform: scaleY(1); }
+      50.1% { transform-origin: bottom; transform: scaleY(1); }
+      100%  { transform-origin: bottom; transform: scaleY(0); }
+    }
+
+    /* ── SCROLL STORY ── */
+    .scroll-story-container {
+      height: 300vh;
+      position: relative;
+      z-index: 5;
+    }
+    .scroll-story-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .story-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+      padding: 0 24px;
+    }
+    .story-text {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 800;
+      color: #111;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .story-btn {
+      margin-top: 24px;
+      padding: 16px 36px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .story-btn:hover { opacity: 0.8 !important; }
+    .story-text.visible,
+    .story-btn.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── CP SHOWCASE ── */
+    .cp-showcase-section {
+      width: 100%;
+      padding: 120px 0;
+      display: flex;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+    .cp-container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .tilted-cp {
+      width: 660px;
+      height: 660px;
+      object-fit: contain;
+      margin-left: 48px;
+      transform: rotate(-8deg) scale(1.02);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+      mask-image: radial-gradient(circle, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+      filter: contrast(1.1) brightness(1.0);
+      opacity: 0.85;
+      transition: transform 0.5s ease;
+    }
+    .tilted-cp:hover { transform: rotate(-5deg) scale(1.05); }
+
+    /* Ghost CTA */
+    .btn-ghost {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: #0A0A0A;
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.22);
+      padding: 14px 32px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+    .btn-ghost:hover {
+      background: rgba(0,0,0,0.04);
+      border-color: rgba(0,0,0,0.45);
+    }
+
+    /* Paper shop section */
     .paper-shop-section {
       max-width: 480px;
       width: 100%;
-      margin: 140px auto; /* Clean breathing window when scrolling */
+      margin: 140px auto;
       padding: 0 24px;
       display: flex;
       flex-direction: column;
       gap: 28px;
     }
 
-    .brand {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #aaa;
+    /* =============================================
+       📱 MOBILE — phones up to 768px
+       ============================================= */
+    @media (max-width: 768px) {
+
+      /* Remove desktop border padding */
+      body {
+        padding: 12px;
+      }
+
+      /* --- Navbar pill --- */
+      .floating-navbar {
+        /* Stretch to almost full width, but don't overflow */
+        width: calc(100% - 24px);
+        max-width: 480px;
+        top: 14px;
+        gap: 0;
+        padding: 6px 6px 6px 10px;
+      }
+
+      /* Hide center nav links — not enough room without a hamburger */
+      .nav-links {
+        display: none;
+      }
+
+      /* Shrink logo circle slightly */
+      .nav-logo {
+        width: 36px;
+        height: 36px;
+      }
+      .nav-logo svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* Truncate the email button on small screens */
+      .nav-contact-btn {
+        padding: 9px 14px;
+        font-size: 11px;
+        /* Show a shorter label via overflow */
+        max-width: 210px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* --- Hero --- */
+      .hero-section {
+        flex-direction: column;
+        min-height: 100svh; /* Use svh so mobile browser chrome is accounted for */
+      }
+
+      .hero-left {
+        flex: none;
+        padding: 110px 24px 40px; /* top clears the fixed navbar */
+        align-items: center;
+        text-align: center;
+      }
+
+      .hero-title {
+        font-size: clamp(2.4rem, 11vw, 3.4rem);
+        text-align: center;
+      }
+
+      .hero-sub {
+        text-align: center;
+        max-width: 100%;
+        font-size: 0.8rem;
+      }
+
+      .cta-row {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .hero-right {
+        flex: none;
+        width: 100%;
+        height: 340px; /* Fixed height instead of min-height */
+        border-top: 1px solid rgba(0,0,0,0.08);
+      }
+
+      .hero-warrior {
+        bottom: -10%;
+        left: 5%;
+        width: 90%;
+        height: 110%;
+        /* Re-apply mask for side-by-side → stacked layout */
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+        mask-image: linear-gradient(to bottom, transparent 0%, black 20%);
+      }
+
+      /* Scroll indicator sits at bottom of hero-left on mobile */
+      .scroll-indicator {
+        bottom: 20px;
+      }
+
+      /* --- Scroll story --- */
+      .story-text {
+        font-size: clamp(1.6rem, 8vw, 2.6rem);
+        line-height: 1.2;
+      }
+
+      .story-btn {
+        padding: 14px 28px;
+        font-size: 0.7rem;
+        text-align: center;
+      }
+
+      /* --- CP showcase --- */
+      .cp-showcase-section {
+        padding: 60px 0;
+        justify-content: center;
+      }
+      .cp-container {
+        padding: 0 24px;
+        display: flex;
+        justify-content: center;
+      }
+      .tilted-cp {
+        width: 300px;
+        height: 300px;
+        margin-left: 0;
+        transform: rotate(-4deg) scale(1.02);
+      }
+
+      /* Paper shop */
+      .paper-shop-section {
+        margin: 80px auto;
+      }
     }
 
-    .trust {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: #888;
+    /* Very small phones (≤ 380px) */
+    @media (max-width: 380px) {
+      .nav-contact-btn {
+        font-size: 10px;
+        padding: 8px 10px;
+        max-width: 170px;
+      }
+      .hero-title {
+        font-size: 2.1rem;
+      }
     }
-
-    .buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 13px 28px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      text-decoration: none;
-      cursor: pointer;
-      border: 1.5px solid #111;
-      transition: opacity 0.2s;
-      background: none;
-    }
-    .btn-primary { background: #111; color: #fff; }
-    .btn-secondary { background: #fff; color: #111; }
-    .btn:hover { opacity: 0.6; }
-
-    /* Pack panel toggle mechanics */
-    .pack-panel {
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      transition: max-height 0.45s ease, opacity 0.35s ease;
-    }
-    .pack-panel.open { max-height: 300px; opacity: 1; }
-
-    .pack-panel-inner {
-      display: flex;
-      flex-direction: column;
-      border: 1.5px solid #111;
-    }
-
-    .pack-question {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #aaa;
-      padding: 20px 24px 14px;
-    }
-
-    .pack-option {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 24px;
-      border-top: 1px solid #e8e8e8;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.15s;
-    }
-    .pack-option:hover:not(.disabled) { background: #f7f7f7; }
-    .pack-option.disabled { cursor: default; }
-    .pack-left { display: flex; flex-direction: column; gap: 4px; }
-
-    .pack-level {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #aaa;
-    }
-    .pack-option.disabled .pack-level { color: #ccc; }
-
-    .pack-name {
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: #111;
-    }
-    .pack-option.disabled .pack-name { color: #bbb; }
-
-    .pack-cta {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #111;
-      border: 1.5px solid #111;
-      padding: 8px 16px;
-      white-space: nowrap;
-    }
-    .pack-option.disabled .pack-cta { color: #ccc; border-color: #ddd; }
-
-    /* Container section for the CP feature layout */
-.cp-showcase-section {
-  width: 100%;
-  padding: 120px 0; /* Creates an elegant gap between the Hero and the Store */
-  display: flex;
-  justify-content: flex-start; /* Aligns everything to the left side of the screen */
-  overflow: hidden; /* Prevents tilted corners from creating horizontal scrolling bugs */
-}
-/* 1. The massive invisible container (Forces you to scroll for a while) */
-.scroll-story-container {
-  height: 300vh; /* Takes 3 full screen heights to scroll past */
-  position: relative;
-  z-index: 5;
-}
-
-/* 2. The pinned window (Locks to the screen while you scroll through the container) */
-.scroll-story-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.story-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  text-align: center;
-}
-
-/* 3. Base styling for the hidden text */
-.story-text {
-  font-size: clamp(2rem, 5vw, 4rem); /* Responsive sizing */
-  font-weight: 800;
-  color: #111;
-  margin: 0;
-  
-  /* Pushed down and invisible */
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-/* 4. Base styling for the hidden button */
-.story-btn {
-  margin-top: 24px;
-  padding: 16px 36px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  background: #111;
-  color: #fff;
-  text-decoration: none;
-  
-  /* Pushed down and invisible */
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.story-btn:hover {
-  opacity: 0.8;
-}
-
-/* 5. The Trigger Class (JS adds this when it's time to appear) */
-.story-text.visible,
-.story-btn.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* Bounds the CP to a fixed area on the left */
-.cp-container {
-  max-width: 1200px;
-  width: 100%;
-  margin: 0;
-  padding: 0; /* Aligns perfectly with your hero text margins */
-  
-}
-/* 1. The Track */
-.scroll-indicator {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 60px;
-  background: rgba(0, 0, 0, 0.15);
-  z-index: 10;
-  transition: opacity 0.4s ease;
-}
-
-/* 2. The Dropping Line */
-.scroll-indicator::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #0A0A0A;
-  animation: scrollDrop 1.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
-}
-
-/* 3. The Hide Class */
-.scroll-indicator.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* 4. The Animation */
-@keyframes scrollDrop {
-  0% { transform-origin: top; transform: scaleY(0); }
-  50% { transform-origin: top; transform: scaleY(1); }
-  50.1% { transform-origin: bottom; transform: scaleY(1); }
-  100% { transform-origin: bottom; transform: scaleY(0); }
-}
-/* The tilted blueprint styling */
-.tilted-cp {
-  width: 660px; /* Adjust based on how large you want it to appear */
-  height: 660px;
-  object-fit: contain;
-  margin-left: 48px;
-  /* Artistic layout tilt and slight depth shadow */
-  transform: rotate(-8deg) scale(1.02); 
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05); 
-  
-  /* Smoothly blends the edges into your background grid */
-  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
-  mask-image: radial-gradient(circle, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
-  
-  /* Keeps the black vector lines crisp and clear */
-  filter: contrast(1.1) brightness(1.0);
-  opacity: 0.85;
-  
-  transition: transform 0.5s ease;
-}
-
-/* Subtle interactive lifting effect when hovered */
-.tilted-cp:hover {
-  transform: rotate(-5deg) scale(1.05);
-}
-
-/* Responsive adjustment for phones */
-@media(max-width: 768px) {
-  .cp-showcase-section { padding: 60px 0; justify-content: center; }
-  .cp-container { padding: 0 24px; display: flex; justify-content: center; }
-  .tilted-cp { width: 300px; height: 300px; transform: rotate(-4deg); }
-}
-
-/* =========================================
-   📱 MOBILE OPTIMIZATION (PHONES & TABLETS)
-   ========================================= */
-@media (max-width: 768px) {
-  
-  /* 1. Remove the massive desktop border */
-  body {
-    padding: 16px; 
-  }
-
-  /* 2. Fix the Navbar Pill */
-  .floating-navbar {
-    width: 92%; /* Takes up most of the phone width safely */
-    gap: auto; 
-    top: 16px;
-    padding: 6px 8px;
-  }
-
-  /* 3. Hide the center links on phones. 
-     (There is physically not enough room for them without a hamburger menu) */
-  .nav-links {
-    display: none; 
-  }
-
-  /* 4. Shrink the email button so it doesn't break the pill */
-  .nav-contact-btn {
-    padding: 10px 16px;
-    font-size: 12px; /* Smaller text */
-  }
-
-  /* 5. Fix the Hero Section Spacing */
-  .hero-left {
-    padding: 120px 20px 60px; /* Adds space at the top so the nav doesn't cover text */
-    align-items: center; 
-  }
-
-  /* 6. Force the text to center (Overrides your inline HTML style) */
-  .hero-title {
-    text-align: center !important; 
-    font-size: 3.2rem; /* Better scaling for mobile */
-  }
-  
-  .hero-right {
-    min-height: 400px;
-  }
-  
-  /* 7. Ensure the warrior scales correctly */
-  .hero-warrior {
-    left: 5%;
-    width: 90%;
-  }
-}
-
-</style>
+  </style>
 </head>
 <body>
 
   <nav class="floating-navbar">
-    <!-- White Logo Circle with Planet SVG -->
     <div class="nav-logo">
       <svg viewBox="0 0 24 24">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
       </svg>
     </div>
 
-    <!-- Center Links -->
     <ul class="nav-links">
       <li><a href="#">Home</a></li>
       <li><a href="#">Paper Gallery</a></li>
@@ -692,93 +500,74 @@
       <li><a href="#">About</a></li>
     </ul>
 
-    <!-- White Email Button -->
-    <a href="mailto:sioa.Naraorigami.official@gmail.com" class="nav-contact-btn">
+    <a href="mailto:Naraorigami.official@gmail.com" class="nav-contact-btn">
       Naraorigami.official@gmail.com
     </a>
   </nav>
+
   <section class="hero-section grid-bg">
     <div class="hero-left">
-
       <h1 class="hero-title fu fu2">
         <span class="metal">Want to create</span><br/>something<br/>extraordinary?
       </h1>
-      
     </div>
 
     <div class="hero-right">
       <img class="hero-warrior" src="imgs/wkkk.png" alt="Origami warrior sculpture" />
-
-    </div>     
-    <div class="scroll-indicator" id="scroll-hint"></div>
-  </section> <section class="scroll-story-container">
-  
-  <div class="scroll-story-sticky">
-    <div class="story-content">
-      
-      <h2 class="story-text" id="step-1">To fold better,</h2>
-      <h2 class="story-text" id="step-2">You need better paper.</h2>
-      
-      <a href="#shop" class="story-btn" id="step-3">Check out Treated Double Tissues</a>
-      
     </div>
-  </div>
-  
-</section>
 
+    <div class="scroll-indicator" id="scroll-hint"></div>
+  </section>
+
+  <section class="scroll-story-container">
+    <div class="scroll-story-sticky">
+      <div class="story-content">
+        <h2 class="story-text" id="step-1">To fold better,</h2>
+        <h2 class="story-text" id="step-2">You need better paper.</h2>
+        <a href="#shop" class="story-btn" id="step-3">Check out Treated Double Tissues</a>
+      </div>
+    </div>
+  </section>
 
   <script>
-  
-  // 1. Grab all our elements
-  const navbar = document.querySelector('.floating-navbar');
-  const scrollHint = document.getElementById('scroll-hint');
-  const storyContainer = document.querySelector('.scroll-story-container');
-  const step1 = document.getElementById('step-1');
-  const step2 = document.getElementById('step-2');
-  const step3 = document.getElementById('step-3');
+    const navbar = document.querySelector('.floating-navbar');
+    const scrollHint = document.getElementById('scroll-hint');
+    const storyContainer = document.querySelector('.scroll-story-container');
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const step3 = document.getElementById('step-3');
 
-  let lastScrollTop = 0;
+    let lastScrollTop = 0;
 
-  // 2. ONE master scroll listener to handle everything cleanly
-  window.addEventListener('scroll', () => {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    // A. Handle Navbar (Hide on scroll down, show on scroll up)
-    if (navbar) {
-      if (scrollTop > lastScrollTop && scrollTop > 50) {
-        navbar.classList.add('hidden');
-      } else {
-        navbar.classList.remove('hidden');
+      // A. Navbar hide/show
+      if (navbar) {
+        if (scrollTop > lastScrollTop && scrollTop > 50) {
+          navbar.classList.add('hidden');
+        } else {
+          navbar.classList.remove('hidden');
+        }
       }
-    }
 
-    // B. Handle Scroll Indicator (Fade out after 50px of scrolling)
-    if (scrollHint) {
-      if (scrollTop > 50) {
-        scrollHint.classList.add('hidden');
-      } else {
-        scrollHint.classList.remove('hidden');
+      // B. Scroll indicator fade
+      if (scrollHint) {
+        scrollHint.classList.toggle('hidden', scrollTop > 50);
       }
-    }
 
-    // C. Handle the "To fold better..." Text Reveal
-    if (storyContainer) {
-      const rect = storyContainer.getBoundingClientRect();
-      const scrollProgress = (rect.top * -1) / (storyContainer.offsetHeight - window.innerHeight);
+      // C. Scroll story reveal
+      if (storyContainer) {
+        const rect = storyContainer.getBoundingClientRect();
+        const scrollProgress = (rect.top * -1) / (storyContainer.offsetHeight - window.innerHeight);
 
-      if (scrollProgress > 0.1) step1.classList.add('visible');
-      else step1.classList.remove('visible');
+        step1.classList.toggle('visible', scrollProgress > 0.1);
+        step2.classList.toggle('visible', scrollProgress > 0.35);
+        step3.classList.toggle('visible', scrollProgress > 0.6);
+      }
 
-      if (scrollProgress > 0.35) step2.classList.add('visible');
-      else step2.classList.remove('visible');
-
-      if (scrollProgress > 0.6) step3.classList.add('visible');
-      else step3.classList.remove('visible');
-    }
-
-    // Save the current scroll position for the next calculation
-    lastScrollTop = scrollTop;
-  });
+      lastScrollTop = scrollTop;
+    });
   </script>
 </body>
- </html>
+</html>
