@@ -22,18 +22,18 @@
 
     /* Grid texture overlay */
     .grid-bg { position: relative; }
-    .grid-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-      z-index: 1;
-    }
-
+    /* 🟢 UPDATED: Grid texture overlay locked to the entire screen */
+.grid-bg::after {
+  content: '';
+  position: fixed; /* Locks it to the camera, not the page */
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: -1; /* Pushes it behind absolutely everything */
+}
     nav, section, .logo-strip, footer, .hr-div {
       position: relative;
       z-index: 10;
@@ -343,6 +343,24 @@
       display: flex;
       align-items: stretch;
     }
+    /* 1. The Container */
+.masterpiece-section {
+  text-align: center;
+  padding: 80px 24px; /* Adds healthy breathing room above and below */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Forces the button to center horizontally */
+  justify-content: center;
+}
+
+/* 2. The Text */
+.masterpiece-text {
+  font-size: clamp(1.8rem, 5vw, 3rem); /* Scales smoothly on mobile */
+  font-weight: 500; /* 🟢 This makes it "less bold" (400 is normal, 800 is ultra-bold) */
+  color: #0A0A0A;
+  line-height: 1.3;
+  margin-bottom: 32px; /* 🟢 Pushes the button down below the text */
+}
   </style>
 </head>
 <body>
@@ -373,9 +391,6 @@
         <span class="metal">Want to create</span><br/>something<br/>extraordinary?
       </h1>
 
-      <p class="hero-sub fu fu3" style="text-align:left; margin-left:0;">
-        Start your next masterpiece with the right paper.
-      </p>
 
      
 
@@ -392,6 +407,13 @@
 
   </section>
 
+  <section class="masterpiece-section">
+  <h2 class="masterpiece-text fu fu2">
+    Start your next masterpiece<br/>with the right paper.
+  </h2>
+  
+  <button class="btn-metal fu fu3">Buy Papers &rarr;</button>
+</section>
 
   <!-- ── LOGO STRIP ── -->
   <div class="logo-strip">
