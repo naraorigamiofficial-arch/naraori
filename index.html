@@ -119,17 +119,18 @@
   }
     /* Grid texture overlay */
     .grid-bg { position: relative; }
-    .grid-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      pointer-events: none;
-      z-index: 1;
-    }
+    /* 🟢 UPDATED: Grid texture overlay locked to the entire screen */
+.grid-bg::after {
+  content: '';
+  position: fixed; /* Locks it to the camera, not the page */
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: -1; /* Pushes it behind absolutely everything */
+}
 
     nav, section, .logo-strip, footer, .hr-div {
       position: relative;
@@ -223,7 +224,6 @@
       flex: 1 1 45%;
       position: relative;
       min-height: 520px;
-      background: #F2F2F2;
     }
     .hero-warrior {
       position: absolute;
@@ -256,7 +256,60 @@
       .hero-warrior { left: 10%; width: 90%; height: 100%; }
     } 
 
+  /* 1. The Scroll Indicator Track */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.15); /* Faint grey track */
+  z-index: 10;
   
+  /* Smooth fade out when JS hides it */
+  transition: opacity 0.4s ease;
+}
+
+/* 2. The Dropping Black Line */
+.scroll-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0A0A0A; /* Solid black */
+  
+  /* The infinite animation loop */
+  animation: scrollDrop 1.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+/* 3. Hide class for when the user starts scrolling */
+.scroll-indicator.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 4. The Animation Keyframes */
+@keyframes scrollDrop {
+  0% {
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+  50% {
+    transform-origin: top;
+    transform: scaleY(1);
+  }
+  50.1% {
+    transform-origin: bottom;
+    transform: scaleY(1);
+  }
+  100% {
+    transform-origin: bottom;
+    transform: scaleY(0);
+  }
+}
     .hero-title {
       font-size: clamp(2.8rem, 7vw, 6rem);
       font-weight: 800;
@@ -420,7 +473,73 @@
   justify-content: flex-start; /* Aligns everything to the left side of the screen */
   overflow: hidden; /* Prevents tilted corners from creating horizontal scrolling bugs */
 }
+/* 1. The massive invisible container (Forces you to scroll for a while) */
+.scroll-story-container {
+  height: 300vh; /* Takes 3 full screen heights to scroll past */
+  position: relative;
+  z-index: 5;
+}
 
+/* 2. The pinned window (Locks to the screen while you scroll through the container) */
+.scroll-story-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.story-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+/* 3. Base styling for the hidden text */
+.story-text {
+  font-size: clamp(2rem, 5vw, 4rem); /* Responsive sizing */
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+  
+  /* Pushed down and invisible */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* 4. Base styling for the hidden button */
+.story-btn {
+  margin-top: 24px;
+  padding: 16px 36px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  
+  /* Pushed down and invisible */
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.story-btn:hover {
+  opacity: 0.8;
+}
+
+/* 5. The Trigger Class (JS adds this when it's time to appear) */
+.story-text.visible,
+.story-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 /* Bounds the CP to a fixed area on the left */
 .cp-container {
   max-width: 1200px;
@@ -429,7 +548,44 @@
   padding: 0; /* Aligns perfectly with your hero text margins */
   
 }
+/* 1. The Track */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  transition: opacity 0.4s ease;
+}
 
+/* 2. The Dropping Line */
+.scroll-indicator::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0A0A0A;
+  animation: scrollDrop 1.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+}
+
+/* 3. The Hide Class */
+.scroll-indicator.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 4. The Animation */
+@keyframes scrollDrop {
+  0% { transform-origin: top; transform: scaleY(0); }
+  50% { transform-origin: top; transform: scaleY(1); }
+  50.1% { transform-origin: bottom; transform: scaleY(1); }
+  100% { transform-origin: bottom; transform: scaleY(0); }
+}
 /* The tilted blueprint styling */
 .tilted-cp {
   width: 660px; /* Adjust based on how large you want it to appear */
@@ -494,39 +650,80 @@
       <h1 class="hero-title fu fu2" style="text-align:left;">
         <span class="metal">Want to create</span><br/>something<br/>extraordinary?
       </h1>
-
-
+      
     </div>
 
     <div class="hero-right">
       <img class="hero-warrior" src="imgs/wkkk.png" alt="Origami warrior sculpture" />
-    </div>     
-  </section> <section class="cp-showcase-section grid-bg">
-    <div class="cp-container">
-      <img class="tilted-cp" src="imgs/asd.png" alt="Warrior Crease Pattern" />
-    </div>
-  </section>
 
+    </div>     
+    <div class="scroll-indicator" id="scroll-hint"></div>
+  </section> <section class="scroll-story-container">
+  
+  <div class="scroll-story-sticky">
+    <div class="story-content">
+      
+      <h2 class="story-text" id="step-1">To fold better,</h2>
+      <h2 class="story-text" id="step-2">You need better paper.</h2>
+      
+      <a href="#shop" class="story-btn" id="step-3">Check out Treated Double Tissues</a>
+      
+    </div>
+  </div>
+  
+</section>
 
 
   <script>
   
-  let lastScrollTop = 0;
+  // 1. Grab all our elements
   const navbar = document.querySelector('.floating-navbar');
+  const scrollHint = document.getElementById('scroll-hint');
+  const storyContainer = document.querySelector('.scroll-story-container');
+  const step1 = document.getElementById('step-1');
+  const step2 = document.getElementById('step-2');
+  const step3 = document.getElementById('step-3');
 
-  window.addEventListener('scroll', function() {
-    // Get the current scroll position
+  let lastScrollTop = 0;
+
+  // 2. ONE master scroll listener to handle everything cleanly
+  window.addEventListener('scroll', () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // If scrolling down AND we are past the top 50 pixels of the page
-    if (scrollTop > lastScrollTop && scrollTop > 50) {
-      navbar.classList.add('hidden');
-    } else {
-      // If scrolling up
-      navbar.classList.remove('hidden');
+
+    // A. Handle Navbar (Hide on scroll down, show on scroll up)
+    if (navbar) {
+      if (scrollTop > lastScrollTop && scrollTop > 50) {
+        navbar.classList.add('hidden');
+      } else {
+        navbar.classList.remove('hidden');
+      }
     }
-    
-    // Update the last scroll position for the next calculation
+
+    // B. Handle Scroll Indicator (Fade out after 50px of scrolling)
+    if (scrollHint) {
+      if (scrollTop > 50) {
+        scrollHint.classList.add('hidden');
+      } else {
+        scrollHint.classList.remove('hidden');
+      }
+    }
+
+    // C. Handle the "To fold better..." Text Reveal
+    if (storyContainer) {
+      const rect = storyContainer.getBoundingClientRect();
+      const scrollProgress = (rect.top * -1) / (storyContainer.offsetHeight - window.innerHeight);
+
+      if (scrollProgress > 0.1) step1.classList.add('visible');
+      else step1.classList.remove('visible');
+
+      if (scrollProgress > 0.35) step2.classList.add('visible');
+      else step2.classList.remove('visible');
+
+      if (scrollProgress > 0.6) step3.classList.add('visible');
+      else step3.classList.remove('visible');
+    }
+
+    // Save the current scroll position for the next calculation
     lastScrollTop = scrollTop;
   });
   </script>
