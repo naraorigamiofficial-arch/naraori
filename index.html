@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -12,6 +12,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
+    /* ── DESKTOP BODY ── */
     body {
       background-color: #f5f5f5;
       margin: 0;
@@ -51,11 +52,7 @@
       color: #1c1c1c;
       flex-shrink: 0;
     }
-    .nav-logo svg {
-      width: 20px;
-      height: 20px;
-      fill: currentColor;
-    }
+    .nav-logo svg { width: 20px; height: 20px; fill: currentColor; }
 
     .nav-links {
       display: flex;
@@ -88,6 +85,10 @@
       flex-shrink: 0;
       white-space: nowrap;
     }
+
+    /* Label swap — desktop shows full email, mobile shows "Contact" */
+    .nav-label-short { display: none; }
+    .nav-label-full  { display: inline; }
 
     /* ── GRID BACKGROUND ── */
     .grid-bg { position: relative; }
@@ -187,10 +188,7 @@
     .fu3 { animation-delay: 0.35s; }
     .fu4 { animation-delay: 0.5s; }
 
-    .cta-row {
-      display: flex;
-      align-items: stretch;
-    }
+    .cta-row { display: flex; align-items: stretch; }
 
     /* ── SCROLL INDICATOR ── */
     .scroll-indicator {
@@ -212,10 +210,7 @@
       background: #0A0A0A;
       animation: scrollDrop 1.5s cubic-bezier(0.77, 0, 0.175, 1) infinite;
     }
-    .scroll-indicator.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+    .scroll-indicator.hidden { opacity: 0; pointer-events: none; }
     @keyframes scrollDrop {
       0%    { transform-origin: top;    transform: scaleY(0); }
       50%   { transform-origin: top;    transform: scaleY(1); }
@@ -271,10 +266,7 @@
     }
     .story-btn:hover { opacity: 0.8 !important; }
     .story-text.visible,
-    .story-btn.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .story-btn.visible { opacity: 1; transform: translateY(0); }
 
     /* ── CP SHOWCASE ── */
     .cp-showcase-section {
@@ -284,12 +276,7 @@
       justify-content: flex-start;
       overflow: hidden;
     }
-    .cp-container {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
+    .cp-container { max-width: 1200px; width: 100%; margin: 0; padding: 0; }
     .tilted-cp {
       width: 660px;
       height: 660px;
@@ -305,29 +292,6 @@
     }
     .tilted-cp:hover { transform: rotate(-5deg) scale(1.05); }
 
-    /* Ghost CTA */
-    .btn-ghost {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: #0A0A0A;
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.22);
-      padding: 14px 32px;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      transition: background 0.2s, border-color 0.2s;
-      white-space: nowrap;
-      border-radius: 0;
-    }
-    .btn-ghost:hover {
-      background: rgba(0,0,0,0.04);
-      border-color: rgba(0,0,0,0.45);
-    }
-
     /* Paper shop section */
     .paper-shop-section {
       max-width: 480px;
@@ -341,71 +305,70 @@
 
     /* =============================================
        📱 MOBILE — phones up to 768px
+       Everything here overrides desktop. Desktop untouched.
        ============================================= */
     @media (max-width: 768px) {
 
-      /* Remove desktop border padding */
+      /* 1. Kill the 50px desktop border */
       body {
-        padding: 12px;
+        padding: 0;
       }
 
-      /* --- Navbar pill --- */
+      /* 2. Navbar pill — full width, properly centred */
       .floating-navbar {
-        /* Stretch to almost full width, but don't overflow */
-        width: calc(100% - 24px);
+        width: calc(100vw - 32px); /* 16px margin each side */
         max-width: 480px;
         top: 14px;
-        gap: 0;
-        padding: 6px 6px 6px 10px;
+        gap: 12px;
+        padding: 6px 6px 6px 12px;
+        /* override desktop width:max-content */
+        min-width: 0;
       }
 
-      /* Hide center nav links — not enough room without a hamburger */
-      .nav-links {
-        display: none;
-      }
-
-      /* Shrink logo circle slightly */
       .nav-logo {
         width: 36px;
         height: 36px;
+        flex-shrink: 0;
       }
-      .nav-logo svg {
-        width: 16px;
-        height: 16px;
-      }
+      .nav-logo svg { width: 16px; height: 16px; }
 
-      /* Shrink and simplify the contact button */
+      /* Hide links — no room without hamburger */
+      .nav-links { display: none; }
+
+      /* Contact button — compact, shows "Contact" label */
       .nav-contact-btn {
-        padding: 9px 16px;
+        padding: 9px 18px;
         font-size: 13px;
+        font-weight: 600;
+        flex-shrink: 0;
       }
-
-      /* Show short label, hide full email */
       .nav-label-full  { display: none; }
       .nav-label-short { display: inline; }
 
-      /* --- Hero --- */
+      /* 3. Hero stacks vertically */
       .hero-section {
         flex-direction: column;
-        min-height: 100svh; /* Use svh so mobile browser chrome is accounted for */
+        min-height: 100svh;
       }
 
       .hero-left {
         flex: none;
-        padding: 110px 24px 16px; /* small bottom — image sits right below */
+        padding: 100px 24px 12px;
         align-items: center;
         text-align: center;
       }
 
       .hero-title {
-        font-size: clamp(2.4rem, 11vw, 3.4rem);
+        font-size: clamp(2.2rem, 10vw, 3.2rem);
         text-align: center;
+        margin-bottom: 16px;
       }
 
       .hero-sub {
         text-align: center;
         max-width: 100%;
         font-size: 0.8rem;
+        margin-bottom: 24px;
       }
 
       .cta-row {
@@ -414,47 +377,44 @@
         gap: 8px;
       }
 
+      /* 4. Image panel — just tall enough to show the figure */
       .hero-right {
         flex: none;
         width: 100%;
-        /* Tight on phones — just enough to show the image */
-        height: clamp(220px, 52vw, 340px);
-        border-top: 1px solid rgba(0,0,0,0.08);
+        height: clamp(200px, 48vw, 300px);
+        min-height: 0;
+        position: relative;
         overflow: hidden;
+        border-top: 1px solid rgba(0,0,0,0.08);
       }
 
       .hero-warrior {
-        /* Pull the image up so it hugs the heading */
         position: absolute;
-        bottom: -5%;
+        bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 85%;
+        width: 80%;
         height: 130%;
         object-fit: contain;
         object-position: bottom center;
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%);
-        mask-image: linear-gradient(to bottom, transparent 0%, black 18%);
+        opacity: 0;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
+        mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
       }
 
-      /* Scroll indicator sits at bottom of hero-left on mobile */
-      .scroll-indicator {
-        bottom: 20px;
-      }
-
-      /* --- Scroll story --- */
+      /* 5. Scroll story text — tighter on phones */
       .story-text {
-        font-size: clamp(1.6rem, 8vw, 2.6rem);
+        font-size: clamp(1.5rem, 7.5vw, 2.4rem);
         line-height: 1.2;
       }
-
       .story-btn {
-        padding: 14px 28px;
-        font-size: 0.7rem;
+        padding: 13px 24px;
+        font-size: 0.68rem;
         text-align: center;
+        margin-top: 16px;
       }
 
-      /* --- CP showcase --- */
+      /* 6. CP showcase */
       .cp-showcase-section {
         padding: 60px 0;
         justify-content: center;
@@ -465,27 +425,21 @@
         justify-content: center;
       }
       .tilted-cp {
-        width: 300px;
-        height: 300px;
+        width: 280px;
+        height: 280px;
         margin-left: 0;
         transform: rotate(-4deg) scale(1.02);
       }
 
-      /* Paper shop */
-      .paper-shop-section {
-        margin: 80px auto;
-      }
+      /* 7. Paper shop */
+      .paper-shop-section { margin: 80px auto; }
     }
 
-    /* Label swap: desktop shows full email, mobile shows "Contact" */
-    .nav-label-short { display: none; }
-    .nav-label-full  { display: inline; }
-
-    /* Very small phones (≤ 380px) */
+    /* Extra small phones ≤ 380px */
     @media (max-width: 380px) {
-      .hero-title {
-        font-size: 2.1rem;
-      }
+      .hero-title { font-size: 2rem; }
+      .floating-navbar { gap: 8px; padding: 5px 5px 5px 10px; }
+      .nav-contact-btn { padding: 8px 14px; font-size: 12px; }
     }
   </style>
 </head>
@@ -548,25 +502,16 @@
     window.addEventListener('scroll', () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-      // A. Navbar hide/show
       if (navbar) {
-        if (scrollTop > lastScrollTop && scrollTop > 50) {
-          navbar.classList.add('hidden');
-        } else {
-          navbar.classList.remove('hidden');
-        }
+        if (scrollTop > lastScrollTop && scrollTop > 50) navbar.classList.add('hidden');
+        else navbar.classList.remove('hidden');
       }
 
-      // B. Scroll indicator fade
-      if (scrollHint) {
-        scrollHint.classList.toggle('hidden', scrollTop > 50);
-      }
+      if (scrollHint) scrollHint.classList.toggle('hidden', scrollTop > 50);
 
-      // C. Scroll story reveal
       if (storyContainer) {
         const rect = storyContainer.getBoundingClientRect();
         const scrollProgress = (rect.top * -1) / (storyContainer.offsetHeight - window.innerHeight);
-
         step1.classList.toggle('visible', scrollProgress > 0.1);
         step2.classList.toggle('visible', scrollProgress > 0.35);
         step3.classList.toggle('visible', scrollProgress > 0.6);
