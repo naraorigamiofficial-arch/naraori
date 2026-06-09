@@ -356,6 +356,33 @@
   line-height: 1.3;
   margin-bottom: 32px; /* 🟢 Pushes the button down below the text */
 }
+/* 1. Base state for the hidden words */
+.mp-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  /* Very fast, snappy easing curve */
+  transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1), transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* 2. The Active State (JS will add the .visible class to the section) */
+.masterpiece-section.visible .mp-word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 3. The Micro-Delays (Creates the fast word-by-word effect) */
+.masterpiece-section .mp-word:nth-of-type(1) { transition-delay: 0.00s; }
+.masterpiece-section .mp-word:nth-of-type(2) { transition-delay: 0.04s; }
+.masterpiece-section .mp-word:nth-of-type(3) { transition-delay: 0.08s; }
+.masterpiece-section .mp-word:nth-of-type(4) { transition-delay: 0.12s; }
+.masterpiece-section .mp-word:nth-of-type(5) { transition-delay: 0.16s; }
+.masterpiece-section .mp-word:nth-of-type(6) { transition-delay: 0.20s; }
+.masterpiece-section .mp-word:nth-of-type(7) { transition-delay: 0.24s; }
+.masterpiece-section .mp-word:nth-of-type(8) { transition-delay: 0.28s; }
+
+/* Let the button wait until all text is done before popping in */
+.masterpiece-section .btn-mp { transition-delay: 0.40s; }
   </style>
 </head>
 <body>
@@ -402,12 +429,19 @@
 
   </section>
 
-  <section class="masterpiece-section">
-  <h2 class="masterpiece-text fu fu2">
-    Start your next masterpiece<br/>with the right paper.
+  <section class="masterpiece-section" id="mp-section">
+  <h2 class="masterpiece-text">
+    <span class="mp-word">Start</span> 
+    <span class="mp-word">your</span> 
+    <span class="mp-word">next</span> 
+    <span class="mp-word">masterpiece</span><br/>
+    <span class="mp-word">with</span> 
+    <span class="mp-word">the</span> 
+    <span class="mp-word">right</span> 
+    <span class="mp-word">paper.</span>
   </h2>
   
-  <button class="btn-metal fu fu3">Buy Papers &rarr;</button>
+  <button class="btn-metal mp-word btn-mp">Buy Papers &rarr;</button>
 </section>
 
   <!-- ── LOGO STRIP ── -->
@@ -443,7 +477,27 @@
   </footer>
 
   <script>
-    /* 3D TILT — removed, no cards present */
+    const mpSection = document.getElementById('mp-section');
+
+    window.addEventListener('scroll', () => {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    
+    if (mpSection) {
+      const rect = mpSection.getBoundingClientRect();
+      
+      // If the top of the section comes into the bottom 85% of the screen
+      if (rect.top < window.innerHeight * 0.85) {
+        mpSection.classList.add('visible');
+      } else {
+        // Optional: Remove this 'else' block entirely if you want the text 
+        // to stay visible forever once it has loaded once!
+        mpSection.classList.remove('visible'); 
+      }
+    }
+
+    lastScrollTop = scrollTop;
+  });
   </script>
 
 </body>
