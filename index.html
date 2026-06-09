@@ -13,27 +13,22 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: #FFFFFF;
-      color: #0A0A0A;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    /* Grid texture overlay */
-    .grid-bg { position: relative; }
-    /* 🟢 UPDATED: Grid texture overlay locked to the entire screen */
-.grid-bg::after {
-  content: '';
-  position: fixed; /* Locks it to the camera, not the page */
-  top: 0; left: 0; width: 100vw; height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  color: #0A0A0A;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  
+  /* 🟢 ADD THIS: Paint the grid directly onto the body background */
+  background-color: #FFFFFF;
   background-image:
     linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
   background-size: 48px 48px;
-  pointer-events: none;
-  z-index: -1; /* Pushes it behind absolutely everything */
+  
+  /* This explicitly tells the background to scroll with the page */
+  background-attachment: scroll; 
 }
+
     nav, section, .logo-strip, footer, .hr-div {
       position: relative;
       z-index: 10;
