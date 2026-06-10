@@ -400,6 +400,7 @@
       transition: opacity 0.2s ease-out, transform 0.2s ease-out;
     }
 
+    /* ── DESKTOP PANEL LAYOUT ── */
     .od-panel-container {
       max-width: 1152px;
       width: 100%;
@@ -507,27 +508,63 @@
       z-index: 2;
     }
 
+    /* ── MOBILE OVERRIDES: same sticky animation, single-column layout ── */
     @media(max-width: 768px) {
-      .od-intro-container { padding: 0 24px; }
-      #panel-intro {
-        position: relative;
-        height: auto;
-        opacity: 1 !important;
-        visibility: visible !important;
-        margin: 60px auto 20px;
-      }
-      .od-title .segment-2 {
-        opacity: 1 !important;
-        transform: none !important;
-      }
-      .od-panel-container {
-        grid-template-columns: 1fr;
-        gap: 32px;
+      /* Intro container text sizing */
+      .od-intro-container {
         padding: 0 24px;
       }
-      .od-sticky-window { height: auto; display: block; overflow: visible; }
-      .od-step-panel { position: relative; height: auto; opacity: 1 !important; visibility: visible !important; margin-bottom: 100px; }
-      .od-scroll-track { height: auto; }
+
+      /* Step panels: stack image above text, full-height centered */
+      .od-panel-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 24px;
+        padding: 0 20px;
+        align-items: center;
+      }
+
+      /* On mobile, put visual column first (top), text below */
+      .od-visual-column {
+        order: -1;
+      }
+
+      /* Smaller circle for phone screens */
+      .od-circle-blueprint-wrapper {
+        width: min(240px, 64vw);
+        height: min(240px, 64vw);
+      }
+
+      /* Tighten crosshairs for smaller circle */
+      .od-crosshair-h { left: -16px; right: -16px; }
+      .od-crosshair-v { top: -16px; bottom: -16px; }
+
+      /* Text column: center-aligned on mobile */
+      .od-text-column {
+        text-align: center;
+      }
+
+      /* Smaller type on mobile */
+      .od-huge-title {
+        font-size: clamp(1.3rem, 5vw, 1.8rem);
+        margin-bottom: 12px;
+      }
+      .od-huge-desc {
+        font-size: 0.82rem;
+        margin-bottom: 8px;
+      }
+      .od-huge-desc-sub {
+        font-size: 0.68rem;
+      }
+      .od-meta-num {
+        font-size: 0.58rem;
+        margin-bottom: 10px;
+      }
+    }
+
+    /* Keep nav links hidden on small screens */
+    @media(max-width: 640px) {
+      .nav-links { display: none; }
     }
   </style>
 </head>
@@ -613,7 +650,7 @@
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
                     <img src="imgs/s1.jpg" alt="Step 1 Deployment" class="od-panel-img">
-                   
+                  </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
               </div>
@@ -634,7 +671,6 @@
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
                     <img src="imgs/s2.jpg" alt="Step 2 Diagonal Crease" class="od-panel-img">
-                   
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -656,7 +692,6 @@
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
                     <img src="imgs/s3.jpg" alt="Step 3 Valley Allocation" class="od-panel-img">
-                    
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -678,7 +713,6 @@
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
                     <img src="imgs/s4.jpg" alt="Step 4 Collapse Base" class="od-panel-img">
-                    
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -700,7 +734,6 @@
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
                     <img src="imgs/s5.jpg" alt="Step 5 Sculpting" class="od-panel-img">
-                    
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -722,7 +755,6 @@
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
                     <img src="imgs/s6.jpg" alt="Step 6 Final Form" class="od-panel-img">
-
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -730,7 +762,12 @@
             </div>
           </div>
 
-        </div> </div> </section> </div> <div class="hr-div"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="hr-div"></div>
   <footer>
     <div>
       <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#AAAAAA;">
@@ -766,20 +803,8 @@
       }
 
       // 2. High-Precision Linear Scroll Sync Matrix
+      // Now runs on ALL screen sizes — mobile gets same sticky scroll animation
       if (track && panels.length > 0) {
-        if (window.innerWidth <= 768) {
-          // Reset styling states so everything flows sequentially down mobile viewpoints
-          panels.forEach(panel => {
-            panel.style.opacity = '';
-            panel.style.visibility = '';
-          });
-          if (punchline) {
-            punchline.style.opacity = '';
-            punchline.style.transform = '';
-          }
-          return;
-        }
-
         const trackRect = track.getBoundingClientRect();
         const viewHeight = window.innerHeight;
         
