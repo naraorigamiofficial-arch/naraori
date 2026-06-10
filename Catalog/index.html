@@ -539,30 +539,15 @@
 // ─────────────────────────────────────────────
 //  SUPABASE CONFIG  ← replace these two lines
 // ─────────────────────────────────────────────
-const SUPABASE_URL  = 'https://YOUR_PROJECT.supabase.co';
-const SUPABASE_ANON = 'YOUR_ANON_KEY';
+const SUPABASE_URL  = 'sb_publishable_moyxHQZL33d98GV_ojy4Eg_Qb7Wui-J';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxuYnRvZ2Z2a2tkZWJta2lqa21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1NTExODcsImV4cCI6MjA5NjEyNzE4N30.6pgBjLFhZ2XUaJzQHp9bi3f8Lv7KtQhfmmA1ZSoi3IA';
 // Expected table: products(id, name, category, size_cm, weight_gsm, price_usd, stock, image_url, description)
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-// ─── DEMO DATA (used when Supabase not configured) ───
-const DEMO = [
-  { id:1,  name:'Double Tissue',        category:'Tissue', size_cm:150, weight_gsm:17, price_usd:28, stock:14, image_url:null, description:'Ultra-thin double tissue laminated with washi.' },
-  { id:2,  name:'Single Tissue',        category:'Tissue', size_cm:100, weight_gsm:12, price_usd:18, stock:0,  image_url:null, description:'Lightweight single-ply tissue for fine detailing.' },
-  { id:3,  name:'Kozo Washi Sheet',     category:'Washi',  size_cm:75,  weight_gsm:28, price_usd:22, stock:9,  image_url:null, description:'Traditional kozo-fibre washi with natural texture.' },
-  { id:4,  name:'Mulberry Washi',       category:'Washi',  size_cm:50,  weight_gsm:32, price_usd:14, stock:22, image_url:null, description:'Mulberry pulp sheet, great for insects and flowers.' },
-  { id:5,  name:'Gold Foil Laminate',   category:'Foil',   size_cm:35,  weight_gsm:55, price_usd:38, stock:6,  image_url:null, description:'Gold-side foil laminated onto tissue for metallic folds.' },
-  { id:6,  name:'Silver Foil Laminate', category:'Foil',   size_cm:35,  weight_gsm:55, price_usd:38, stock:4,  image_url:null, description:'Silver-side foil with a crisp, mirror finish.' },
-  { id:7,  name:'Natural Kraft',        category:'Kraft',  size_cm:100, weight_gsm:60, price_usd:12, stock:35, image_url:null, description:'Unbleached kraft with high wet-fold tolerance.' },
-  { id:8,  name:'Brown Kraft Roll',     category:'Kraft',  size_cm:150, weight_gsm:70, price_usd:16, stock:18, image_url:null, description:'Heavy kraft ideal for large-scale sculptures.' },
-  { id:9,  name:'Unryu Cloud Paper',    category:'Unryu',  size_cm:75,  weight_gsm:22, price_usd:26, stock:11, image_url:null, description:'Unryu with visible fibre wisps for organic texture.' },
-  { id:10, name:'Tissue Foil Duo',      category:'Tissue', size_cm:50,  weight_gsm:45, price_usd:42, stock:0,  image_url:null, description:'Tissue-foil composite — the go-to for complex models.' },
-  { id:11, name:'Gampi Washi',          category:'Washi',  size_cm:100, weight_gsm:20, price_usd:34, stock:7,  image_url:null, description:'Rare gampi-fibre washi with silky surface.' },
-  { id:12, name:'Lokta Sheet',          category:'Kraft',  size_cm:50,  weight_gsm:50, price_usd:10, stock:42, image_url:null, description:'Himalayan lokta fibre — rugged and affordable.' },
-];
 
 // ─── CURRENCY ──────────────────────────────────
-const FX  = { USD:1, INR:83.5, EUR:0.92 };
+const FX  = { USD:1, INR:95.19, EUR:0.86 };
 const SYM = { USD:'$', INR:'₹', EUR:'€' };
 let activeCurrency = 'USD';
 
