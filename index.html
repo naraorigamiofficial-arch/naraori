@@ -383,6 +383,129 @@
 
 /* Let the button wait until all text is done before popping in */
 .masterpiece-section .btn-mp { transition-delay: 0.40s; }
+.od-section {
+  padding: 120px 0 160px;
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.od-header {
+  text-align: center;
+  margin-bottom: 100px;
+}
+.od-eyebrow {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #BBBBBB;
+  margin-bottom: 12px;
+}
+.od-title {
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #0A0A0A;
+  line-height: 1.1;
+}
+.od-title em {
+  font-style: normal;
+  font-weight: 200;
+}
+
+/* ── SVG canvas that holds the whole diagram ── */
+.od-canvas-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+#od-svg {
+  width: 100%;
+  overflow: visible;
+  display: block;
+}
+
+/* ── Photo circles ── */
+.od-photo-ring {
+  fill: #fff;
+  stroke: #0A0A0A;
+  stroke-width: 2;
+}
+.od-photo-clip image {
+  transition: opacity 0.5s;
+}
+
+/* ── Step label text ── */
+.od-label-num {
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  fill: #AAAAAA;
+  font-family: 'Montserrat', sans-serif;
+}
+.od-label-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  fill: #0A0A0A;
+  font-family: 'Montserrat', sans-serif;
+}
+.od-label-desc {
+  font-size: 0.65rem;
+  font-weight: 400;
+  fill: #777777;
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.6;
+}
+
+/* ── Connector paths ── */
+.od-path {
+  fill: none;
+  stroke: #0A0A0A;
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-dasharray: 5 4;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.od-path.show {
+  opacity: 1;
+}
+
+/* ── Arrow direction markers ── */
+.od-arrow-tri {
+  fill: #0A0A0A;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.od-arrow-tri.show {
+  opacity: 1;
+}
+
+/* ── Step fade-in ── */
+.od-step-g {
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform-origin: center;
+}
+.od-step-g.show {
+  opacity: 1;
+}
+
+/* ── Fold-line tick marks (origami instruction style) ── */
+.od-tick {
+  stroke: #0A0A0A;
+  stroke-width: 0.8;
+  opacity: 0;
+  transition: opacity 0.3s 0.3s;
+}
+.od-tick.show {
+  opacity: 0.35;
+}
+
+@media (max-width: 600px) {
+  .od-canvas-wrap { padding: 0 12px; }
+}
   </style>
 </head>
 <body>
@@ -454,7 +577,224 @@
       <span class="logo-item">naraori.com</span>
     </div>
   </div>
+<section class="od-section">
+  <div class="od-header">
+    <p class="od-eyebrow">How it folds</p>
+    <h2 class="od-title">Wanna see how an origami<br/><em>comes to life?</em></h2>
+  </div>
 
+  <div class="od-canvas-wrap">
+    <!--
+      SVG viewBox: 800 wide × 1600 tall.
+      Steps are laid out alternating left/right like real origami diagrams.
+      Replace the image src attributes with your own photos.
+    -->
+    <svg id="od-svg" viewBox="0 0 800 1640" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+
+        <!-- Arrowhead marker — origami diagram style small filled triangle -->
+        <marker id="od-arr" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto">
+          <polygon points="0,0 8,3 0,6" fill="#0A0A0A"/>
+        </marker>
+        <marker id="od-arr-rev" markerWidth="8" markerHeight="8" refX="4" refY="3" orient="auto-start-reverse">
+          <polygon points="0,0 8,3 0,6" fill="#0A0A0A"/>
+        </marker>
+
+        <!-- Circular clip paths for each photo -->
+        <clipPath id="cp1"><circle cx="160" cy="80" r="72"/></clipPath>
+        <clipPath id="cp2"><circle cx="640" cy="80" r="72"/></clipPath>
+        <clipPath id="cp3"><circle cx="160" cy="80" r="72"/></clipPath>
+        <clipPath id="cp4"><circle cx="640" cy="80" r="72"/></clipPath>
+        <clipPath id="cp5"><circle cx="160" cy="80" r="72"/></clipPath>
+        <clipPath id="cp6"><circle cx="640" cy="80" r="72"/></clipPath>
+
+      </defs>
+
+      <!-- ─────────────────────────────────────────
+           STEP 1  —  LEFT  (cx=160, cy=80)
+      ───────────────────────────────────────── -->
+      <g class="od-step-g" id="step-1" transform="translate(0,0)">
+
+        <!-- Fold-line ticks (short horizontal lines above circle — origami diagram style) -->
+        <line class="od-tick" x1="100" y1="20" x2="220" y2="20"/>
+        <line class="od-tick" x1="115" y1="12" x2="115" y2="28"/>
+        <line class="od-tick" x1="205" y1="12" x2="205" y2="28"/>
+
+        <!-- Photo circle -->
+        <circle class="od-photo-ring" cx="160" cy="80" r="72"/>
+        <!-- Replace src with your image. x/y/width/height position within the circle -->
+        <image href="imgs/step1.jpg" x="88" y="8" width="144" height="144" clip-path="url(#cp1)" preserveAspectRatio="xMidYMid slice"/>
+        <!-- Fallback placeholder shown when no image -->
+        <circle cx="160" cy="80" r="72" fill="rgba(0,0,0,0.03)" stroke="none" id="ph1"/>
+        <text x="160" y="75" text-anchor="middle" class="od-label-num" dy="0" fill="#CCCCCC">ADD IMAGE</text>
+        <text x="160" y="90" text-anchor="middle" class="od-label-num" fill="#CCCCCC">step1.jpg</text>
+
+        <!-- Step number + label to the RIGHT of circle -->
+        <text x="258" y="58" class="od-label-num">Step 01</text>
+        <text x="258" y="78" class="od-label-name">Start with the sheet</text>
+        <text x="258" y="96" class="od-label-desc">Lay flat, smooth side up.</text>
+        <text x="258" y="112" class="od-label-desc">Orient to a corner facing you.</text>
+
+      </g>
+
+      <!-- ─────────────────────────────────────────
+           CONNECTOR 1→2  curved path + arrow
+      ───────────────────────────────────────── -->
+      <path id="conn-1" class="od-path"
+        d="M 160 155 C 160 210, 400 230, 640 270"
+        marker-end="url(#od-arr)"/>
+      <!-- Fold direction indicator ticks along the path -->
+      <line class="od-tick" id="tick-c1a" x1="320" y1="215" x2="328" y2="228"/>
+      <line class="od-tick" id="tick-c1b" x1="345" y1="218" x2="353" y2="231"/>
+
+      <!-- ─────────────────────────────────────────
+           STEP 2  —  RIGHT  (cx=640, cy=340)
+      ───────────────────────────────────────── -->
+      <g class="od-step-g" id="step-2" transform="translate(0,260)">
+
+        <line class="od-tick" x1="580" y1="20" x2="700" y2="20"/>
+        <line class="od-tick" x1="595" y1="12" x2="595" y2="28"/>
+        <line class="od-tick" x1="685" y1="12" x2="685" y2="28"/>
+
+        <circle class="od-photo-ring" cx="640" cy="80" r="72"/>
+        <image href="imgs/step2.jpg" x="568" y="8" width="144" height="144" clip-path="url(#cp2)" preserveAspectRatio="xMidYMid slice"/>
+        <circle cx="640" cy="80" r="72" fill="rgba(0,0,0,0.03)" stroke="none"/>
+        <text x="640" y="75" text-anchor="middle" class="od-label-num" fill="#CCCCCC">ADD IMAGE</text>
+        <text x="640" y="90" text-anchor="middle" class="od-label-num" fill="#CCCCCC">step2.jpg</text>
+
+        <!-- Label to the LEFT -->
+        <text x="548" y="58" text-anchor="end" class="od-label-num">Step 02</text>
+        <text x="548" y="78" text-anchor="end" class="od-label-name">First fold</text>
+        <text x="548" y="96" text-anchor="end" class="od-label-desc">Fold corner to corner.</text>
+        <text x="548" y="112" text-anchor="end" class="od-label-desc">Crease firmly, unfold.</text>
+
+      </g>
+
+      <!-- CONNECTOR 2→3 -->
+      <path id="conn-2" class="od-path"
+        d="M 640 415 C 640 470, 400 490, 160 530"
+        marker-end="url(#od-arr)"/>
+      <line class="od-tick" id="tick-c2a" x1="460" y1="475" x2="452" y2="488"/>
+      <line class="od-tick" id="tick-c2b" x1="435" y1="478" x2="427" y2="491"/>
+
+      <!-- ─────────────────────────────────────────
+           STEP 3  —  LEFT  (cy base = 520)
+      ───────────────────────────────────────── -->
+      <g class="od-step-g" id="step-3" transform="translate(0,520)">
+
+        <line class="od-tick" x1="100" y1="20" x2="220" y2="20"/>
+        <line class="od-tick" x1="115" y1="12" x2="115" y2="28"/>
+        <line class="od-tick" x1="205" y1="12" x2="205" y2="28"/>
+
+        <circle class="od-photo-ring" cx="160" cy="80" r="72"/>
+        <image href="imgs/step3.jpg" x="88" y="8" width="144" height="144" clip-path="url(#cp3)" preserveAspectRatio="xMidYMid slice"/>
+        <circle cx="160" cy="80" r="72" fill="rgba(0,0,0,0.03)" stroke="none"/>
+        <text x="160" y="75" text-anchor="middle" class="od-label-num" fill="#CCCCCC">ADD IMAGE</text>
+        <text x="160" y="90" text-anchor="middle" class="od-label-num" fill="#CCCCCC">step3.jpg</text>
+
+        <text x="258" y="58" class="od-label-num">Step 03</text>
+        <text x="258" y="78" class="od-label-name">Valley fold</text>
+        <text x="258" y="96" class="od-label-desc">Fold bottom edge up</text>
+        <text x="258" y="112" class="od-label-desc">to the centre crease.</text>
+
+      </g>
+
+      <!-- CONNECTOR 3→4 -->
+      <path id="conn-3" class="od-path"
+        d="M 160 675 C 160 730, 400 750, 640 790"
+        marker-end="url(#od-arr)"/>
+      <line class="od-tick" id="tick-c3a" x1="320" y1="735" x2="328" y2="748"/>
+      <line class="od-tick" id="tick-c3b" x1="345" y1="738" x2="353" y2="751"/>
+
+      <!-- ─────────────────────────────────────────
+           STEP 4  —  RIGHT  (cy base = 780)
+      ───────────────────────────────────────── -->
+      <g class="od-step-g" id="step-4" transform="translate(0,780)">
+
+        <line class="od-tick" x1="580" y1="20" x2="700" y2="20"/>
+        <line class="od-tick" x1="595" y1="12" x2="595" y2="28"/>
+        <line class="od-tick" x1="685" y1="12" x2="685" y2="28"/>
+
+        <circle class="od-photo-ring" cx="640" cy="80" r="72"/>
+        <image href="imgs/step4.jpg" x="568" y="8" width="144" height="144" clip-path="url(#cp4)" preserveAspectRatio="xMidYMid slice"/>
+        <circle cx="640" cy="80" r="72" fill="rgba(0,0,0,0.03)" stroke="none"/>
+        <text x="640" y="75" text-anchor="middle" class="od-label-num" fill="#CCCCCC">ADD IMAGE</text>
+        <text x="640" y="90" text-anchor="middle" class="od-label-num" fill="#CCCCCC">step4.jpg</text>
+
+        <text x="548" y="58" text-anchor="end" class="od-label-num">Step 04</text>
+        <text x="548" y="78" text-anchor="end" class="od-label-name">Collapse the base</text>
+        <text x="548" y="96" text-anchor="end" class="od-label-desc">Bring all four corners</text>
+        <text x="548" y="112" text-anchor="end" class="od-label-desc">to meet at the centre.</text>
+
+      </g>
+
+      <!-- CONNECTOR 4→5 -->
+      <path id="conn-4" class="od-path"
+        d="M 640 935 C 640 990, 400 1010, 160 1050"
+        marker-end="url(#od-arr)"/>
+      <line class="od-tick" id="tick-c4a" x1="460" y1="995" x2="452" y2="1008"/>
+      <line class="od-tick" id="tick-c4b" x1="435" y1="998" x2="427" y2="1011"/>
+
+      <!-- ─────────────────────────────────────────
+           STEP 5  —  LEFT  (cy base = 1040)
+      ───────────────────────────────────────── -->
+      <g class="od-step-g" id="step-5" transform="translate(0,1040)">
+
+        <line class="od-tick" x1="100" y1="20" x2="220" y2="20"/>
+        <line class="od-tick" x1="115" y1="12" x2="115" y2="28"/>
+        <line class="od-tick" x1="205" y1="12" x2="205" y2="28"/>
+
+        <circle class="od-photo-ring" cx="160" cy="80" r="72"/>
+        <image href="imgs/step5.jpg" x="88" y="8" width="144" height="144" clip-path="url(#cp5)" preserveAspectRatio="xMidYMid slice"/>
+        <circle cx="160" cy="80" r="72" fill="rgba(0,0,0,0.03)" stroke="none"/>
+        <text x="160" y="75" text-anchor="middle" class="od-label-num" fill="#CCCCCC">ADD IMAGE</text>
+        <text x="160" y="90" text-anchor="middle" class="od-label-num" fill="#CCCCCC">step5.jpg</text>
+
+        <text x="258" y="58" class="od-label-num">Step 05</text>
+        <text x="258" y="78" class="od-label-name">Shape and sculpt</text>
+        <text x="258" y="96" class="od-label-desc">Ease curves with fingertips.</text>
+        <text x="258" y="112" class="od-label-desc">Wet-fold where needed.</text>
+
+      </g>
+
+      <!-- CONNECTOR 5→6 -->
+      <path id="conn-5" class="od-path"
+        d="M 160 1195 C 160 1250, 400 1270, 640 1310"
+        marker-end="url(#od-arr)"/>
+      <line class="od-tick" id="tick-c5a" x1="320" y1="1255" x2="328" y2="1268"/>
+      <line class="od-tick" id="tick-c5b" x1="345" y1="1258" x2="353" y2="1271"/>
+
+      <!-- ─────────────────────────────────────────
+           STEP 6  —  RIGHT  (cy base = 1300)  FINAL
+      ───────────────────────────────────────── -->
+      <g class="od-step-g" id="step-6" transform="translate(0,1300)">
+
+        <!-- Double ring for the final step -->
+        <circle cx="640" cy="80" r="78" fill="none" stroke="#0A0A0A" stroke-width="0.8" stroke-dasharray="3 3" opacity="0.3"/>
+        <line class="od-tick" x1="580" y1="20" x2="700" y2="20"/>
+        <line class="od-tick" x1="595" y1="12" x2="595" y2="28"/>
+        <line class="od-tick" x1="685" y1="12" x2="685" y2="28"/>
+
+        <circle class="od-photo-ring" cx="640" cy="80" r="72" stroke-width="2.5"/>
+        <image href="imgs/step6.jpg" x="568" y="8" width="144" height="144" clip-path="url(#cp6)" preserveAspectRatio="xMidYMid slice"/>
+        <circle cx="640" cy="80" r="72" fill="rgba(0,0,0,0.03)" stroke="none"/>
+        <text x="640" y="75" text-anchor="middle" class="od-label-num" fill="#CCCCCC">ADD IMAGE</text>
+        <text x="640" y="90" text-anchor="middle" class="od-label-num" fill="#CCCCCC">step6.jpg</text>
+
+        <text x="548" y="52" text-anchor="end" class="od-label-num">Step 06</text>
+        <text x="548" y="72" text-anchor="end" class="od-label-name">Finished.</text>
+        <text x="548" y="92" text-anchor="end" class="od-label-desc">One uncut sheet.</text>
+        <text x="548" y="108" text-anchor="end" class="od-label-desc">One complete form.</text>
+        <!-- "complete" mark — small circle with cross, standard origami notation -->
+        <circle cx="548" cy="130" r="8" fill="none" stroke="#0A0A0A" stroke-width="1" opacity="0.3"/>
+        <line x1="544" y1="130" x2="552" y2="130" stroke="#0A0A0A" stroke-width="1" opacity="0.3"/>
+        <line x1="548" y1="126" x2="548" y2="134" stroke="#0A0A0A" stroke-width="1" opacity="0.3"/>
+
+      </g>
+
+    </svg>
+  </div>
+</section>
   <!-- ── FOOTER ── -->
   <div class="hr-div"></div>
   <footer>
@@ -498,6 +838,66 @@
 
     lastScrollTop = scrollTop;
   });
+  (function() {
+  var steps    = [1,2,3,4,5,6];
+  var connMap  = { 1:'conn-1', 2:'conn-2', 3:'conn-3', 4:'conn-4', 5:'conn-5' };
+  var tickMap  = {
+    1: ['tick-c1a','tick-c1b'],
+    2: ['tick-c2a','tick-c2b'],
+    3: ['tick-c3a','tick-c3b'],
+    4: ['tick-c4a','tick-c4b'],
+    5: ['tick-c5a','tick-c5b']
+  };
+  var shown = {};
+
+  /* Animate connector path length */
+  function animatePath(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    var len = el.getTotalLength ? el.getTotalLength() : 300;
+    el.style.strokeDasharray = len + ' ' + len;
+    el.style.strokeDashoffset = len;
+    el.style.opacity = 1;
+    el.style.transition = 'stroke-dashoffset 0.75s cubic-bezier(0.4,0,0.2,1) 0.15s';
+    /* Force reflow */
+    el.getBoundingClientRect();
+    el.style.strokeDashoffset = 0;
+  }
+
+  function showTicks(ids) {
+    ids.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) { el.classList.add('show'); }
+    });
+  }
+
+  function check() {
+    var wh = window.innerHeight;
+    steps.forEach(function(n) {
+      if (shown[n]) return;
+      var el = document.getElementById('step-' + n);
+      if (!el) return;
+      var rect = el.getBoundingClientRect();
+      if (rect.top < wh * 0.82) {
+        shown[n] = true;
+        el.classList.add('show');
+        /* Show all ticks inside the step group */
+        el.querySelectorAll('.od-tick').forEach(function(t) { t.classList.add('show'); });
+        /* After a beat, animate the connector coming out of this step */
+        if (connMap[n]) {
+          setTimeout(function() {
+            animatePath(connMap[n]);
+            if (tickMap[n]) showTicks(tickMap[n]);
+          }, 350);
+        }
+      }
+    });
+  }
+
+  window.addEventListener('scroll', check, { passive: true });
+  /* Small delay on load so SVG has rendered and getTotalLength works */
+  setTimeout(check, 100);
+})();
   </script>
 
 </body>
