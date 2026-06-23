@@ -14,13 +14,13 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      color: #0A0A0A;
+      color: #F5F5F5;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
-      background-color: #FFFFFF;
+      background-color: #0A0A0A;
       background-image:
-        linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
       background-size: 48px 48px;
       background-attachment: scroll; 
     }
@@ -33,10 +33,10 @@
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.88);
+      background: rgba(10,10,10,0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .nav-inner {
       max-width: 1152px;
@@ -50,7 +50,7 @@
     .nav-logo {
       font-size: 0.8rem;
       font-weight: 700;
-      color: #0A0A0A;
+      color: #F5F5F5;
       letter-spacing: 0.06em;
       white-space: nowrap;
       text-decoration: none;
@@ -63,37 +63,37 @@
     .nav-link {
       font-size: 0.75rem;
       font-weight: 400;
-      color: #707070;
+      color: #9A9A9A;
       letter-spacing: 0.04em;
       transition: color 0.2s;
       text-decoration: none;
     }
-    .nav-link:hover { color: #0A0A0A; }
+    .nav-link:hover { color: #FFFFFF; }
 
     .btn-metal {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.72rem;
       font-weight: 600;
       letter-spacing: 0.06em;
-      color: #FFFFFF;
-      background: #0A0A0A;
-      border: 1px solid #0A0A0A;
+      color: #0A0A0A;
+      background: #F5F5F5;
+      border: 1px solid #F5F5F5;
       padding: 10px 22px;
       cursor: pointer;
       transition: background 0.2s;
       white-space: nowrap;
       border-radius: 0;
     }
-    .btn-metal:hover { background: #2A2A2A; }
+    .btn-metal:hover { background: #CFCFCF; }
 
     .btn-ghost {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 0.08em;
-      color: #0A0A0A;
+      color: #F5F5F5;
       background: transparent;
-      border: 1px solid rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.22);
       padding: 14px 32px;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s;
@@ -101,44 +101,27 @@
       border-radius: 0;
     }
     .btn-ghost:hover {
-      background: rgba(0,0,0,0.04);
-      border-color: rgba(0,0,0,0.45);
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.45);
     }
-
-    .btn-about {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: #0A0A0A;
-      background: transparent;
-      border: 1px solid rgba(0,0,0,0.18);
-      border-left: none;
-      padding: 14px 32px;
-      cursor: pointer;
-      transition: background 0.2s;
-      white-space: nowrap;
-      border-radius: 0;
-    }
-    .btn-about:hover { background: rgba(0,0,0,0.04); }
 
     .trust-pill {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
       padding: 6px 16px 6px 10px;
       font-size: 0.7rem;
       font-weight: 500;
-      color: #606060;
+      color: #B0B0B0;
       letter-spacing: 0.06em;
       border-radius: 0;
     }
     .trust-dot {
       width: 6px; height: 6px;
       border-radius: 50%;
-      background: #303030;
+      background: #D0D0D0;
     }
 
     /* ── HERO ── */
@@ -176,13 +159,13 @@
       opacity: 0;
       -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0.0) 95%);
       mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0.0) 95%);
-      filter: brightness(0.95) contrast(1.05) grayscale(1);
+      filter: brightness(1.05) contrast(1.05) grayscale(1);
       animation: warriorFade 1.6s cubic-bezier(0.23,1,0.32,1) both;
       animation-delay: 0.5s;
     }
     @keyframes warriorFade {
       from { opacity: 0; transform: translateY(20px) scale(0.97); }
-      to   { opacity: 0.75; transform: translateY(0) scale(1); }
+      to   { opacity: 0.8; transform: translateY(0) scale(1); }
     }
 
     @media(max-width: 768px) {
@@ -216,11 +199,11 @@
       font-weight: 800;
       line-height: 1.0;
       letter-spacing: -0.025em;
-      color: #0A0A0A;
+      color: #F5F5F5;
       margin-bottom: 24px;
     }
     .hero-title span.metal {
-      background: linear-gradient(135deg, #0A0A0A 0%, #606060 50%, #0A0A0A 100%);
+      background: linear-gradient(135deg, #FFFFFF 0%, #888888 50%, #FFFFFF 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -228,37 +211,12 @@
     .hero-sub {
       font-size: 0.85rem;
       font-weight: 300;
-      color: #707070;
+      color: #9A9A9A;
       line-height: 1.8;
       letter-spacing: 0.02em;
       max-width: 420px;
       margin-bottom: 40px;
     }
-
-    /* ── LOGO STRIP ── */
-    .logo-strip {
-      border-top: 1px solid rgba(0,0,0,0.07);
-      border-bottom: 1px solid rgba(0,0,0,0.07);
-      padding: 32px 24px;
-    }
-    .logo-strip-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 40px 64px;
-    }
-    .logo-item {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.18);
-      transition: color 0.2s;
-    }
-    .logo-item:hover { color: rgba(0,0,0,0.5); }
 
     /* ── PAGE LOAD ANIMATIONS ── */
     @keyframes fadeUp {
@@ -269,29 +227,38 @@
     .fu1 { animation-delay: 0.05s; }
     .fu2 { animation-delay: 0.2s; }
 
-    .hr-div { width: 100%; height: 1px; background: rgba(0,0,0,0.07); }
-
-    /* Footer */
-    footer {
-      padding: 40px;
-      max-width: 1152px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-    @media(min-width:640px) {
-      footer { flex-direction: row; align-items: center; justify-content: space-between; }
-      .nav-links { display: flex; }
-    }
-    @media(max-width:640px) {
-      .nav-links { display: none; }
+    /* ── SECTION SEPARATORS ── */
+    /* Each major section gets a top border and a subtle background shift */
+    .section-divider {
+      width: 100%;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 10;
     }
 
-    /* Masterpiece Section */
+    /* Alternating section backgrounds for visual rhythm */
+    .section-white {
+      background-color: #0A0A0A;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .section-off {
+      background-color: #141414;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .section-dark {
+      background-color: #000000;
+    }
+
+    /* ── MASTERPIECE SECTION ── */
     .masterpiece-section {
       text-align: center;
-      padding: 80px 24px; 
+      padding: 120px 24px;
       display: flex;
       flex-direction: column;
       align-items: center; 
@@ -300,7 +267,7 @@
     .masterpiece-text {
       font-size: clamp(1.8rem, 5vw, 3rem); 
       font-weight: 500; 
-      color: #0A0A0A;
+      color: #F5F5F5;
       line-height: 1.3;
       margin-bottom: 32px; 
     }
@@ -322,7 +289,6 @@
     .masterpiece-section .mp-word:nth-of-type(6) { transition-delay: 0.20s; }
     .masterpiece-section .mp-word:nth-of-type(7) { transition-delay: 0.24s; }
     .masterpiece-section .mp-word:nth-of-type(8) { transition-delay: 0.28s; }
-    .masterpiece-section .btn-mp { transition-delay: 0.40s; }
 
     /* ── SCROLL ANIMATED SECTIONS ── */
     .od-section-wrapper {
@@ -361,7 +327,7 @@
       justify-content: center;
     }
 
-    /* ── BOUNDED INTRO PANEL DESIGN ── */
+    /* ── INTRO PANEL ── */
     #panel-intro {
       display: flex;
       align-items: center;
@@ -381,14 +347,14 @@
       font-weight: 700;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #BBBBBB;
+      color: #777777;
       margin-bottom: 14px;
     }
     .od-title {
       font-size: clamp(1.6rem, 4vw, 2.6rem);
       font-weight: 800;
       letter-spacing: -0.025em;
-      color: #0A0A0A;
+      color: #F5F5F5;
       line-height: 1.3;
     }
     .od-title .segment-2 {
@@ -400,7 +366,7 @@
       transition: opacity 0.2s ease-out, transform 0.2s ease-out;
     }
 
-    /* ── DESKTOP PANEL LAYOUT ── */
+    /* ── PANEL LAYOUT ── */
     .od-panel-container {
       max-width: 1152px;
       width: 100%;
@@ -421,28 +387,28 @@
       font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.15em;
-      color: #BBBBBB;
+      color: #777777;
       margin-bottom: 16px;
     }
     .od-huge-title {
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       font-weight: 800;
       letter-spacing: -0.020em;
-      color: #0A0A0A;
+      color: #F5F5F5;
       margin-bottom: 20px;
       line-height: 1.15;
     }
     .od-huge-desc {
       font-size: 0.95rem;
       font-weight: 400;
-      color: #555555;
+      color: #AAAAAA;
       line-height: 1.6;
       margin-bottom: 12px;
     }
     .od-huge-desc-sub {
       font-size: 0.75rem;
       font-weight: 500;
-      color: #999999;
+      color: #777777;
       letter-spacing: 0.02em;
     }
     .od-visual-column {
@@ -451,7 +417,7 @@
       justify-content: center;
     }
 
-    /* ── BLUEPRINT DESIGN LANGUAGE ── */
+    /* ── BLUEPRINT CIRCLE ── */
     .od-circle-blueprint-wrapper {
       position: relative;
       width: min(440px, 80vw);
@@ -465,9 +431,9 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      border: 1px solid #0A0A0A;
+      border: 1px solid #F5F5F5;
       overflow: hidden;
-      background: #FFFFFF;
+      background: #0A0A0A;
       z-index: 5;
     }
     .od-panel-img {
@@ -475,47 +441,28 @@
       height: 100%;
       object-fit: cover;
     }
-    .od-img-fallback {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.02);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 1;
-    }
-    .lbl-1 { font-size: 0.55rem; font-weight: 700; color: #CCCCCC; letter-spacing: 0.12em; margin-bottom: 4px; }
-    .lbl-2 { font-size: 0.55rem; font-weight: 500; color: #DDDDDD; letter-spacing: 0.05em; }
-
     .od-crosshair-h {
       position: absolute;
       top: 50%; left: -30px; right: -30px;
-      height: 1px; background: rgba(0,0,0,0.08);
+      height: 1px; background: rgba(255,255,255,0.12);
       z-index: 2;
     }
     .od-crosshair-v {
       position: absolute;
       left: 50%; top: -30px; bottom: -30px;
-      width: 1px; background: rgba(0,0,0,0.08);
+      width: 1px; background: rgba(255,255,255,0.12);
       z-index: 2;
     }
     .od-outer-vector-ring {
       position: absolute;
       width: 114%; height: 114%;
       border-radius: 50%;
-      border: 1px dashed rgba(0,0,0,0.12);
+      border: 1px dashed rgba(255,255,255,0.16);
       z-index: 2;
     }
 
-    /* ── MOBILE OVERRIDES: same sticky animation, single-column layout ── */
     @media(max-width: 768px) {
-      /* Intro container text sizing */
-      .od-intro-container {
-        padding: 0 24px;
-      }
-
-      /* Step panels: stack image above text, full-height centered */
+      .od-intro-container { padding: 0 24px; }
       .od-panel-container {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
@@ -523,49 +470,620 @@
         padding: 0 20px;
         align-items: center;
       }
-
-      /* On mobile, put visual column first (top), text below */
-      .od-visual-column {
-        order: -1;
-      }
-
-      /* Smaller circle for phone screens */
+      .od-visual-column { order: -1; }
       .od-circle-blueprint-wrapper {
         width: min(240px, 64vw);
         height: min(240px, 64vw);
       }
-
-      /* Tighten crosshairs for smaller circle */
       .od-crosshair-h { left: -16px; right: -16px; }
       .od-crosshair-v { top: -16px; bottom: -16px; }
-
-      /* Text column: center-aligned on mobile */
-      .od-text-column {
-        text-align: center;
-      }
-
-      /* Smaller type on mobile */
-      .od-huge-title {
-        font-size: clamp(1.3rem, 5vw, 1.8rem);
-        margin-bottom: 12px;
-      }
-      .od-huge-desc {
-        font-size: 0.82rem;
-        margin-bottom: 8px;
-      }
-      .od-huge-desc-sub {
-        font-size: 0.68rem;
-      }
-      .od-meta-num {
-        font-size: 0.58rem;
-        margin-bottom: 10px;
-      }
+      .od-text-column { text-align: center; }
+      .od-huge-title { font-size: clamp(1.3rem, 5vw, 1.8rem); margin-bottom: 12px; }
+      .od-huge-desc { font-size: 0.82rem; margin-bottom: 8px; }
+      .od-huge-desc-sub { font-size: 0.68rem; }
+      .od-meta-num { font-size: 0.58rem; margin-bottom: 10px; }
     }
 
-    /* Keep nav links hidden on small screens */
     @media(max-width: 640px) {
       .nav-links { display: none; }
     }
+
+    /* ── SERVICES CARDS ── */
+    .services-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 1152px;
+      margin: 0 auto;
+      padding: 120px 40px;
+    }
+    .service-card {
+      position: relative;
+      background: #141414;
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 64px 56px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+      min-width: 0;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.55);
+    }
+    .card-texture {
+      position: absolute;
+      inset: 0;
+      opacity: 0.6;
+      background-image: 
+        linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.03) 49%, rgba(255,255,255,0.03) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(255,255,255,0.03) 49%, rgba(255,255,255,0.03) 51%, transparent 52%);
+      background-size: 80px 80px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .card-content {
+      position: relative;
+      z-index: 1;
+    }
+    .service-eyebrow {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #888888;
+      margin-bottom: 24px;
+    }
+    .service-title {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: #F5F5F5;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .service-desc {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: #AAAAAA;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+    .btn-fold {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background: #F5F5F5;
+      color: #0A0A0A;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      position: relative;
+      transition: all 0.4s ease;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-fold svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-fold::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 0 16px 16px 0;
+      border-color: transparent #141414 transparent transparent; 
+      transition: border-width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-fold:hover { background: #CFCFCF; padding-right: 28px; }
+    .btn-fold:hover::after { border-width: 0 24px 24px 0; }
+    .btn-fold:hover svg { transform: translateX(4px); }
+
+    /* On dark card bg, the notch needs to match */
+    .service-card-dark .btn-fold::after {
+      border-color: transparent #0A0A0A transparent transparent;
+    }
+
+    @media(max-width: 900px) {
+      .services-split { 
+        grid-template-columns: 1fr; 
+        padding: 80px 24px;
+      }
+      .service-card { padding: 48px 32px; }
+    }
+
+    /* ── ABOUT SECTION ── */
+    .about-section {
+      padding: 140px 40px;
+      max-width: 1152px;
+      margin: 0 auto;
+    }
+    .about-container {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); 
+      gap: 100px;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+    }
+    .about-frame {
+      position: relative;
+      padding: 16px;
+      background: rgba(20,20,20,0.8);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      display: flex;
+      overflow: hidden;
+    }
+    .frame-corner {
+      position: absolute;
+      width: 16px; height: 16px;
+      border: 1.5px solid #F5F5F5;
+      z-index: 2;
+    }
+    .frame-corner.tl { top: -6px; left: -6px; border-right: none; border-bottom: none; }
+    .frame-corner.br { bottom: -6px; right: -6px; border-left: none; border-top: none; }
+    .about-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      background-color: rgba(255,255,255,0.04);
+      filter: grayscale(100%) contrast(1.1); 
+      transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .about-frame:hover .about-img { filter: grayscale(0%) contrast(1); }
+    .about-meta-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: #888888;
+      text-transform: uppercase;
+    }
+    .about-eyebrow {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #888888;
+      margin-bottom: 12px;
+    }
+    .about-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      color: #F5F5F5;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .about-subtitle {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: #777777;
+      margin-bottom: 40px;
+    }
+    .about-content p {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #AAAAAA;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .about-content .highlight-block {
+      padding: 24px 32px;
+      background: rgba(255,255,255,0.03);
+      border-left: 2px solid #F5F5F5;
+      margin: 36px 0;
+    }
+    .about-content .highlight-block p { margin-bottom: 0; color: #F5F5F5; font-weight: 500; }
+    @media(max-width: 900px) {
+      .about-container { grid-template-columns: 1fr; gap: 60px; }
+      .about-visual { max-width: 400px; margin: 0 auto; }
+      .about-section { padding: 80px 24px; }
+      .about-content .highlight-block { padding: 20px 24px; }
+    }
+
+    /* ── GALLERY INTRO HEADER ── */
+    .gallery-intro {
+      max-width: 1152px;
+      margin: 0 auto;
+      padding: 100px 40px 60px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 60px;
+    }
+    .gallery-intro-left { flex: 1; }
+    .gallery-intro-right { flex: 1; max-width: 480px; }
+    .gallery-eyebrow {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #888888;
+      margin-bottom: 16px;
+    }
+    .gallery-main-title {
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      font-weight: 800;
+      color: #F5F5F5;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0;
+    }
+    .gallery-main-desc {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: #AAAAAA;
+      line-height: 1.8;
+      margin-bottom: 6px;
+    }
+    @media(max-width: 900px) {
+      .gallery-intro {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        padding: 60px 24px 40px 24px;
+      }
+      .gallery-intro-right { max-width: 100%; }
+    }
+
+    /* ── GALLERY EDITORIAL ── */
+    .gallery-editorial {
+      width: 100%;
+      position: relative;
+      background: transparent;
+    }
+
+    /* Each gallery item */
+    .gallery-item {
+      min-height: 100vh;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px;
+      display: grid;
+      align-items: center;
+      gap: 60px;
+      /* Initial hidden state */
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Exit transition (fading out as you scroll away) */
+    .gallery-item.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* When scrolled past, fade back out */
+    .gallery-item.was-seen {
+      opacity: 0;
+      transform: translateY(-30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .layout-left { grid-template-columns: 1fr 1fr; }
+    .layout-right { grid-template-columns: 1fr 1fr; }
+    .layout-wide { 
+      grid-template-columns: 1fr; 
+      text-align: center; 
+      justify-content: center;
+    }
+    .layout-wide .gallery-visual { max-width: 900px; margin: 0 auto; }
+    .layout-wide .gallery-text { max-width: 600px; margin: 0 auto; }
+
+    .gallery-meta {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      color: #888888;
+      margin-bottom: 16px;
+    }
+    .gallery-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      color: #F5F5F5;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .gallery-desc {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #AAAAAA;
+      line-height: 1.8;
+    }
+
+    /* No border, no bg — just the transparent PNG floating */
+    .floating-origami {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0px 40px 50px rgba(0,0,0,0.6));
+      transition: transform 0.6s ease, filter 0.6s ease;
+    }
+    .gallery-item:hover .floating-origami {
+      transform: scale(1.02) translateY(-10px);
+      filter: drop-shadow(0px 60px 70px rgba(0,0,0,0.7));
+    }
+
+    /* Thin dividing lines between gallery items */
+    .gallery-item-divider {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.09);
+    }
+
+    @media(max-width: 900px) {
+      .gallery-item {
+        min-height: auto;
+        grid-template-columns: 1fr !important;
+        text-align: center;
+        padding: 80px 24px;
+      }
+      .layout-right .gallery-visual { order: -1; }
+    }
+
+    /* ── WORD SPLIT ANIMATION ── */
+    .split-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .split-text.visible .split-word {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      padding: 180px 40px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle paper-fold geometric lines behind the CTA text */
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(700px, 90vw);
+      height: min(700px, 90vw);
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(500px, 70vw);
+      height: min(500px, 70vw);
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
+
+    .cta-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 28px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-headline {
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .cta-headline .cta-em {
+      font-weight: 200;
+      font-style: italic;
+    }
+
+    .cta-subline {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.04em;
+      line-height: 1.8;
+      margin-bottom: 64px;
+      max-width: 500px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-buttons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Primary CTA: white on dark */
+    .btn-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 40px;
+      background: #FFFFFF;
+      color: #0A0A0A;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      position: relative;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid #FFFFFF;
+    }
+    .btn-cta-primary::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 0; height: 0;
+      border-style: solid;
+      border-width: 0 14px 14px 0;
+      border-color: transparent #000000 transparent transparent;
+      transition: border-width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-cta-primary svg {
+      width: 14px; height: 14px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      transition: transform 0.35s ease;
+    }
+    .btn-cta-primary:hover {
+      background: rgba(255,255,255,0.92);
+      padding-right: 36px;
+    }
+    .btn-cta-primary:hover::after { border-width: 0 22px 22px 0; }
+    .btn-cta-primary:hover svg { transform: translateX(4px); }
+
+    /* Secondary CTA: ghost on dark */
+    .btn-cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 40px;
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.35s ease;
+    }
+    .btn-cta-ghost svg {
+      width: 14px; height: 14px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      transition: transform 0.35s ease;
+    }
+    .btn-cta-ghost:hover {
+      color: #FFFFFF;
+      border-color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.06);
+    }
+    .btn-cta-ghost:hover svg { transform: translateX(3px); }
+
+    /* Animated diagonal crease marks in CTA */
+    .cta-crease {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.06;
+    }
+    .cta-crease-1 {
+      width: 1px;
+      height: 60%;
+      background: #FFFFFF;
+      top: 20%;
+      left: 20%;
+      transform: rotate(45deg);
+    }
+    .cta-crease-2 {
+      width: 1px;
+      height: 40%;
+      background: #FFFFFF;
+      top: 30%;
+      right: 22%;
+      transform: rotate(-45deg);
+    }
+    .cta-crease-3 {
+      width: 35%;
+      height: 1px;
+      background: #FFFFFF;
+      bottom: 25%;
+      left: 32%;
+    }
+
+    @media(max-width: 640px) {
+      .cta-section { padding: 120px 24px; }
+      .cta-buttons { flex-direction: column; width: 100%; }
+      .btn-cta-primary, .btn-cta-ghost { width: 100%; justify-content: center; }
+    }
+
+    /* Footer */
+    .footer-wrapper {
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    footer {
+      padding: 40px;
+      max-width: 1152px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    @media(min-width:640px) {
+      footer { flex-direction: row; align-items: center; justify-content: space-between; }
+      .nav-links { display: flex; }
+    }
+    @media(max-width:640px) {
+      .nav-links { display: none; }
+    }
+
+    /* hr-div kept for compatibility */
+    .hr-div { width: 100%; height: 1px; background: rgba(255,255,255,0.09); }
   </style>
 </head>
 <body>
@@ -575,14 +1093,14 @@
       <a href="#" class="nav-logo">Nara Origami Originals</a>
       <div class="nav-links">
         <a href="Catalog/index.html" class="nav-link">Papers</a>
-        <a href="#" class="nav-link">About</a>
-        <a href="https://naraori.com" target="_blank" rel="noopener" class="nav-link">naraori.com</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#showcase" class="nav-link">Gallery</a>
       </div>
-      <a href="Catalog/index.html" class="btn-metal mp-word btn-mp">Buy Papers &rarr;</a>
     </div>
   </nav>
 
-  <section class="hero-section grid-bg">
+  <!-- ── HERO ── -->
+  <section class="hero-section section-white">
     <div class="hero-left">
       <div class="trust-pill fu fu1" style="margin-bottom:36px;">
         <span class="trust-dot"></span>
@@ -597,35 +1115,135 @@
     </div>
   </section>
 
-  <section class="masterpiece-section" id="mp-section">
+  <!-- ── MASTERPIECE ── -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
+  <section class="masterpiece-section section-off" id="mp-section">
     <h2 class="masterpiece-text">
-      <span class="mp-word">Start</span> 
-      <span class="mp-word">your</span> 
-      <span class="mp-word">next</span> 
-      <span class="mp-word">masterpiece</span><br/>
-      <span class="mp-word">with</span> 
-      <span class="mp-word">the</span> 
-      <span class="mp-word">right</span> 
-      <span class="mp-word">paper.</span>
+      <span class="mp-word">Start</span>&nbsp;<span class="mp-word">your</span>&nbsp;<span class="mp-word">next</span>&nbsp;<span class="mp-word">masterpiece</span><br/>
+      <span class="mp-word">with</span>&nbsp;<span class="mp-word">the</span>&nbsp;<span class="mp-word">right</span>&nbsp;<span class="mp-word">paper.</span>
     </h2>
-   <a href="Catalog/index.html" class="btn-metal mp-word btn-mp">Buy Papers &rarr;</a>
   </section>
 
-  <div class="logo-strip">
-    <div class="logo-strip-inner">
-      <span class="logo-item">Papers</span>
-      <span class="logo-item">Kits</span>
-      <span class="logo-item">Originals</span>
-      <span class="logo-item">Exhibition</span>
-      <span class="logo-item">naraori.com</span>
-    </div>
+  <!-- ── ABOUT ── -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
+  <div class="section-white">
+    <section class="about-section" id="about">
+      <div class="about-container">
+        <div class="about-visual">
+          <div class="about-frame fu">
+            <div class="frame-corner tl"></div>
+            <div class="frame-corner br"></div>
+            <img src="imgs/your-photo.jpg" alt="Abhijeet S. Vashistha - Nara Origami" class="about-img">
+          </div>
+          <div class="about-meta-tag fu" style="animation-delay: 0.2s;">ID: NARA // EST. INDIA</div>
+        </div>
+        <div class="about-text">
+          <span class="about-eyebrow fu">The Artist</span>
+          <h2 class="about-title split-text">Abhijeet S. Vashistha</h2>
+          <span class="about-subtitle fu" style="animation-delay: 0.2s;">[ NARA ]</span>
+          <div class="about-content">
+            <p class="split-text">I am an origami artist from India. Through Nara Origami Originals, I create original paper sculptures, undertake commissioned projects, and collaborate with brands and organizations. My work uses origami as a medium to share stories, culture, and values through paper.</p>
+            <div class="highlight-block fu" style="animation-delay: 0.4s;">
+              <p class="split-text">I primarily work with the box pleating design method and specialize in creating complex sculptures from a single sheet of paper. My preferred material is double tissue paper, which I produce by hand for my own work and also make available to other origami artists.</p>
+            </div>
+            <p class="split-text">I am also the administrator and developer of the Society of Indian Origami Artists (SIOA), where I work to support artists, promote origami, and help build a stronger origami community in India.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <div class="od-section-wrapper">
+  <!-- ── GALLERY ── -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
+  <div class="section-off">
+    <section class="gallery-editorial" id="showcase">
+      <div class="gallery-intro">
+        <div class="gallery-intro-left">
+          <span class="gallery-eyebrow fu">The Collection</span>
+          <h2 class="gallery-main-title split-text">Gallery</h2>
+        </div>
+        <div class="gallery-intro-right">
+          <p class="gallery-main-desc fu" style="animation-delay: 0.4s;">Each piece begins as a single sheet of paper and becomes a story, a character, or an idea brought to life through origami.</p>
+        </div>
+      </div>
+
+      <div class="gallery-item layout-left">
+        <div class="gallery-visual">
+          <img src="imgs/tall-model.png" alt="Tall Origami Model" class="floating-origami">
+        </div>
+        <div class="gallery-text">
+          <span class="gallery-meta fu">01 // BOX PLEATING</span>
+          <h3 class="gallery-title split-text">The Sentinel</h3>
+          <p class="gallery-desc fu" style="animation-delay: 0.4s;">Folded from a single 150cm sheet of double tissue paper. The structural tension is held entirely without adhesives.</p>
+        </div>
+      </div>
+
+      <div class="gallery-item-divider"></div>
+
+      <div class="gallery-item layout-wide">
+        <div class="gallery-visual">
+          <img src="imgs/wide-model.png" alt="Wide Origami Model" class="floating-origami">
+        </div>
+        <div class="gallery-text">
+          <span class="gallery-meta fu">02 // 22.5 DEGREE</span>
+          <h3 class="gallery-title split-text">Eastern Dragon</h3>
+          <p class="gallery-desc fu" style="animation-delay: 0.4s;">A sprawling horizontal composition focusing on scale details and dynamic curvature.</p>
+        </div>
+      </div>
+
+      <div class="gallery-item-divider"></div>
+
+      <div class="gallery-item layout-right">
+        <div class="gallery-text">
+          <span class="gallery-meta fu">03 // WET FOLDING</span>
+          <h3 class="gallery-title split-text">Crescent Form</h3>
+          <p class="gallery-desc fu" style="animation-delay: 0.4s;">Utilizing heavy watercolor paper and water to sculpt soft, organic curves that dry into rigid structures.</p>
+        </div>
+        <div class="gallery-visual">
+          <img src="imgs/tall-model-2.png" alt="Curved Origami Model" class="floating-origami">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── SERVICES ── -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
+  <div class="section-white">
+    <section class="services-split" id="services">
+      <div class="service-card">
+        <div class="card-texture"></div>
+        <div class="card-content">
+          <span class="service-eyebrow fu">01 // For Collectors</span>
+          <h3 class="service-title split-text">Private Acquisitions</h3>
+          <p class="service-desc split-text">Secure a one-of-a-kind fold for personal collections or residential spaces. Each piece is crafted using archival-grade materials designed for structural longevity.</p>
+          <a href="mailto:naraorigami.official@gmail.com?subject=Private%20Commission%20Enquiry" class="btn-fold fu" style="animation-delay: 0.6s;">
+            <span>Begin a private commission</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="card-texture"></div>
+        <div class="card-content">
+          <span class="service-eyebrow fu">02 // For Brands</span>
+          <h3 class="service-title split-text">Brand Collaborations</h3>
+          <p class="service-desc split-text">Partner to develop custom origami works for commercial displays, editorial features, or tailored packaging solutions.</p>
+          <a href="mailto:naraorigami.official@gmail.com?subject=Brand%20Collaboration%20Enquiry" class="btn-fold fu" style="animation-delay: 0.8s;">
+            <span>Propose a collaboration</span>
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ── HOW IT FOLDS (SCROLL SECTION) ── -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
+  <div class="section-off od-section-wrapper">
     <section class="od-fullscreen-section">
       <div class="od-scroll-track">
         <div class="od-sticky-window">
-    
+
           <div class="od-step-panel" id="panel-intro">
             <div class="od-intro-container">
               <p class="od-eyebrow">How it folds</p>
@@ -641,7 +1259,7 @@
               <div class="od-text-column">
                 <span class="od-meta-num">INDEX // 01</span>
                 <h2 class="od-huge-title">Grid and Pre-creasing</h2>
-                <p class="od-huge-desc">After preprating the paper, We make Grid and Pre-Crease the fold.</p>
+                <p class="od-huge-desc">After preparing the paper, we make a grid and pre-crease the fold.</p>
                 <p class="od-huge-desc-sub">150cm, White double tracing paper was used to fold this</p>
               </div>
               <div class="od-visual-column">
@@ -649,7 +1267,7 @@
                   <div class="od-crosshair-h"></div>
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
-                    <img src="imgs/s1.jpg" alt="Step 1 Deployment" class="od-panel-img">
+                    <img src="imgs/s1.jpg" alt="Step 1 - Grid and Pre-creasing" class="od-panel-img">
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -662,7 +1280,7 @@
               <div class="od-text-column">
                 <span class="od-meta-num">INDEX // 02</span>
                 <h2 class="od-huge-title">Collapse</h2>
-                <p class="od-huge-desc">Then we collapse high priority structure like scales</p>
+                <p class="od-huge-desc">Then we collapse high priority structures like scales.</p>
                 <p class="od-huge-desc-sub">Scales or other high priority structures are made first</p>
               </div>
               <div class="od-visual-column">
@@ -670,7 +1288,7 @@
                   <div class="od-crosshair-h"></div>
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
-                    <img src="imgs/s2.jpg" alt="Step 2 Diagonal Crease" class="od-panel-img">
+                    <img src="imgs/s2.jpg" alt="Step 2 - Collapse" class="od-panel-img">
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -683,15 +1301,15 @@
               <div class="od-text-column">
                 <span class="od-meta-num">INDEX // 03</span>
                 <h2 class="od-huge-title">Collapse Complete</h2>
-                <p class="od-huge-desc">After we follow every line in crease pattern, we start with pre-shaping</p>
-                <p class="od-huge-desc-sub">End of collapse ends whatever we can get from a Crease pattern, now shaping depends our own creativity</p>
+                <p class="od-huge-desc">After following every line in the crease pattern, we start with pre-shaping.</p>
+                <p class="od-huge-desc-sub">End of collapse ends whatever we can get from a crease pattern — shaping depends on our own creativity</p>
               </div>
               <div class="od-visual-column">
                 <div class="od-circle-blueprint-wrapper">
                   <div class="od-crosshair-h"></div>
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
-                    <img src="imgs/s3.jpg" alt="Step 3 Valley Allocation" class="od-panel-img">
+                    <img src="imgs/s3.jpg" alt="Step 3 - Collapse Complete" class="od-panel-img">
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -704,15 +1322,15 @@
               <div class="od-text-column">
                 <span class="od-meta-num">INDEX // 04</span>
                 <h2 class="od-huge-title">Pre-Shaping</h2>
-                <p class="od-huge-desc">Here we add small details before we start with shaping</p>
-                <p class="od-huge-desc-sub">no mc/glue/super glue is used in pre-shaping</p>
+                <p class="od-huge-desc">Here we add small details before we start with shaping.</p>
+                <p class="od-huge-desc-sub">No MC / glue / super glue is used in pre-shaping</p>
               </div>
               <div class="od-visual-column">
                 <div class="od-circle-blueprint-wrapper">
                   <div class="od-crosshair-h"></div>
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
-                    <img src="imgs/s4.jpg" alt="Step 4 Collapse Base" class="od-panel-img">
+                    <img src="imgs/s4.jpg" alt="Step 4 - Pre-Shaping" class="od-panel-img">
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -725,15 +1343,15 @@
               <div class="od-text-column">
                 <span class="od-meta-num">INDEX // 05</span>
                 <h2 class="od-huge-title">Shaping</h2>
-                <p class="od-huge-desc">Hardest and most time consuming part begins now</p>
-                <p class="od-huge-desc-sub">This is where transformation happens</p>
+                <p class="od-huge-desc">The hardest and most time-consuming part begins now.</p>
+                <p class="od-huge-desc-sub">This is where the transformation happens</p>
               </div>
               <div class="od-visual-column">
                 <div class="od-circle-blueprint-wrapper">
                   <div class="od-crosshair-h"></div>
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
-                    <img src="imgs/s5.jpg" alt="Step 5 Sculpting" class="od-panel-img">
+                    <img src="imgs/s5.jpg" alt="Step 5 - Shaping" class="od-panel-img">
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -746,7 +1364,7 @@
               <div class="od-text-column">
                 <span class="od-meta-num">INDEX // 06</span>
                 <h2 class="od-huge-title">Finished Fold</h2>
-                <p class="od-huge-desc">After the rigorous shaping, the model is completed</p>
+                <p class="od-huge-desc">After rigorous shaping, the model is completed.</p>
                 <p class="od-huge-desc-sub">Shaping alone took more than 24 hours in this fold</p>
               </div>
               <div class="od-visual-column">
@@ -754,7 +1372,7 @@
                   <div class="od-crosshair-h"></div>
                   <div class="od-crosshair-v"></div>
                   <div class="od-massive-circle">
-                    <img src="imgs/s6.jpg" alt="Step 6 Final Form" class="od-panel-img">
+                    <img src="imgs/s6.jpg" alt="Step 6 - Finished Fold" class="od-panel-img">
                   </div>
                   <div class="od-outer-vector-ring"></div>
                 </div>
@@ -767,32 +1385,65 @@
     </section>
   </div>
 
-  <div class="hr-div"></div>
-  <footer>
-    <div>
-      <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#AAAAAA;">
-        Nara Origami Originals
-      </p>
-      <a href="https://naraori.com" target="_blank" rel="noopener" style="font-size:0.65rem;font-weight:400;color:#CCCCCC;letter-spacing:0.08em;text-decoration:none;">naraori.com</a>
-    </div>
-    <div style="display:flex;gap:32px;">
-      <a href="#" class="nav-link" style="font-size:0.65rem;">Papers</a>
-      <a href="#" class="nav-link" style="font-size:0.65rem;">About</a>
-    </div>
-    <p style="font-size:0.62rem;color:#CCCCCC;letter-spacing:0.06em;">
-      2025 Nara Origami Originals. All rights reserved.
+  <!-- ── CTA ── -->
+  <div style="border-top: 1px solid rgba(255,255,255,0.15);"></div>
+  <section class="cta-section section-dark" id="contact">
+    <!-- Subtle crease lines -->
+    <div class="cta-crease cta-crease-1"></div>
+    <div class="cta-crease cta-crease-2"></div>
+    <div class="cta-crease cta-crease-3"></div>
+
+    <p class="cta-eyebrow">Let's work together</p>
+    <h2 class="cta-headline">
+      Let's fold the <span class="cta-em">impossible,</span><br/>together.
+    </h2>
+    <p class="cta-subline">
+      Whether it's a private commission, a brand installation, or simply a conversation about paper — reach out. Every extraordinary thing starts with a single fold.
     </p>
-  </footer>
+    <div class="cta-buttons">
+      <a href="mailto:naraorigami.official@gmail.com?subject=Commission%20Enquiry" class="btn-cta-primary">
+        <span>Start a commission</span>
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="mailto:naraorigami.official@gmail.com?subject=Hello%20from%20Nara%20Originals" class="btn-cta-ghost">
+        <span>Get in touch</span>
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <div class="footer-wrapper section-white">
+    <footer>
+      <div>
+        <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#888888;">
+          Nara Origami Originals
+        </p>
+        <a href="https://naraori.com" target="_blank" rel="noopener" style="font-size:0.65rem;font-weight:400;color:#666666;letter-spacing:0.08em;text-decoration:none;">naraori.com</a>
+      </div>
+      <div style="display:flex;gap:32px;">
+        <a href="#showcase" class="nav-link" style="font-size:0.65rem;">Gallery</a>
+        <a href="#about" class="nav-link" style="font-size:0.65rem;">About</a>
+        
+      </div>
+      <p style="font-size:0.62rem;color:#666666;letter-spacing:0.06em;">
+        2025 Nara Origami Originals. All rights reserved.
+      </p>
+    </footer>
+  </div>
 
   <script>
+    // ── MASTERPIECE SECTION ──
     const mpSection = document.getElementById('mp-section');
+
+    // ── SCROLL PANELS ──
     const track = document.querySelector('.od-scroll-track');
     const panels = document.querySelectorAll('.od-step-panel');
     const introPanel = document.getElementById('panel-intro');
     const punchline = document.querySelector('#panel-intro .segment-2');
 
     function handleCoreScrollEngine() {
-      // 1. Masterpiece Section Word Pop-in 
+      // Masterpiece word pop-in
       if (mpSection) {
         const rect = mpSection.getBoundingClientRect();
         if (rect.top < window.innerHeight * 0.85) {
@@ -802,12 +1453,10 @@
         }
       }
 
-      // 2. High-Precision Linear Scroll Sync Matrix
-      // Now runs on ALL screen sizes — mobile gets same sticky scroll animation
+      // Scroll step panel sync
       if (track && panels.length > 0) {
         const trackRect = track.getBoundingClientRect();
         const viewHeight = window.innerHeight;
-        
         const totalScrollableSpace = trackRect.height - viewHeight;
         const totalScrolledPastTop = -trackRect.top;
         
@@ -817,25 +1466,18 @@
         const activeSteps = Array.from(panels).filter(p => p !== introPanel);
 
         if (systemProgress <= 0.22) {
-          // ── PHASE A: DYNAMIC TITLING MATRIX (0.0 to 0.22 Timeline) ──
           introPanel.style.opacity = 1;
           introPanel.style.visibility = 'visible';
-          
-          // Force active step nodes hidden during presentation intro
           activeSteps.forEach(panel => {
             panel.style.opacity = 0;
             panel.style.visibility = 'hidden';
           });
-
-          // Second text segment ("comes to life?") fades in smoothly across first 10% of track
           let textIn = systemProgress / 0.10;
           textIn = Math.max(0, Math.min(1, textIn));
           if (punchline) {
             punchline.style.opacity = textIn;
             punchline.style.transform = `translateY(${8 - (textIn * 8)}px)`;
           }
-
-          // Complete panel exit crossfade between 0.15 and 0.22 scroll marks
           if (systemProgress > 0.15) {
             let introOut = (systemProgress - 0.15) / (0.22 - 0.15);
             introOut = Math.max(0, Math.min(1, introOut));
@@ -843,16 +1485,12 @@
             if (introOut >= 1) introPanel.style.visibility = 'hidden';
           }
         } else {
-          // ── PHASE B: BOUNDED CANVAS STEP SWITCHER (0.22 to 1.0 Timeline) ──
           introPanel.style.opacity = 0;
           introPanel.style.visibility = 'hidden';
-          
           const stepTimelineRange = 1.0 - 0.22;
           const normalizedStepProgress = (systemProgress - 0.22) / stepTimelineRange;
-          
           const exactStepIndex = Math.floor(normalizedStepProgress * activeSteps.length);
           const activeIndex = Math.min(exactStepIndex, activeSteps.length - 1);
-          
           activeSteps.forEach((panel, idx) => {
             if (idx === activeIndex) {
               panel.style.opacity = 1;
@@ -866,10 +1504,69 @@
       }
     }
 
-    // Window Activation Lifecycles
-    window.addEventListener('scroll', handleCoreScrollEngine, { passive: true });
-    window.addEventListener('resize', handleCoreScrollEngine);
-    setTimeout(handleCoreScrollEngine, 100);
+    // ── GALLERY FADE IN & OUT ──
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    const galleryObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          entry.target.classList.remove('was-seen');
+        } else {
+          // Only apply "scrolled past" treatment if it was already seen
+          if (entry.target.classList.contains('in-view')) {
+            entry.target.classList.remove('in-view');
+            entry.target.classList.add('was-seen');
+          }
+        }
+      });
+    }, { 
+      threshold: 0.15,
+      rootMargin: "0px 0px -80px 0px"
+    });
+
+    galleryItems.forEach(item => galleryObserver.observe(item));
+
+    // ── WORD SPLIT ENGINE ──
+    const splitTextElements = document.querySelectorAll('.split-text');
+    splitTextElements.forEach(el => {
+      const words = el.innerText.trim().split(/\s+/);
+      el.innerHTML = ''; 
+      words.forEach((word, i) => {
+        const span = document.createElement('span');
+        span.className = 'split-word';
+        span.style.transitionDelay = `${i * 0.04}s`; 
+        span.textContent = word; 
+        el.appendChild(span);
+        if (i < words.length - 1) {
+          el.appendChild(document.createTextNode(' '));
+        }
+      });
+    });
+
+    const textObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          textObserver.unobserve(entry.target); 
+        }
+      });
+    }, { threshold: 0.2 });
+
+    splitTextElements.forEach(el => textObserver.observe(el));
+
+    // ── EVENTS ──
+    window.addEventListener('scroll', () => {
+      handleCoreScrollEngine();
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+      handleCoreScrollEngine();
+    });
+
+    setTimeout(() => {
+      handleCoreScrollEngine();
+    }, 100);
   </script>
 
 </body>
