@@ -120,7 +120,6 @@
       line-height: 1.8; letter-spacing: 0.02em;
       max-width: 420px; margin-bottom: 40px;
     }
-    /* Hero CTA buttons */
     .hero-ctas {
       display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
     }
@@ -181,103 +180,6 @@
     }
     .section-dark { background-color: #000000; }
 
-    /* ── MASTERPIECE SECTION ── */
-    .masterpiece-section {
-      text-align: center; padding: 120px 24px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-    }
-    .masterpiece-text {
-      font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 500; color: #F5F5F5;
-      line-height: 1.3; margin-bottom: 40px;
-    }
-    .mp-word {
-      display: inline-block; opacity: 0; transform: translateY(20px);
-      transition: opacity 0.3s cubic-bezier(0.2,0,0,1), transform 0.3s cubic-bezier(0.2,0,0,1);
-    }
-    .masterpiece-section.visible .mp-word { opacity: 1; transform: translateY(0); }
-    .masterpiece-section .mp-word:nth-of-type(1) { transition-delay: 0.00s; }
-    .masterpiece-section .mp-word:nth-of-type(2) { transition-delay: 0.04s; }
-    .masterpiece-section .mp-word:nth-of-type(3) { transition-delay: 0.08s; }
-    .masterpiece-section .mp-word:nth-of-type(4) { transition-delay: 0.12s; }
-    .masterpiece-section .mp-word:nth-of-type(5) { transition-delay: 0.16s; }
-    .masterpiece-section .mp-word:nth-of-type(6) { transition-delay: 0.20s; }
-    .masterpiece-section .mp-word:nth-of-type(7) { transition-delay: 0.24s; }
-    .masterpiece-section .mp-word:nth-of-type(8) { transition-delay: 0.28s; }
-    /* CTA under masterpiece */
-    .masterpiece-cta {
-      display: inline-flex; align-items: center; gap: 12px;
-      padding: 16px 36px;
-      background: #F5F5F5; color: #0A0A0A;
-      font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
-      transition: background 0.2s;
-      opacity: 0; transform: translateY(12px);
-      transition: opacity 0.4s 0.5s ease, transform 0.4s 0.5s ease, background 0.2s;
-    }
-    .masterpiece-section.visible .masterpiece-cta { opacity: 1; transform: translateY(0); }
-    .masterpiece-cta svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.3s ease; }
-    .masterpiece-cta:hover { background: #CFCFCF; }
-    .masterpiece-cta:hover svg { transform: translateX(4px); }
-
-    /* ── ABOUT SECTION ── */
-    .about-section { padding: 140px 40px; max-width: 1152px; margin: 0 auto; }
-    .about-container {
-      display: grid;
-      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-      gap: 100px; align-items: center;
-    }
-    /* Geometric shape replacing photo */
-    .about-visual {
-      position: relative;
-      display: flex; flex-direction: column; gap: 20px;
-      min-width: 0;
-    }
-    .about-shape-wrap {
-      position: relative;
-      width: 100%;
-      padding-bottom: 130%; /* tall portrait ratio */
-    }
-    .about-shape {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    /* Geometric origami-fold pattern built with CSS + SVG */
-    .about-shape svg {
-      width: 100%; height: 100%;
-    }
-    .about-meta-tag {
-      font-size: 0.6rem; font-weight: 700;
-      letter-spacing: 0.25em; color: #888888; text-transform: uppercase;
-    }
-    .about-eyebrow {
-      display: inline-block; font-size: 0.65rem; font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase; color: #888888; margin-bottom: 12px;
-    }
-    .about-title {
-      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; color: #F5F5F5;
-      letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 6px;
-    }
-    .about-subtitle {
-      display: inline-block; font-size: 0.8rem; font-weight: 600;
-      letter-spacing: 0.3em; color: #777777; margin-bottom: 40px;
-    }
-    .about-content p {
-      font-size: 0.9rem; font-weight: 400; color: #AAAAAA; line-height: 1.8; margin-bottom: 24px;
-    }
-    .about-content .highlight-block {
-      padding: 24px 32px;
-      background: rgba(255,255,255,0.03);
-      border-left: 2px solid #F5F5F5;
-      margin: 36px 0;
-    }
-    .about-content .highlight-block p { margin-bottom: 0; color: #F5F5F5; font-weight: 500; }
-    @media(max-width: 900px) {
-      .about-container { grid-template-columns: 1fr; gap: 60px; }
-      .about-visual { max-width: 320px; margin: 0 auto; }
-      .about-section { padding: 80px 24px; }
-    }
-
     /* ── GALLERY ── */
     .gallery-intro {
       max-width: 1152px; margin: 0 auto;
@@ -303,7 +205,6 @@
 
     .gallery-editorial { width: 100%; position: relative; }
 
-    /* Gallery items — image-first layout */
     .gallery-item {
       width: 100%; max-width: 1400px; margin: 0 auto; padding: 80px 40px;
       display: grid; align-items: center; gap: 40px;
@@ -316,12 +217,10 @@
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
-    /* Image gets 2/3, text gets 1/3 */
     .layout-left  { grid-template-columns: 2fr 1fr; }
     .layout-right { grid-template-columns: 1fr 2fr; }
     .layout-wide  { grid-template-columns: 1fr; text-align: center; }
 
-    /* Visual containers */
     .gallery-visual {
       display: flex; align-items: center; justify-content: center;
     }
@@ -329,7 +228,6 @@
       width: 100%;
       display: flex; align-items: center; justify-content: center;
     }
-    /* Images breathe at full column width */
     .floating-origami {
       max-width: 100%; max-height: 680px; width: auto; height: auto;
       display: block; object-fit: contain;
@@ -340,11 +238,9 @@
       transform: translateY(-10px);
       filter: drop-shadow(0px 50px 70px rgba(0,0,0,0.8));
     }
-    /* Wide layout: even bigger */
     .layout-wide .gallery-img-box { max-width: 860px; margin: 0 auto; }
     .layout-wide .floating-origami { max-height: 700px; }
 
-    /* Text column — small and restrained */
     .gallery-text { display: flex; flex-direction: column; justify-content: center; }
     .gallery-meta { display: block; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em; color: #666; margin-bottom: 12px; }
     .gallery-title { font-size: clamp(1rem, 1.6vw, 1.4rem); font-weight: 600; color: #F5F5F5; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 12px; }
@@ -390,7 +286,6 @@
       .papers-sub { text-align: left; max-width: 100%; }
     }
 
-    /* Pack cards */
     .pack-grid {
       display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px;
     }
@@ -507,7 +402,7 @@
     .btn-fold:hover svg { transform: translateX(4px); }
     @media(max-width:900px) { .services-split { grid-template-columns: 1fr; padding: 80px 24px; } .service-card { padding: 48px 32px; } }
 
-    /* ── HOW IT FOLDS (SCROLL SECTION) ── */
+    /* ── HOW IT FOLDS ── */
     .od-section-wrapper { position: relative; width: 100%; }
     .od-fullscreen-section { position: relative; width: 100%; }
     .od-scroll-track { position: relative; height: 550vh; }
@@ -609,6 +504,69 @@
     footer { padding: 40px; max-width: 1152px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
     @media(min-width:640px) { footer { flex-direction: row; align-items: center; justify-content: space-between; } }
 
+    /* ── CLIPBOARD COPY FEATURE ── */
+    .copy-fallback {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .copy-fallback-btn {
+      background: none;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #555;
+      cursor: pointer;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(255,255,255,0.15);
+    }
+    .copy-fallback-btn:hover { color: #AAAAAA; }
+    .copy-fallback-btn svg {
+      width: 11px; height: 11px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+    .copy-fallback-hint {
+      font-size: 0.58rem;
+      font-weight: 400;
+      color: #444;
+      letter-spacing: 0.04em;
+    }
+    /* Toast notification */
+    .copy-toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      background: #F5F5F5;
+      color: #0A0A0A;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     /* ── MODAL SYSTEM ── */
     .modal-overlay {
       display: none; position: fixed; inset: 0;
@@ -631,9 +589,7 @@
     .modal-close:hover { color: #F5F5F5; }
     .modal-subtitle { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #666; margin-bottom: 4px; }
     .modal-title { font-size: 1.1rem; font-weight: 700; color: #F5F5F5; letter-spacing: -0.01em; }
-    .modal-desc { font-size: 0.8rem; color: #777; line-height: 1.7; border-left: 1px solid rgba(255,255,255,0.15); padding-left: 14px; }
 
-    /* Builder */
     .builder { display: flex; flex-direction: column; gap: 16px; }
     .builder-row { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 10px; align-items: end; }
     .field { display: flex; flex-direction: column; gap: 6px; }
@@ -656,7 +612,6 @@
     .price-hint { font-size: 0.75rem; font-weight: 500; color: #666; }
     .price-hint span { color: #F5F5F5; font-weight: 600; }
 
-    /* Cart */
     .cart { display: flex; flex-direction: column; gap: 0; }
     .cart-header-row { display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
     .cart-header { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #666; }
@@ -671,7 +626,6 @@
     .switch-pack-btn { background: none; border: 1px solid rgba(255,255,255,0.15); font-family: 'Montserrat', sans-serif; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #666; padding: 5px 10px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
     .switch-pack-btn:hover { border-color: rgba(255,255,255,0.5); color: #F5F5F5; }
 
-    /* Shipping */
     .shipping-toggle { background: none; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #666; cursor: pointer; padding: 0; display: none; align-items: center; gap: 6px; transition: color 0.15s; }
     .shipping-toggle.visible { display: flex; }
     .shipping-toggle:hover { color: #F5F5F5; }
@@ -688,6 +642,13 @@
     .shipping-grand { display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700; color: #F5F5F5; }
     .shipping-intl { font-size: 0.7rem; font-weight: 400; color: #555; line-height: 1.7; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 10px; }
 
+    /* Send button + clipboard wrapper */
+    .send-btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
     .send-btn {
       background: #F5F5F5; color: #0A0A0A; border: none; cursor: pointer;
       font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 700;
@@ -711,7 +672,8 @@
     .price-table tr:last-child td { border-bottom: none; }
     .price-table td:first-child { font-weight: 600; color: #F5F5F5; }
     .info-tag { display: inline-block; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.15); color: #666; padding: 5px 10px; }
-   /* ── ABOUT SECTION ── */
+
+    /* ── ABOUT SECTION ── */
     .about-section {
       padding: 140px 40px;
       max-width: 1152px;
@@ -719,7 +681,7 @@
     }
     .about-container {
       display: grid;
-      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); 
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
       gap: 100px;
       align-items: center;
     }
@@ -754,7 +716,7 @@
       object-fit: cover;
       display: block;
       background-color: rgba(255,255,255,0.04);
-      filter: grayscale(100%) contrast(1.1); 
+      filter: grayscale(100%) contrast(1.1);
       transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .about-frame:hover .about-img { filter: grayscale(0%) contrast(1); }
@@ -810,9 +772,43 @@
       .about-section { padding: 80px 24px; }
       .about-content .highlight-block { padding: 20px 24px; }
     }
+
+    /* ── CTA clipboard fallback (inline, outside modals) ── */
+    .inline-copy-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .inline-copy-hint {
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: #444;
+      letter-spacing: 0.04em;
+    }
+    .inline-copy-btn {
+      background: none;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #555;
+      cursor: pointer;
+      padding: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(255,255,255,0.15);
+      transition: color 0.2s;
+    }
+    .inline-copy-btn:hover { color: #AAAAAA; }
   </style>
 </head>
 <body>
+
+  <!-- Toast notification -->
+  <div class="copy-toast" id="copyToast">Copied to clipboard</div>
 
   <nav>
     <div class="nav-inner">
@@ -836,7 +832,7 @@
       <h1 class="hero-title fu fu2" style="text-align:left;">
         <span class="metal">Want to create</span><br/>something<br/>extraordinary?
       </h1>
-      <p class="hero-sub fu fu3">Original paper sculptures, commissions, and collaborations, folded  from a single sheet.</p>
+      <p class="hero-sub fu fu3">Original paper sculptures, commissions, and collaborations, folded from a single sheet.</p>
       <div class="hero-ctas fu fu4">
         <a href="mailto:naraorigami.official@gmail.com?subject=Commission%20Enquiry" class="btn-hero-primary">
           <span>Start a commission</span>
@@ -847,14 +843,16 @@
           <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
       </div>
+      <!-- Hero clipboard fallback -->
+      <div class="inline-copy-row fu" style="animation-delay:0.65s;">
+        <span class="inline-copy-hint">Button not working?</span>
+        <button class="inline-copy-btn" onclick="copyEmail('naraorigami.official@gmail.com')">Copy email address</button>
+      </div>
     </div>
     <div class="hero-right">
       <img class="hero-warrior" src="imgs/wkkk.webp" alt="Origami warrior sculpture" />
     </div>
   </section>
-
-  <!-- ── ABOUT ── -->
-  
 
   <!-- ── GALLERY ── -->
   <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
@@ -1009,6 +1007,10 @@
             <span>Begin a private commission</span>
             <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
+          <div class="inline-copy-row fu" style="animation-delay:0.75s;">
+            <span class="inline-copy-hint">Not opening?</span>
+            <button class="inline-copy-btn" onclick="copyEmail('naraorigami.official@gmail.com')">Copy email</button>
+          </div>
         </div>
       </div>
       <div class="service-card">
@@ -1021,12 +1023,16 @@
             <span>Propose a collaboration</span>
             <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
+          <div class="inline-copy-row fu" style="animation-delay:0.95s;">
+            <span class="inline-copy-hint">Not opening?</span>
+            <button class="inline-copy-btn" onclick="copyEmail('naraorigami.official@gmail.com')">Copy email</button>
+          </div>
         </div>
       </div>
     </section>
   </div>
 
- <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
+  <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
   <div class="section-white">
     <section class="about-section" id="about">
       <div class="about-container">
@@ -1034,7 +1040,6 @@
           <div class="about-frame fu">
             <div class="frame-corner tl"></div>
             <div class="frame-corner br"></div>
-            <!--<img src="imgs/me.webp" alt="Abhijeet S. Vashistha - Nara Origami" class="about-img">-->
           </div>
           <div class="about-meta-tag fu" style="animation-delay: 0.2s;">ID: NARA // EST. INDIA</div>
         </div>
@@ -1053,6 +1058,7 @@
       </div>
     </section>
   </div>
+
   <!-- ── HOW IT FOLDS ── -->
   <div style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
   <div class="section-white od-section-wrapper">
@@ -1202,6 +1208,13 @@
         <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       </a>
     </div>
+    <!-- CTA clipboard fallback -->
+    <div style="margin-top: 20px; position: relative; z-index: 2;">
+      <div class="inline-copy-row" style="justify-content:center;">
+        <span class="inline-copy-hint" style="color: rgba(255,255,255,0.25);">Buttons not opening your mail app?</span>
+        <button class="inline-copy-btn" style="color: rgba(255,255,255,0.35);" onclick="copyEmail('naraorigami.official@gmail.com')">Copy email address</button>
+      </div>
+    </div>
   </section>
 
   <!-- ── FOOTER ── -->
@@ -1279,7 +1292,17 @@
           <div class="shipping-intl">International buyers: prices are the same. Shipping is free for orders above $200 USD. A flat $30 USD fee applies below that.</div>
         </div>
       </div>
-      <a class="send-btn disabled" id="s-send-btn" href="#">Send Order by Email</a>
+      <!-- Send button group with clipboard fallback -->
+      <div class="send-btn-group">
+        <a class="send-btn disabled" id="s-send-btn" href="#">Send Order by Email</a>
+        <div class="copy-fallback" id="s-copy-fallback" style="display:none;">
+          <span class="copy-fallback-hint">Not opening?</span>
+          <button class="copy-fallback-btn" onclick="copyOrderToClipboard('s')">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy order to clipboard
+          </button>
+        </div>
+      </div>
       <p class="modal-note">Clicking the button will open a pre-filled draft in your mail app. Just hit send.</p>
     </div>
   </div>
@@ -1342,7 +1365,17 @@
           <div class="shipping-intl">International buyers: prices are the same. Shipping is free for orders above $200 USD. A flat $30 USD fee applies below that.</div>
         </div>
       </div>
-      <a class="send-btn disabled" id="a-send-btn" href="#">Send Order by Email</a>
+      <!-- Send button group with clipboard fallback -->
+      <div class="send-btn-group">
+        <a class="send-btn disabled" id="a-send-btn" href="#">Send Order by Email</a>
+        <div class="copy-fallback" id="a-copy-fallback" style="display:none;">
+          <span class="copy-fallback-hint">Not opening?</span>
+          <button class="copy-fallback-btn" onclick="copyOrderToClipboard('a')">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy order to clipboard
+          </button>
+        </div>
+      </div>
       <p class="modal-note">Clicking the button will open a pre-filled draft in your mail app. Just hit send.</p>
     </div>
   </div>
@@ -1435,6 +1468,70 @@
     };
 
     const sharedCart = [];
+
+    // ── CLIPBOARD HELPERS ──
+    function showToast(msg) {
+      const toast = document.getElementById('copyToast');
+      toast.textContent = msg || 'Copied to clipboard';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function copyEmail(email) {
+      navigator.clipboard.writeText(email).then(() => {
+        showToast('Email address copied');
+      }).catch(() => {
+        // Fallback for older browsers
+        const el = document.createElement('textarea');
+        el.value = email;
+        el.style.position = 'fixed'; el.style.opacity = '0';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('Email address copied');
+      });
+    }
+
+    function copyOrderToClipboard(p) {
+      if (sharedCart.length === 0) return;
+      const total    = sharedCart.reduce((s, i) => s + i.price, 0);
+      const shipping = total >= 2000 ? 0 : 140;
+      const grand    = total + shipping;
+      const list     = sharedCart.map(i =>
+        `- ${i.size} cm | ${i.colour} | ${i.qty} sheets | Rs. ${i.price.toLocaleString('en-IN')} (${i.pack === 'starter' ? 'Starter Pack' : 'Artist Pack'})`
+      ).join('\n');
+      const text =
+`To: naraorigami.official@gmail.com
+Subject: Paper Order
+
+Hi,
+
+I would like to place an order for the following treated double tissue paper:
+
+${list}
+
+Subtotal: Rs. ${total.toLocaleString('en-IN')}
+Shipping: ${shipping === 0 ? 'Free' : 'Rs. 140'}
+Grand Total: Rs. ${grand.toLocaleString('en-IN')}
+
+Please let me know next steps.
+
+Thank you.`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Order copied — paste it into an email');
+      }).catch(() => {
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.style.position = 'fixed'; el.style.opacity = '0';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('Order copied — paste it into an email');
+      });
+    }
 
     // ── MODAL ──
     function openModal(type) {
@@ -1547,12 +1644,15 @@
     }
     function updateSendBtns() {
       ['s', 'a'].forEach(p => {
-        const btn       = document.getElementById(p + '-send-btn');
-        const toggleBtn = document.getElementById(p + '-shipping-toggle');
-        const panel     = document.getElementById(p + '-shipping-note');
+        const btn        = document.getElementById(p + '-send-btn');
+        const toggleBtn  = document.getElementById(p + '-shipping-toggle');
+        const panel      = document.getElementById(p + '-shipping-note');
+        const copyFallback = document.getElementById(p + '-copy-fallback');
+
         if (sharedCart.length === 0) {
-          btn.classList.add('disabled'); btn.onclick = null;
+          btn.classList.add('disabled'); btn.href = '#';
           toggleBtn.classList.remove('visible', 'open'); panel.classList.remove('visible');
+          copyFallback.style.display = 'none';
           return;
         }
         const total      = sharedCart.reduce((s, i) => s + i.price, 0);
@@ -1563,32 +1663,27 @@
         document.getElementById(p + '-shipping-val').className   = 'value' + (shipping === 0 ? ' free' : '');
         document.getElementById(p + '-grand-val').textContent    = 'Rs. ' + grandTotal.toLocaleString('en-IN');
         toggleBtn.classList.add('visible');
+
         const list = sharedCart.map(i =>
           `- ${i.size} cm | ${i.colour} | ${i.qty} sheets | Rs. ${i.price.toLocaleString('en-IN')} (${i.pack === 'starter' ? 'Starter Pack' : 'Artist Pack'})`
         ).join('\n');
         const body = `Hi,\n\nI would like to place an order for the following treated double tissue paper:\n\n${list}\n\nSubtotal: Rs. ${total.toLocaleString('en-IN')}\nShipping: ${shipping === 0 ? 'Free' : 'Rs. 140'}\nGrand Total: Rs. ${grandTotal.toLocaleString('en-IN')}\n\nPlease let me know next steps.\n\nThank you.`;
         const mailto = `mailto:naraorigami.official@gmail.com?subject=Paper%20Order&body=${encodeURIComponent(body)}`;
         btn.classList.remove('disabled');
-        btn.removeAttribute('onclick');
         btn.href = mailto;
+
+        // Show clipboard fallback
+        copyFallback.style.display = 'flex';
       });
     }
 
-    // ── MASTERPIECE ──
-    const mpSection = document.getElementById('mp-section');
-
     // ── SCROLL PANELS ──
-    const track     = document.querySelector('.od-scroll-track');
-    const panels    = document.querySelectorAll('.od-step-panel');
+    const track      = document.querySelector('.od-scroll-track');
+    const panels     = document.querySelectorAll('.od-step-panel');
     const introPanel = document.getElementById('panel-intro');
     const punchline  = document.querySelector('#panel-intro .segment-2');
 
     function handleCoreScrollEngine() {
-      if (mpSection) {
-        const rect = mpSection.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.85) mpSection.classList.add('visible');
-        else mpSection.classList.remove('visible');
-      }
       if (track && panels.length > 0) {
         const trackRect = track.getBoundingClientRect();
         const viewHeight = window.innerHeight;
