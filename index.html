@@ -1567,9 +1567,10 @@
           `- ${i.size} cm | ${i.colour} | ${i.qty} sheets | Rs. ${i.price.toLocaleString('en-IN')} (${i.pack === 'starter' ? 'Starter Pack' : 'Artist Pack'})`
         ).join('\n');
         const body = `Hi,\n\nI would like to place an order for the following treated double tissue paper:\n\n${list}\n\nSubtotal: Rs. ${total.toLocaleString('en-IN')}\nShipping: ${shipping === 0 ? 'Free' : 'Rs. 140'}\nGrand Total: Rs. ${grandTotal.toLocaleString('en-IN')}\n\nPlease let me know next steps.\n\nThank you.`;
-        const mailto = `mailto:naraorigami.official@gmail.com?subject=Paper Order&body=${encodeURIComponent(body)}`;
+        const mailto = `mailto:naraorigami.official@gmail.com?subject=Paper%20Order&body=${encodeURIComponent(body)}`;
         btn.classList.remove('disabled');
-        btn.onclick = function(e) { e.preventDefault(); window.location.href = mailto; };
+        btn.removeAttribute('onclick');
+        btn.href = mailto;
       });
     }
 
