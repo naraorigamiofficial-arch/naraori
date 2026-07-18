@@ -289,50 +289,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .quiz-card{ padding: 26px; }
   .section{ padding: 60px 0; }
 }
-/* ===================== REVIEWS ===================== */
-.reviews-layout {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 40px;
-  margin-top: 40px;
-}
-.review-form-wrap {
-  background: var(--paper-raised);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 32px;
-  height: fit-content;
-}
-.review-form-wrap h3 { font-size: 20px; margin-bottom: 20px; }
-.review-form-wrap label { display: block; font-size: 13px; font-weight: 600; margin-top: 16px; margin-bottom: 6px; }
-.review-form-wrap input, .review-form-wrap textarea {
-  width: 100%; font-family: var(--font-body); font-size: 14px; padding: 10px 12px;
-  border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--paper);
-}
-.review-form-wrap input:focus, .review-form-wrap textarea:focus { background: #fff; }
-.review-form-wrap .btn { margin-top: 24px; }
-.reviews-list-wrap h3 { font-size: 20px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-.review-card {
-  padding: 24px 0;
-  border-bottom: 1px dashed var(--line);
-}
-.review-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
-.reviewer-name { font-weight: 600; font-family: var(--font-display); color: var(--ink); }
-.review-rating { color: var(--c-yellow); font-family: var(--font-mono); font-size: 14px; }
-.review-text { font-size: 15px; color: var(--graphite); line-height: 1.6; }
-.review-actions { margin-top: 14px; }
-.helpful-btn {
-  background: none; border: 1px solid var(--line-strong); border-radius: 4px;
-  padding: 6px 10px; font-family: var(--font-mono); font-size: 11px;
-  color: var(--graphite); cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-  transition: all .15s;
-}
-.helpful-btn:hover { border-color: var(--accent); color: var(--accent); }
-.helpful-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-@media (max-width: 760px) {
-  .reviews-layout { grid-template-columns: 1fr; }
-}
 
 /* ===================== GALLERY SLIDER ===================== */
 .slider-section {
@@ -553,41 +510,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     </div>
   </div>
 </div>
-
-<!-- ============ REVIEWS ============ -->
-  <section id="reviews" class="section reviews-section">
-    <div class="wrap">
-      <p class="section-label">05 — Community</p>
-      <h2>Folder Reviews</h2>
-      <p class="section-sub">See what other folders think of my paper, or leave your own thoughts.</p>
-      
-      <div class="reviews-layout">
-        <div class="review-form-wrap">
-          <h3>Leave a Review</h3>
-          <form id="reviewForm">
-            <label>Name
-              <input type="text" name="reviewer_name" required>
-            </label>
-            <label>Rating (1-5)
-              <input type="number" name="rating" min="1" max="5" required>
-            </label>
-            <label>Review
-              <textarea name="review_text" rows="4" required></textarea>
-            </label>
-            <div id="reviewFormError" class="form-error" hidden></div>
-            <button type="submit" id="submitReviewBtn" class="btn btn-primary btn-block">Post Review</button>
-          </form>
-        </div>
-        
-        <div class="reviews-list-wrap">
-          <h3>All Reviews</h3>
-          <div id="reviewsList">
-            <p style="color: var(--graphite); font-family: var(--font-mono); font-size: 13px;">Loading reviews...</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
 <footer class="site-footer">
   <div class="wrap">
@@ -1124,111 +1046,7 @@ function observeCards() {
 observeCards();
 
 /* ============================================================
-   REVIEWS LOGIC
-   ============================================================ */
-async function loadReviews() {
-  const listEl = document.getElementById('reviewsList');
-  if (!supabaseReady) {
-    listEl.innerHTML = '<p>Supabase not connected. Cannot load reviews.</p>';
-    return;
-  }
-
-  try {
-    const { data, error } = await supabaseClient
-      .from('reviews')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) throw error;
-
-    if (!data || data.length === 0) {
-      listEl.innerHTML = '<p style="color: var(--graphite);">No reviews yet. Be the first!</p>';
-      return;
-    }
-
-    listEl.innerHTML = data.map(review => `
-      <div class="review-card">
-        <div class="review-header">
-          <span class="reviewer-name">${review.reviewer_name}</span>
-          <span class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
-        </div>
-        <div class="review-text">${review.review_text}</div>
-        <div class="review-actions">
-          <button type="button" class="helpful-btn" data-id="${review.id}" data-count="${review.helpful_count || 0}" onclick="markHelpful(this)">
-            Find this useful? (${review.helpful_count || 0})
-          </button>
-        </div>
-      </div>
-    `).join('');
-  } catch (err) {
-    console.error('Error fetching reviews:', err);
-    listEl.innerHTML = '<p>Failed to load reviews.</p>';
-  }
-}
-
-async function markHelpful(btn) {
-  if (!supabaseReady) return;
-  const id = btn.dataset.id;
-  const currentCount = parseInt(btn.dataset.count) || 0;
-  const newCount = currentCount + 1;
   
-  btn.disabled = true;
-  btn.textContent = `Useful (${newCount})`;
-  
-  try {
-    await supabaseClient
-      .from('reviews')
-      .update({ helpful_count: newCount })
-      .eq('id', id);
-    btn.dataset.count = newCount;
-  } catch (err) {
-    console.error('Error updating helpful count:', err);
-    btn.disabled = false;
-    btn.textContent = `Find this useful? (${currentCount})`;
-  }
-}
-
-document.getElementById('reviewForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const form = e.target;
-  const submitBtn = document.getElementById('submitReviewBtn');
-  const errorBox = document.getElementById('reviewFormError');
-  errorBox.hidden = true;
-
-  if (!supabaseReady) {
-    errorBox.textContent = 'Supabase isn\'t connected.';
-    errorBox.hidden = false;
-    return;
-  }
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Posting...';
-
-  const payload = {
-    reviewer_name: form.reviewer_name.value.trim(),
-    rating: parseInt(form.rating.value),
-    review_text: form.review_text.value.trim(),
-    helpful_count: 0
-  };
-
-  try {
-    const { error } = await supabaseClient.from('reviews').insert([payload]);
-    if (error) throw error;
-    form.reset();
-    await loadReviews();
-  } catch (err) {
-    errorBox.textContent = 'Failed to post review. Try again.';
-    errorBox.hidden = false;
-    console.error(err);
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Post Review';
-  }
-});
-
-// Load reviews when the page loads
-loadReviews();
-
 /* ============================================================
    GALLERY SLIDER LOGIC
    ============================================================ */
