@@ -8,17 +8,291 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-<link rel="stylesheet" href="styles.css">
+<style>
+/* ===================== TOKENS ===================== */
+:root{
+  --paper: #F5F4EF;
+  --paper-raised: #FBFAF7;
+  --ink: #1B1B18;
+  --graphite: #5B5850;
+  --line: #D9D6CB;
+  --line-strong: #B7B3A5;
+  --accent: #2B3A67;
+  --accent-soft: #DDE2EE;
+  --accent-hover: #22304F;
 
+  --c-red: #B5292E;
+  --c-black: #1B1B18;
+  --c-blue: #1F4E8C;
+  --c-yellow: #C99A1B;
+  --c-green: #2E6B45;
+  --c-white: #FAFAF7;
 
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --radius: 3px;
+  --wrap: 1120px;
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body{
+  margin:0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap{ max-width: var(--wrap); margin: 0 auto; padding: 0 28px; }
+
+a{ color: inherit; }
+h1,h2,h3{ font-family: var(--font-display); font-weight: 600; margin: 0 0 0.4em; letter-spacing: -0.01em; }
+p{ margin: 0 0 1em; color: var(--graphite); }
+
+::selection{ background: var(--accent-soft); color: var(--ink); }
+
+/* focus visibility */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===================== CONFIG BANNER ===================== */
+.config-banner{
+  background: #3A2A12;
+  color: #F5E6C8;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-align: center;
+  padding: 10px 16px;
+}
+
+/* ===================== HEADER ===================== */
+.site-header{
+  position: sticky; top:0; z-index: 40;
+  background: rgba(245,244,239,0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner{
+  display:flex; align-items:center; justify-content:space-between;
+  height: 64px;
+}
+.wordmark{
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  text-decoration:none; letter-spacing: 0.02em;
+}
+.wordmark span{ font-family: var(--font-mono); font-weight: 400; font-size: 12px; color: var(--graphite); letter-spacing: 0; }
+.main-nav{ display:flex; gap: 28px; }
+.main-nav a{ text-decoration:none; font-size: 14px; color: var(--graphite); transition: color .15s; }
+.main-nav a:hover{ color: var(--ink); }
+.currency-toggle{
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.03em;
+  background: var(--paper-raised); border: 1px solid var(--line-strong); border-radius: var(--radius);
+  padding: 7px 12px; cursor: pointer; color: var(--ink);
+}
+.currency-toggle:hover{ border-color: var(--accent); }
+
+/* ===================== BUTTONS ===================== */
+.btn{
+  display:inline-block; text-decoration:none; font-family: var(--font-body); font-weight: 600; font-size: 14px;
+  padding: 13px 24px; border-radius: var(--radius); cursor:pointer; border: 1px solid transparent;
+  transition: all .15s;
+}
+.btn-primary{ background: var(--accent); color: #fff; }
+.btn-primary:hover{ background: var(--accent-hover); }
+.btn-ghost{ background: transparent; color: var(--ink); border-color: var(--line-strong); }
+.btn-ghost:hover{ border-color: var(--ink); }
+.btn-block{ width: 100%; text-align:center; }
+.btn:disabled{ opacity:0.55; cursor:not-allowed; }
+.btn-small{
+  font-size: 12px; padding: 8px 14px; font-family: var(--font-mono);
+  background: var(--paper-raised); border: 1px solid var(--line-strong); border-radius: var(--radius); cursor:pointer;
+}
+.btn-small:hover{ border-color: var(--accent); color: var(--accent); }
+.btn-small.selected{ background: var(--accent); border-color: var(--accent); color:#fff; }
+
+/* ===================== HERO ===================== */
+.hero{ padding: 88px 0 0; }
+.hero .wrap{ max-width: 760px; }
+.eyebrow{
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 18px;
+}
+.hero h1{ font-size: 44px; line-height: 1.12; }
+.strike{ text-decoration: line-through; text-decoration-color: var(--line-strong); text-decoration-thickness: 2px; color: var(--graphite); }
+.hero-number{ font-family: var(--font-mono); color: var(--accent); }
+.hero-sub{ font-size: 17px; max-width: 560px; margin-top: 18px; }
+.hero-actions{ display:flex; gap: 14px; margin-top: 30px; }
+
+.ruler-wrap{ margin-top: 64px; width: 100%; }
+#heroRuler{ width: 100%; height: 150px; display:block; }
+.ruler-line{ stroke: var(--line-strong); stroke-width: 1; }
+.ruler-tick{ stroke: var(--ink); stroke-width: 1.5; }
+.ruler-tick.small{ stroke: var(--line-strong); stroke-width: 1; }
+.ruler-label{ font-family: var(--font-mono); font-size: 11px; fill: var(--graphite); }
+.ruler-label.strong{ fill: var(--accent); font-weight: 600; }
+
+/* ===================== SECTIONS ===================== */
+.section{ padding: 90px 0; border-top: 1px solid var(--line); }
+.section-label{
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+}
+.section h2{ font-size: 30px; max-width: 620px; }
+.section-sub{ max-width: 560px; font-size: 15px; margin-top: 10px; }
+
+/* ===================== QUIZ ===================== */
+.quiz-card{
+  margin-top: 40px; background: var(--paper-raised); border: 1px solid var(--line);
+  border-radius: 6px; padding: 40px; max-width: 700px;
+}
+.quiz-progress{ display:flex; gap: 6px; margin-bottom: 28px; }
+.quiz-progress span{ height: 3px; flex:1; background: var(--line); border-radius: 2px; }
+.quiz-progress span.done{ background: var(--accent); }
+.quiz-question{ font-family: var(--font-display); font-size: 20px; margin-bottom: 20px; }
+.quiz-options{ display:grid; gap: 10px; }
+.quiz-option{
+  text-align:left; padding: 15px 18px; border: 1px solid var(--line-strong); border-radius: var(--radius);
+  background: var(--paper); cursor: pointer; font-family: var(--font-body); font-size: 15px; color: var(--ink);
+  transition: all .15s;
+}
+.quiz-option:hover{ border-color: var(--accent); background: #fff; }
+.quiz-nav{ margin-top: 24px; display:flex; justify-content: space-between; }
+.quiz-back{ background:none; border:none; font-family: var(--font-mono); font-size: 13px; color: var(--graphite); cursor:pointer; }
+.quiz-back:hover{ color: var(--ink); }
+
+.quiz-result{ }
+.quiz-result-label{ font-family: var(--font-mono); font-size: 12px; text-transform:uppercase; letter-spacing:0.06em; color: var(--accent); margin-bottom: 10px; }
+.quiz-result-size{ font-family: var(--font-mono); font-size: 42px; color: var(--ink); }
+.quiz-result-detail{ margin: 14px 0 24px; }
+
+/* ===================== CATALOG ===================== */
+.catalog-group{ margin-top: 48px; }
+.group-title{
+  font-size: 18px; display:flex; align-items:baseline; gap: 10px; border-bottom: 1px solid var(--line); padding-bottom: 12px;
+}
+.group-title span{ font-family: var(--font-mono); font-size: 12px; font-weight:400; color: var(--graphite); }
+
+.catalog-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 18px; margin-top: 20px; }
+.product-card{
+  background: var(--paper-raised); border: 1px solid var(--line); border-radius: 6px; padding: 22px;
+  opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease;
+}
+.product-card.in-view{ opacity: 1; transform: translateY(0); }
+.product-size{ font-family: var(--font-mono); font-size: 26px; }
+.product-size .unit{ font-size: 14px; color: var(--graphite); }
+
+.swatch-row{ display:flex; gap: 8px; margin: 14px 0; }
+.swatch{
+  width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent;
+  padding:0;
+}
+.swatch[data-colour="White"]{ border-color: var(--line-strong); }
+.swatch.selected{ border-color: var(--accent); box-shadow: 0 0 0 2px var(--paper-raised), 0 0 0 3px var(--accent); }
+
+.pack-row{ display:flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.pack-btn{
+  font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--line-strong); background: var(--paper);
+  border-radius: var(--radius); padding: 8px 10px; cursor: pointer; text-align:left; line-height: 1.3;
+}
+.pack-btn .moq{ display:block; color: var(--graphite); font-size: 10px; }
+.pack-btn:hover{ border-color: var(--accent); }
+.pack-btn.selected{ background: var(--accent); border-color: var(--accent); color: #fff; }
+.pack-btn.selected .moq{ color: var(--accent-soft); }
+
+/* ===================== GRID CALC ===================== */
+.grid-calc{
+  margin-top: 40px; background: var(--paper-raised); border: 1px solid var(--line); border-radius: 6px;
+  padding: 40px; display:grid; grid-template-columns: 1fr 1fr; gap: 40px;
+}
+.grid-calc-controls label{ display:block; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--graphite); margin: 18px 0 8px; }
+.grid-calc-controls label:first-child{ margin-top:0; }
+.grid-calc-controls select, .grid-calc-controls input[type=range]{ width: 100%; }
+.grid-calc-controls select{
+  font-family: var(--font-body); font-size: 14px; padding: 10px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: #fff;
+}
+.grid-count-display{ font-family: var(--font-mono); font-size: 14px; margin-top: 6px; }
+.grid-visual{ display:flex; align-items:center; justify-content:center; }
+.grid-visual svg{ width: 100%; height: auto; max-height: 220px; border: 1px solid var(--line); background:#fff; }
+.grid-readout{ margin-top: 22px; }
+.grid-readout-row{ display:flex; justify-content: space-between; font-family: var(--font-mono); font-size: 13px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.grid-cta{ margin-top: 20px; }
+
+@media (max-width: 760px){
+  .grid-calc{ grid-template-columns: 1fr; }
+}
+
+/* ===================== PREMIUM ===================== */
+.lead-time-note{
+  background: var(--accent-soft); border-radius: var(--radius); padding: 16px 20px; font-size: 14px;
+  max-width: 620px; margin: 28px 0 8px; color: var(--ink);
+}
+.premium-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 18px; margin-top: 32px; }
+.premium-card{
+  background: var(--paper-raised); border: 1px solid var(--line); border-radius: 6px; padding: 24px;
+  opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease;
+}
+.premium-card.in-view{ opacity: 1; transform: translateY(0); }
+.premium-card h4{ font-family: var(--font-display); font-size: 17px; margin: 0 0 8px; }
+.premium-card p{ font-size: 13px; margin-bottom: 16px; }
+.quote-tag{ font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); }
+
+/* ===================== MODAL ===================== */
+.modal-overlay{
+  position: fixed; inset:0; background: rgba(27,27,24,0.5); display:flex; align-items:center; justify-content:center;
+  padding: 20px; z-index: 100;
+}
+.modal-overlay[hidden]{ display:none; }
+.modal{
+  background: #fff; border-radius: 8px; padding: 36px; max-width: 460px; width:100%;
+  max-height: 88vh; overflow-y:auto; position: relative;
+}
+.modal-close{
+  position:absolute; top: 16px; right: 16px; background:none; border:none; font-size: 22px; cursor:pointer; color: var(--graphite); line-height:1;
+}
+.modal h3{ font-size: 20px; margin-bottom: 4px; }
+.form-summary{
+  font-family: var(--font-mono); font-size: 12px; background: var(--paper); border-radius: var(--radius);
+  padding: 12px 14px; margin: 16px 0; color: var(--graphite); line-height: 1.6;
+}
+#inquiryForm label{ display:block; font-size: 13px; font-weight: 600; margin-top: 16px; margin-bottom: 6px; }
+.optional{ font-weight: 400; color: var(--graphite); }
+#inquiryForm input, #inquiryForm textarea{
+  width:100%; font-family: var(--font-body); font-size: 14px; padding: 10px 12px; border: 1px solid var(--line-strong);
+  border-radius: var(--radius); background: var(--paper);
+}
+#inquiryForm input:focus, #inquiryForm textarea:focus{ background:#fff; }
+.form-error{ color: var(--c-red); font-size: 13px; margin-top: 14px; }
+.btn-block{ margin-top: 22px; }
+.form-success{ text-align:center; padding: 20px 0; }
+.form-success p{ font-family: var(--font-display); font-size: 17px; color: var(--ink); }
+
+/* ===================== FOOTER ===================== */
+.site-footer{ border-top: 1px solid var(--line); padding: 32px 0; }
+.site-footer p{ font-size: 13px; margin:0; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 700px){
+  .main-nav{ display:none; }
+  .hero h1{ font-size: 32px; }
+  .quiz-card{ padding: 26px; }
+  .section{ padding: 60px 0; }
+}
+
+</style>
 </head>
 <body>
-
-<!-- ============ CONFIG BANNER (only shows if Supabase isn't set up) ============ -->
-<div id="configBanner" class="config-banner" hidden>
-  Supabase isn't connected yet — inquiries won't save. Open catalog.html and add your Project URL + anon key near the top of the &lt;script&gt; section.
-</div>
-
 <!-- ============ HEADER ============ -->
 <header class="site-header">
   <div class="wrap header-inner">
@@ -146,6 +420,523 @@
   </div>
 </footer>
 
-<script src="app.js"></script>
+<script>
+/* ============================================================
+   CONFIG — fill these in from Supabase: Project Settings > API
+   ============================================================ */
+const SUPABASE_URL = 'https://lnbtogfvkkdebmkijkmm.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxuYnRvZ2Z2a2tkZWJta2lqa21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1NTExODcsImV4cCI6MjA5NjEyNzE4N30.6pgBjLFhZ2XUaJzQHp9bi3f8Lv7KtQhfmmA1ZSoi3IA';
+
+// Editable INR -> USD conversion rate. Update whenever you like.
+const USD_RATE = 83;
+
+/* ============================================================
+   DATA — matches supabase_setup.sql seed data exactly
+   ============================================================ */
+const SIZES = [
+  { size: 10,   category: 'starter', priced: true,  packs: [[20,200],[30,300],[50,500],[70,700],[140,1400]] },
+  { size: 15,   category: 'starter', priced: true,  packs: [[20,270],[30,390],[50,600],[100,1100]] },
+  { size: 20,   category: 'starter', priced: true,  packs: [[25,800],[50,1500]] },
+  { size: 25,   category: 'starter', priced: true,  packs: [[5,600],[10,1100],[25,2100],[50,3300]] },
+  { size: 37.5, category: 'starter', priced: true,  packs: [[5,800],[10,1800],[25,3400],[50,5400]] },
+  { size: 50,   category: 'artist',  priced: true,  packs: [[5,1500],[6,1750],[10,2800],[12,3200]] },
+  { size: 70,   category: 'artist',  priced: true,  packs: [[2,1350],[5,3000],[6,3500],[10,5500],[12,6200]] },
+  { size: 100,  category: 'artist',  priced: true,  packs: [[1,1400],[2,2600],[3,3750],[4,4800]] },
+  { size: 150,  category: 'artist',  priced: true,  packs: [[1,3500],[2,6600],[3,9300],[4,11800]] },
+  { size: 200,  category: 'oversize', priced: false, packs: [] },
+  { size: 300,  category: 'oversize', priced: false, packs: [] },
+  { size: 400,  category: 'oversize', priced: false, packs: [] },
+  { size: 600,  category: 'oversize', priced: false, packs: [] },
+];
+
+const COLOURS = [
+  { name: 'Red',    hex: '#B5292E' },
+  { name: 'Black',  hex: '#1B1B18' },
+  { name: 'Blue',   hex: '#1F4E8C' },
+  { name: 'Yellow', hex: '#C99A1B' },
+  { name: 'Green',  hex: '#2E6B45' },
+  { name: 'White',  hex: '#FAFAF7' },
+];
+
+/* ============================================================
+   SUPABASE CLIENT
+   ============================================================ */
+let supabaseClient = null;
+const supabaseReady = SUPABASE_URL !== 'YOUR_SUPABASE_PROJECT_URL' && SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY';
+if (supabaseReady) {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} else {
+  document.getElementById('configBanner').hidden = false;
+}
+
+/* ============================================================
+   CURRENCY
+   ============================================================ */
+let currency = 'INR';
+function formatPrice(inr) {
+  if (currency === 'INR') return '₹' + inr.toLocaleString('en-IN');
+  const usd = inr / USD_RATE;
+  return '$' + usd.toFixed(usd < 10 ? 2 : 0);
+}
+document.getElementById('currencyToggle').addEventListener('click', () => {
+  currency = currency === 'INR' ? 'USD' : 'INR';
+  document.getElementById('currencyToggle').textContent = currency === 'INR' ? '₹ INR' : '$ USD';
+  renderCatalog();
+  renderQuizResultIfShown();
+});
+
+/* ============================================================
+   HERO RULER — sqrt scale so small sizes stay legible
+   ============================================================ */
+function drawRuler() {
+  const svg = document.getElementById('heroRuler');
+  const W = 1200, H = 150, padL = 20, padR = 20;
+  const min = 10, max = 600;
+  const usable = W - padL - padR;
+  const pos = (s) => padL + ((Math.sqrt(s) - Math.sqrt(min)) / (Math.sqrt(max) - Math.sqrt(min))) * usable;
+
+  let svgContent = `<line x1="${padL}" y1="90" x2="${W - padR}" y2="90" class="ruler-line"/>`;
+  SIZES.forEach((s, i) => {
+    const x = pos(s.size);
+    const isEdge = i === 0 || i === SIZES.length - 1;
+    svgContent += `<line x1="${x}" y1="${isEdge ? 55 : 70}" x2="${x}" y2="90" class="ruler-tick${isEdge ? '' : ' small'}"/>`;
+    svgContent += `<text x="${x}" y="${isEdge ? 42 : 108}" text-anchor="middle" class="ruler-label${isEdge ? ' strong' : ''}">${s.size % 1 === 0 ? s.size : s.size}cm</text>`;
+  });
+  svg.innerHTML = svgContent;
+}
+drawRuler();
+
+/* ============================================================
+   QUIZ
+   ============================================================ */
+const quizState = { step: 0, projectType: null, size: null, colour: null, grid: null };
+
+const quizSteps = [
+  {
+    q: 'What are you making?',
+    key: 'projectType',
+    options: [
+      { label: 'Small folds & standard origami', value: 'small' },
+      { label: 'Larger sculptural or display pieces', value: 'medium' },
+      { label: 'Installation or oversized art', value: 'large' },
+      { label: 'Not sure — show me everything', value: 'any' },
+    ],
+  },
+  {
+    q: 'Pick the closest size to what you need.',
+    key: 'size',
+    dynamic: true, // options built from projectType
+  },
+  {
+    q: 'Which colour?',
+    key: 'colour',
+    options: COLOURS.map(c => ({ label: c.name, value: c.name })).concat([{ label: 'Not decided yet', value: null }]),
+  },
+  {
+    q: 'Plain sheet, or gridded for precision folding?',
+    key: 'grid',
+    options: [
+      { label: 'Plain sheet', value: false },
+      { label: 'Custom grid', value: true },
+    ],
+  },
+];
+
+function sizesForProjectType(type) {
+  if (type === 'small') return SIZES.filter(s => s.size <= 25);
+  if (type === 'medium') return SIZES.filter(s => s.size > 25 && s.size <= 150);
+  if (type === 'large') return SIZES.filter(s => s.size > 150);
+  return SIZES;
+}
+
+function renderQuiz() {
+  const card = document.getElementById('quizCard');
+  const total = quizSteps.length;
+
+  if (quizState.step >= total) {
+    renderQuizResult();
+    return;
+  }
+
+  const step = quizSteps[quizState.step];
+  let options = step.options;
+  if (step.dynamic && step.key === 'size') {
+    options = sizesForProjectType(quizState.projectType).map(s => ({
+      label: `${s.size % 1 === 0 ? s.size : s.size}cm`,
+      value: s.size,
+    }));
+  }
+
+  let html = `<div class="quiz-progress">${quizSteps.map((_, i) => `<span class="${i < quizState.step ? 'done' : ''}"></span>`).join('')}</div>`;
+  html += `<div class="quiz-question">${step.q}</div>`;
+  html += `<div class="quiz-options">`;
+  options.forEach(opt => {
+    html += `<button type="button" class="quiz-option" data-key="${step.key}" data-value="${opt.value}">${opt.label}</button>`;
+  });
+  html += `</div>`;
+  html += `<div class="quiz-nav">`;
+  html += quizState.step > 0 ? `<button type="button" class="quiz-back" id="quizBack">← Back</button>` : `<span></span>`;
+  html += `</div>`;
+
+  card.innerHTML = html;
+
+  card.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      let val = btn.dataset.value;
+      if (val === 'true') val = true;
+      else if (val === 'false') val = false;
+      else if (val === 'null') val = null;
+      else if (!isNaN(parseFloat(val)) && step.key === 'size') val = parseFloat(val);
+      quizState[btn.dataset.key] = val;
+      quizState.step++;
+      renderQuiz();
+    });
+  });
+
+  const backBtn = document.getElementById('quizBack');
+  if (backBtn) backBtn.addEventListener('click', () => { quizState.step--; renderQuiz(); });
+}
+
+function renderQuizResult() {
+  const card = document.getElementById('quizCard');
+  const sizeData = SIZES.find(s => s.size === quizState.size);
+  const cheapestPack = sizeData && sizeData.priced ? sizeData.packs.reduce((a, b) => a[1] < b[1] ? a : b) : null;
+
+  let priceLine = 'Quote on request';
+  if (cheapestPack) priceLine = `from ${formatPrice(cheapestPack[1])} · pack of ${cheapestPack[0]}`;
+
+  card.innerHTML = `
+    <div class="quiz-result">
+      <div class="quiz-result-label">Recommended</div>
+      <div class="quiz-result-size">${quizState.size}cm</div>
+      <div class="quiz-result-detail">
+        ${quizState.colour ? quizState.colour + ' · ' : ''}${quizState.grid ? 'Custom grid' : 'Plain sheet'} · ${priceLine}
+      </div>
+      <button type="button" class="btn btn-primary" id="quizRequestBtn">Request this</button>
+      <button type="button" class="quiz-back" id="quizRestart" style="margin-left:16px;">Start over</button>
+    </div>
+  `;
+
+  document.getElementById('quizRequestBtn').addEventListener('click', () => {
+    openModal({
+      type: quizState.grid ? 'custom_grid' : 'standard',
+      size_cm: quizState.size,
+      colour: quizState.colour,
+      pack_moq: cheapestPack ? cheapestPack[0] : null,
+      grid_count: null,
+      priceLabel: priceLine,
+    });
+  });
+  document.getElementById('quizRestart').addEventListener('click', () => {
+    Object.assign(quizState, { step: 0, projectType: null, size: null, colour: null, grid: null });
+    renderQuiz();
+  });
+}
+function renderQuizResultIfShown() {
+  if (quizState.step >= quizSteps.length) renderQuizResult();
+}
+renderQuiz();
+
+/* ============================================================
+   CATALOG
+   ============================================================ */
+const productSelections = {}; // size -> { colour, pack: [moq, price] }
+
+function renderCatalog() {
+  renderCatalogGroup('starterGrid', 'starter');
+  renderCatalogGroup('artistGrid', 'artist');
+}
+
+function renderCatalogGroup(containerId, category) {
+  const container = document.getElementById(containerId);
+  const items = SIZES.filter(s => s.category === category);
+
+  container.innerHTML = items.map(s => {
+    if (!productSelections[s.size]) {
+      productSelections[s.size] = { colour: COLOURS[0].name, pack: s.packs[0] };
+    }
+    const sel = productSelections[s.size];
+    return `
+      <div class="product-card" data-size="${s.size}">
+        <div class="product-size">${s.size}<span class="unit">cm</span></div>
+        <div class="swatch-row" data-size="${s.size}">
+          ${COLOURS.map(c => `<button type="button" class="swatch${sel.colour === c.name ? ' selected' : ''}" style="background:${c.hex}" data-colour="${c.name}" title="${c.name}"></button>`).join('')}
+        </div>
+        <div class="pack-row" data-size="${s.size}">
+          ${s.packs.map(p => `<button type="button" class="pack-btn${sel.pack[0] === p[0] ? ' selected' : ''}" data-moq="${p[0]}" data-price="${p[1]}">${formatPrice(p[1])}<span class="moq">pack of ${p[0]}</span></button>`).join('')}
+        </div>
+        <button type="button" class="btn btn-ghost btn-block inquire-btn" data-size="${s.size}">Inquire</button>
+      </div>
+    `;
+  }).join('');
+
+  container.querySelectorAll('.swatch').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const size = parseFloat(btn.closest('.swatch-row').dataset.size);
+      productSelections[size].colour = btn.dataset.colour;
+      renderCatalog();
+      observeCards();
+    });
+  });
+  container.querySelectorAll('.pack-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const size = parseFloat(btn.closest('.pack-row').dataset.size);
+      productSelections[size].pack = [parseInt(btn.dataset.moq), parseFloat(btn.dataset.price)];
+      renderCatalog();
+      observeCards();
+    });
+  });
+  container.querySelectorAll('.inquire-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const size = parseFloat(btn.dataset.size);
+      const sel = productSelections[size];
+      openModal({
+        type: 'standard',
+        size_cm: size,
+        colour: sel.colour,
+        pack_moq: sel.pack[0],
+        grid_count: null,
+        priceLabel: `${formatPrice(sel.pack[1])} · pack of ${sel.pack[0]}`,
+      });
+    });
+  });
+}
+renderCatalog();
+
+/* ============================================================
+   CUSTOM GRID CALCULATOR
+   ============================================================ */
+function renderGridCalc() {
+  const el = document.getElementById('gridCalc');
+  el.innerHTML = `
+    <div class="grid-calc-controls">
+      <label for="gcSize">Base sheet size</label>
+      <select id="gcSize">
+        ${SIZES.map(s => `<option value="${s.size}">${s.size}cm</option>`).join('')}
+      </select>
+
+      <label for="gcColour">Base colour</label>
+      <select id="gcColour">
+        ${COLOURS.map(c => `<option value="${c.name}">${c.name}</option>`).join('')}
+      </select>
+
+      <label for="gcCount">Grid lines per side <span id="gcCountVal">16</span></label>
+      <input type="range" id="gcCount" min="2" max="256" value="16" step="1">
+
+      <div class="grid-readout" id="gcReadout"></div>
+      <div class="grid-cta">
+        <button type="button" class="btn btn-primary" id="gcRequestBtn">Request this grid</button>
+      </div>
+    </div>
+    <div class="grid-visual"><svg id="gcSvg" viewBox="0 0 200 200"></svg></div>
+  `;
+
+  function update() {
+    const size = parseFloat(document.getElementById('gcSize').value);
+    const count = parseInt(document.getElementById('gcCount').value);
+    document.getElementById('gcCountVal').textContent = count;
+    const spacingCm = size / count;
+    const spacingMm = spacingCm * 10;
+
+    document.getElementById('gcReadout').innerHTML = `
+      <div class="grid-readout-row"><span>Sheet size</span><span>${size}cm</span></div>
+      <div class="grid-readout-row"><span>Grid lines</span><span>${count} × ${count}</span></div>
+      <div class="grid-readout-row"><span>Cell spacing</span><span>${spacingCm.toFixed(2)}cm (${spacingMm.toFixed(1)}mm)</span></div>
+    `;
+
+    // Simplified visual preview — capped at 32 lines so it stays legible
+    const previewCount = Math.min(count, 32);
+    const svg = document.getElementById('gcSvg');
+    let lines = '';
+    for (let i = 0; i <= previewCount; i++) {
+      const p = (i / previewCount) * 200;
+      lines += `<line x1="${p}" y1="0" x2="${p}" y2="200" stroke="var(--line-strong)" stroke-width="0.5"/>`;
+      lines += `<line x1="0" y1="${p}" x2="200" y2="${p}" stroke="var(--line-strong)" stroke-width="0.5"/>`;
+    }
+    svg.innerHTML = `<rect x="0" y="0" width="200" height="200" fill="#fff"/>${lines}`;
+  }
+
+  document.getElementById('gcSize').addEventListener('input', update);
+  document.getElementById('gcColour').addEventListener('input', update);
+  document.getElementById('gcCount').addEventListener('input', update);
+  document.getElementById('gcRequestBtn').addEventListener('click', () => {
+    const size = parseFloat(document.getElementById('gcSize').value);
+    const colour = document.getElementById('gcColour').value;
+    const count = parseInt(document.getElementById('gcCount').value);
+    const spacingCm = (size / count).toFixed(2);
+    openModal({
+      type: 'custom_grid',
+      size_cm: size,
+      colour: colour,
+      pack_moq: null,
+      grid_count: count,
+      priceLabel: 'Quote on request',
+      extraNote: `Requested grid: ${count}×${count} lines, ~${spacingCm}cm spacing.`,
+    });
+  });
+
+  update();
+}
+renderGridCalc();
+
+/* ============================================================
+   PREMIUM SECTION
+   ============================================================ */
+function renderPremium() {
+  const el = document.getElementById('premiumGrid');
+  const oversize = SIZES.filter(s => s.category === 'oversize');
+
+  let html = oversize.map(s => `
+    <div class="premium-card">
+      <span class="quote-tag">Oversize</span>
+      <h4>${s.size}cm sheet</h4>
+      <p>Made to order in any of our six colours.</p>
+      <button type="button" class="btn btn-ghost btn-block premium-inquire" data-type="standard" data-size="${s.size}">Inquire</button>
+    </div>
+  `).join('');
+
+  html += `
+    <div class="premium-card">
+      <span class="quote-tag">Two-tone</span>
+      <h4>Duo-colour sheets</h4>
+      <p>Two colours on one sheet, split or blended to your spec.</p>
+      <button type="button" class="btn btn-ghost btn-block premium-inquire" data-type="duo_colour" data-size="">Inquire</button>
+    </div>
+    <div class="premium-card">
+      <span class="quote-tag">Custom colour</span>
+      <h4>Dyed papers</h4>
+      <p>A shade outside the standard six — tell us what you're after.</p>
+      <button type="button" class="btn btn-ghost btn-block premium-inquire" data-type="dyed" data-size="">Inquire</button>
+    </div>
+  `;
+
+  el.innerHTML = html;
+
+  el.querySelectorAll('.premium-inquire').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const size = btn.dataset.size ? parseFloat(btn.dataset.size) : null;
+      openModal({
+        type: btn.dataset.type,
+        size_cm: size,
+        colour: null,
+        pack_moq: null,
+        grid_count: null,
+        priceLabel: 'Quote on request',
+      });
+    });
+  });
+}
+renderPremium();
+
+/* ============================================================
+   MODAL + SUPABASE SUBMIT
+   ============================================================ */
+let currentInquiry = null;
+
+function openModal(inquiry) {
+  currentInquiry = inquiry;
+  const overlay = document.getElementById('modalOverlay');
+  const form = document.getElementById('inquiryForm');
+  form.reset();
+  document.getElementById('formError').hidden = true;
+  document.getElementById('formSuccess').hidden = true;
+  form.hidden = false;
+
+  const typeLabels = { standard: 'Standard order', duo_colour: 'Duo-colour request', dyed: 'Dyed paper request', custom_grid: 'Custom grid request' };
+  let summary = `<strong>${typeLabels[inquiry.type]}</strong><br>`;
+  if (inquiry.size_cm) summary += `Size: ${inquiry.size_cm}cm<br>`;
+  if (inquiry.colour) summary += `Colour: ${inquiry.colour}<br>`;
+  if (inquiry.pack_moq) summary += `Pack: ${inquiry.pack_moq} sheets<br>`;
+  if (inquiry.grid_count) summary += `Grid: ${inquiry.grid_count}×${inquiry.grid_count}<br>`;
+  summary += `Price: ${inquiry.priceLabel}`;
+  document.getElementById('formSummary').innerHTML = summary;
+
+  if (inquiry.extraNote) {
+    form.querySelector('textarea[name="notes"]').value = inquiry.extraNote;
+  }
+
+  overlay.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').hidden = true;
+  document.body.style.overflow = '';
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if (e.target.id === 'modalOverlay') closeModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('modalOverlay').hidden) closeModal();
+});
+
+document.getElementById('inquiryForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const submitBtn = document.getElementById('submitBtn');
+  const errorBox = document.getElementById('formError');
+  errorBox.hidden = true;
+
+  const payload = {
+    type: currentInquiry.type,
+    name: form.name.value.trim(),
+    email: form.email.value.trim(),
+    phone: form.phone.value.trim() || null,
+    size_cm: currentInquiry.size_cm,
+    colour: currentInquiry.colour,
+    pack_moq: currentInquiry.pack_moq,
+    grid_count: currentInquiry.grid_count,
+    notes: form.notes.value.trim() || null,
+  };
+
+  if (!supabaseReady) {
+    errorBox.textContent = 'Supabase isn\'t connected yet — this inquiry could not be saved. See the config note at the top of the page.';
+    errorBox.hidden = false;
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+
+  try {
+    const { error } = await supabaseClient.from('inquiries').insert([payload]);
+    if (error) throw error;
+    form.hidden = true;
+    document.getElementById('formSuccess').hidden = false;
+  } catch (err) {
+    errorBox.textContent = 'Something went wrong sending this — please try again, or reach out directly.';
+    errorBox.hidden = false;
+    console.error(err);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send inquiry';
+  }
+});
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+let cardObserver;
+function observeCards() {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.product-card, .premium-card').forEach(c => c.classList.add('in-view'));
+    return;
+  }
+  if (!cardObserver) {
+    cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+  }
+  document.querySelectorAll('.product-card:not(.in-view), .premium-card:not(.in-view)').forEach(c => cardObserver.observe(c));
+}
+observeCards();
+
+</script>
 </body>
 </html>
