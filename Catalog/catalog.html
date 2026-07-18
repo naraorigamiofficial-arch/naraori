@@ -289,7 +289,109 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .quiz-card{ padding: 26px; }
   .section{ padding: 60px 0; }
 }
+/* ===================== REVIEWS ===================== */
+.reviews-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  margin-top: 40px;
+}
+.review-form-wrap {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 32px;
+  height: fit-content;
+}
+.review-form-wrap h3 { font-size: 20px; margin-bottom: 20px; }
+.review-form-wrap label { display: block; font-size: 13px; font-weight: 600; margin-top: 16px; margin-bottom: 6px; }
+.review-form-wrap input, .review-form-wrap textarea {
+  width: 100%; font-family: var(--font-body); font-size: 14px; padding: 10px 12px;
+  border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--paper);
+}
+.review-form-wrap input:focus, .review-form-wrap textarea:focus { background: #fff; }
+.review-form-wrap .btn { margin-top: 24px; }
+.reviews-list-wrap h3 { font-size: 20px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.review-card {
+  padding: 24px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.review-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.reviewer-name { font-weight: 600; font-family: var(--font-display); color: var(--ink); }
+.review-rating { color: var(--c-yellow); font-family: var(--font-mono); font-size: 14px; }
+.review-text { font-size: 15px; color: var(--graphite); line-height: 1.6; }
+.review-actions { margin-top: 14px; }
+.helpful-btn {
+  background: none; border: 1px solid var(--line-strong); border-radius: 4px;
+  padding: 6px 10px; font-family: var(--font-mono); font-size: 11px;
+  color: var(--graphite); cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+  transition: all .15s;
+}
+.helpful-btn:hover { border-color: var(--accent); color: var(--accent); }
+.helpful-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
+@media (max-width: 760px) {
+  .reviews-layout { grid-template-columns: 1fr; }
+}
+
+/* ===================== GALLERY SLIDER ===================== */
+.slider-section {
+  overflow: hidden;
+  padding: 90px 0;
+  border-top: 1px solid var(--line);
+}
+.slider-track-wrap {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-top: 40px;
+}
+/* The track uses flexbox and an infinite linear animation */
+.slider-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: scrollTrack 30s linear infinite;
+}
+.slider-track:hover {
+  animation-play-state: paused; /* Pauses the scroll on hover */
+}
+@keyframes scrollTrack {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+.slide-card {
+  width: 320px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 20px;
+  flex-shrink: 0;
+}
+.slide-image {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--line); 
+  margin-bottom: 16px;
+}
+.slide-model { 
+  font-family: var(--font-display); 
+  font-size: 18px; 
+  font-weight: 600; 
+  margin-bottom: 6px; 
+  line-height: 1.2;
+}
+.slide-details { 
+  font-size: 14px; 
+  color: var(--graphite); 
+  line-height: 1.5; 
+}
+.slide-details span { 
+  color: var(--ink); 
+  font-weight: 500; 
+}
 </style>
 </head>
 <body>
@@ -313,7 +415,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   <section class="hero">
     <div class="wrap">
       <p class="eyebrow">Double tissue, cut to a scale nobody else runs</p>
-      <h1>Most studios stop at <span class="strike">100cm</span>.<br>We go to <span class="hero-number">600cm</span>.</h1>
+      <h1>Most studios stop at <span class="strike">100cm</span>.<br>I go to <span class="hero-number">600cm</span>.</h1>
       <p class="hero-sub">Eleven standard sizes from 10cm to 150cm, priced by the pack. Above that, up to a full six metres, plus duo-colour, dyed, and custom gridded sheets, made to order.</p>
       <div class="hero-actions">
         <a href="#choose" class="btn btn-primary">Help me choose</a>
@@ -355,12 +457,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       </div>
     </div>
   </section>
-
+  
+<!-- ============ GALLERY SLIDER ============ -->
+  <section id="gallery-slider" class="slider-section">
+    <div class="wrap">
+      <p class="section-label">06 — Inspiration</p>
+      <h2>Folded with Nara</h2>
+      <p class="section-sub">A look at what the community is folding using my paper :) </p>
+    </div>
+    
+    <!-- The slider breaks out of the 'wrap' constraint to hit the edges of the screen -->
+    <div class="slider-track-wrap">
+      <div class="slider-track" id="gallerySliderTrack">
+        <!-- Slides will be injected here via JavaScript -->
+        <p style="padding-left: 28px; font-family: var(--font-mono); font-size: 13px; color: var(--graphite);">Loading gallery...</p>
+      </div>
+    </div>
+  </section>
   <!-- ============ CUSTOM GRID ============ -->
   <section id="grid" class="section grid-section">
     <div class="wrap">
       <p class="section-label">03 : Custom grid papers</p>
-      <h2>Up to a 256-line grid, on any size we make.</h2>
+      <h2>Up to a 256-line grid, on any size I make.</h2>
       <p class="section-sub">Grid spacing depends on the sheet, the calculator below shows you the real spacing before you ask.</p>
 
       <div class="grid-calc" id="gridCalc"></div>
@@ -413,6 +531,41 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     </div>
   </div>
 </div>
+
+<!-- ============ REVIEWS ============ -->
+  <section id="reviews" class="section reviews-section">
+    <div class="wrap">
+      <p class="section-label">05 — Community</p>
+      <h2>Folder Reviews</h2>
+      <p class="section-sub">See what other folders think of my paper, or leave your own thoughts.</p>
+      
+      <div class="reviews-layout">
+        <div class="review-form-wrap">
+          <h3>Leave a Review</h3>
+          <form id="reviewForm">
+            <label>Name
+              <input type="text" name="reviewer_name" required>
+            </label>
+            <label>Rating (1-5)
+              <input type="number" name="rating" min="1" max="5" required>
+            </label>
+            <label>Review
+              <textarea name="review_text" rows="4" required></textarea>
+            </label>
+            <div id="reviewFormError" class="form-error" hidden></div>
+            <button type="submit" id="submitReviewBtn" class="btn btn-primary btn-block">Post Review</button>
+          </form>
+        </div>
+        
+        <div class="reviews-list-wrap">
+          <h3>All Reviews</h3>
+          <div id="reviewsList">
+            <p style="color: var(--graphite); font-family: var(--font-mono); font-size: 13px;">Loading reviews...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 <footer class="site-footer">
   <div class="wrap">
@@ -790,7 +943,7 @@ function renderPremium() {
     <div class="premium-card">
       <span class="quote-tag">Oversize</span>
       <h4>${s.size}cm sheet</h4>
-      <p>Made to order in any of our six colours.</p>
+      <p>Made to order in any of my six colours.</p>
       <button type="button" class="btn btn-ghost btn-block premium-inquire" data-type="standard" data-size="${s.size}">Inquire</button>
     </div>
   `).join('');
@@ -937,6 +1090,171 @@ function observeCards() {
 }
 observeCards();
 
+/* ============================================================
+   REVIEWS LOGIC
+   ============================================================ */
+async function loadReviews() {
+  const listEl = document.getElementById('reviewsList');
+  if (!supabaseReady) {
+    listEl.innerHTML = '<p>Supabase not connected. Cannot load reviews.</p>';
+    return;
+  }
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('reviews')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      listEl.innerHTML = '<p style="color: var(--graphite);">No reviews yet. Be the first!</p>';
+      return;
+    }
+
+    listEl.innerHTML = data.map(review => `
+      <div class="review-card">
+        <div class="review-header">
+          <span class="reviewer-name">${review.reviewer_name}</span>
+          <span class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+        </div>
+        <div class="review-text">${review.review_text}</div>
+        <div class="review-actions">
+          <button type="button" class="helpful-btn" data-id="${review.id}" data-count="${review.helpful_count || 0}" onclick="markHelpful(this)">
+            Find this useful? (${review.helpful_count || 0})
+          </button>
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    console.error('Error fetching reviews:', err);
+    listEl.innerHTML = '<p>Failed to load reviews.</p>';
+  }
+}
+
+async function markHelpful(btn) {
+  if (!supabaseReady) return;
+  const id = btn.dataset.id;
+  const currentCount = parseInt(btn.dataset.count) || 0;
+  const newCount = currentCount + 1;
+  
+  btn.disabled = true;
+  btn.textContent = `Useful (${newCount})`;
+  
+  try {
+    await supabaseClient
+      .from('reviews')
+      .update({ helpful_count: newCount })
+      .eq('id', id);
+    btn.dataset.count = newCount;
+  } catch (err) {
+    console.error('Error updating helpful count:', err);
+    btn.disabled = false;
+    btn.textContent = `Find this useful? (${currentCount})`;
+  }
+}
+
+document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const submitBtn = document.getElementById('submitReviewBtn');
+  const errorBox = document.getElementById('reviewFormError');
+  errorBox.hidden = true;
+
+  if (!supabaseReady) {
+    errorBox.textContent = 'Supabase isn\'t connected.';
+    errorBox.hidden = false;
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Posting...';
+
+  const payload = {
+    reviewer_name: form.reviewer_name.value.trim(),
+    rating: parseInt(form.rating.value),
+    review_text: form.review_text.value.trim(),
+    helpful_count: 0
+  };
+
+  try {
+    const { error } = await supabaseClient.from('reviews').insert([payload]);
+    if (error) throw error;
+    form.reset();
+    await loadReviews();
+  } catch (err) {
+    errorBox.textContent = 'Failed to post review. Try again.';
+    errorBox.hidden = false;
+    console.error(err);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Post Review';
+  }
+});
+
+// Load reviews when the page loads
+loadReviews();
+
+/* ============================================================
+   GALLERY SLIDER LOGIC
+   ============================================================ */
+async function loadGallerySlider() {
+  const track = document.getElementById('gallerySliderTrack');
+  if (!supabaseReady) {
+    track.innerHTML = '<div style="padding-left: 28px; color: var(--c-red);">Supabase not connected.</div>';
+    return;
+  }
+
+  try {
+    // Fetch up to the 15 most recent uploads
+    const { data, error } = await supabaseClient
+      .from('nara_folders_gallery')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(15);
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      track.innerHTML = '<div style="padding-left: 28px; color: var(--graphite);">No community folds uploaded yet.</div>';
+      return;
+    }
+
+    // Build the HTML for the cards
+    const slidesHtml = data.map(item => `
+      <div class="slide-card">
+        <img src="${item.image_url}" alt="${item.model_name}" class="slide-image" 
+             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNEMUQ2Q0IiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM1QjU4NTAiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg=='">
+        <div class="slide-model">${item.model_name}</div>
+        <div class="slide-details">
+          Designer: <span>${item.designer_name || 'Unknown'}</span><br>
+          Folded by: <span>${item.folder_name}</span>
+        </div>
+      </div>
+    `).join('');
+
+    // Duplicate the HTML so the CSS marquee can loop seamlessly
+    track.innerHTML = slidesHtml + slidesHtml;
+    
+    // Adjust animation speed dynamically based on the amount of content
+    const itemWidth = 344; // 320px width + 24px gap
+    const totalWidth = data.length * itemWidth;
+    
+    // Calculate a speed of approx 40 pixels per second
+    const durationInSeconds = totalWidth / 40; 
+    
+    // Set a minimum duration so it doesn't spin too fast if there are only 2-3 images
+    track.style.animationDuration = `${Math.max(15, durationInSeconds)}s`;
+
+  } catch (err) {
+    console.error('Error fetching gallery:', err);
+    track.innerHTML = '<div style="padding-left: 28px; color: var(--c-red);">Failed to load gallery slides.</div>';
+  }
+}
+
+// Load the gallery slider when the page loads
+loadGallerySlider();
 </script>
 </body>
 </html>
