@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NARA — Sized Different | Origami Tissue Paper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="styles.css">
+
+
+</head>
+<body>
+
+<!-- ============ CONFIG BANNER (only shows if Supabase isn't set up) ============ -->
+<div id="configBanner" class="config-banner" hidden>
+  Supabase isn't connected yet — inquiries won't save. Open catalog.html and add your Project URL + anon key near the top of the &lt;script&gt; section.
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="#top" class="wordmark">NARA <span>— sized different</span></a>
+    <nav class="main-nav">
+      <a href="#choose">Help me choose</a>
+      <a href="#catalog">Catalog</a>
+      <a href="#grid">Custom grid</a>
+      <a href="#premium">Premium</a>
+    </nav>
+    <button id="currencyToggle" class="currency-toggle" type="button" aria-label="Switch currency">₹ INR</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Double tissue, cut to a scale nobody else runs</p>
+      <h1>Most studios stop at <span class="strike">100cm</span>.<br>We go to <span class="hero-number">600cm</span>.</h1>
+      <p class="hero-sub">Eleven standard sizes from 10cm to 150cm, priced by the pack. Above that — up to a full six metres, plus duo-colour, dyed, and custom gridded sheets — made to order.</p>
+      <div class="hero-actions">
+        <a href="#choose" class="btn btn-primary">Help me choose</a>
+        <a href="#catalog" class="btn btn-ghost">Browse the catalog</a>
+      </div>
+    </div>
+    <div class="ruler-wrap" aria-hidden="true">
+      <svg id="heroRuler" viewBox="0 0 1200 160" preserveAspectRatio="none"></svg>
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="choose" class="section quiz-section">
+    <div class="wrap">
+      <p class="section-label">01 — Not sure what you need</p>
+      <h2>Answer three questions, get a size.</h2>
+
+      <div class="quiz-card" id="quizCard">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CATALOG ============ -->
+  <section id="catalog" class="section">
+    <div class="wrap">
+      <p class="section-label">02 — Standard sizes</p>
+      <h2>Starter &amp; Artist packs</h2>
+      <p class="section-sub">Priced by pack size. Colour doesn't change the price — pick any of the six for any pack.</p>
+
+      <div class="catalog-group">
+        <h3 class="group-title">Starter Packs <span>10cm – 37.5cm</span></h3>
+        <div class="catalog-grid" id="starterGrid"></div>
+      </div>
+
+      <div class="catalog-group">
+        <h3 class="group-title">Artist Packs <span>50cm – 150cm</span></h3>
+        <div class="catalog-grid" id="artistGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CUSTOM GRID ============ -->
+  <section id="grid" class="section grid-section">
+    <div class="wrap">
+      <p class="section-label">03 — Custom grid papers</p>
+      <h2>Up to a 256-line grid, on any size we make.</h2>
+      <p class="section-sub">Grid spacing depends on the sheet — the calculator below shows you the real spacing before you ask.</p>
+
+      <div class="grid-calc" id="gridCalc"></div>
+    </div>
+  </section>
+
+  <!-- ============ PREMIUM ============ -->
+  <section id="premium" class="section premium-section">
+    <div class="wrap">
+      <p class="section-label">04 — Premium &amp; oversize</p>
+      <h2>Duo-colour, dyed, and 200cm–600cm sheets.</h2>
+      <p class="section-sub">Quote on request — every piece here is made for the order, not off a shelf.</p>
+
+      <div class="lead-time-note">
+        <strong>Lead time:</strong> large custom or gridded sheets are made to order — plan on at least <strong>one month</strong> before your project date.
+      </div>
+
+      <div class="premium-grid" id="premiumGrid"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ INQUIRY MODAL ============ -->
+<div id="modalOverlay" class="modal-overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button>
+    <h3 id="modalTitle">Send an inquiry</h3>
+    <form id="inquiryForm">
+      <div class="form-summary" id="formSummary"></div>
+
+      <label>Name
+        <input type="text" name="name" required>
+      </label>
+      <label>Email
+        <input type="email" name="email" required>
+      </label>
+      <label>Phone <span class="optional">(optional)</span>
+        <input type="tel" name="phone">
+      </label>
+      <label id="notesLabel">Notes <span class="optional">(optional)</span>
+        <textarea name="notes" rows="3"></textarea>
+      </label>
+
+      <div id="formError" class="form-error" hidden></div>
+      <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Send inquiry</button>
+    </form>
+    <div id="formSuccess" class="form-success" hidden>
+      <p>Sent. We'll get back to you by email.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>NARA Origami Originals — every sheet folded, gridded, or dyed to order.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
