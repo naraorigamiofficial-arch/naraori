@@ -214,7 +214,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* ===================== GRID CALC ===================== */
 .grid-calc{
   margin-top: 40px; background: var(--paper-raised); border: 1px solid var(--line); border-radius: 6px;
-  padding: 40px; display:grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  padding: 40px; max-width: 520px;
 }
 .grid-calc-controls label{ display:block; font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--graphite); margin: 18px 0 8px; }
 .grid-calc-controls label:first-child{ margin-top:0; }
@@ -392,6 +392,24 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   color: var(--ink); 
   font-weight: 500; 
 }
+.slot-bar{
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-top: 24px;
+}
+.slot-bar.available{ background: #DDE9DD; color: #2E5B33; }
+.slot-bar.unavailable{ background: #F3D9D9; color: #8A2A2A; }
+
+.grid-temp-note{
+  font-size: 14px;
+  max-width: 560px;
+  margin: 16px 0 0;
+}
 </style>
 </head>
 <body>
@@ -474,17 +492,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       </div>
     </div>
   </section>
-  <!-- ============ CUSTOM GRID ============ -->
-  <section id="grid" class="section grid-section">
-    <div class="wrap">
-      <p class="section-label">03 : Custom grid papers</p>
-      <h2>Up to a 256-line grid, on any size I make.</h2>
-      <p class="section-sub">Grid spacing depends on the sheet, the calculator below shows you the real spacing before you ask.</p>
+ <section id="grid" class="section grid-section">
+  <div class="wrap">
+    <p class="section-label">03 : Custom grid papers</p>
+    <h2>Up to a 256-line grid, on any size I make.</h2>
+    <p class="section-sub">Grid spacing depends on the sheet, the calculator below shows you the real spacing before you ask.</p>
 
-      <div class="grid-calc" id="gridCalc"></div>
-    </div>
-  </section>
+    <div class="slot-bar" id="slotBar"></div>
 
+    <p class="grid-temp-note">
+      This is a temporary setup. Large sized custom grid paper can only be requested when a production slot is open.
+    </p>
+
+    <div class="grid-calc" id="gridCalc"></div>
+  </div>
+</section>
   <!-- ============ PREMIUM ============ -->
   <section id="premium" class="section premium-section">
     <div class="wrap">
@@ -582,7 +604,8 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 // Editable INR -> USD conversion rate. Update whenever you like.
 const USD_RATE = 83;
-
+// Toggle this manually whenever a large custom grid slot opens or closes
+const SLOT_AVAILABLE = true;
 /* ============================================================
    DATA — matches supabase_setup.sql seed data exactly
    ============================================================ */
@@ -856,10 +879,29 @@ function renderCatalogGroup(containerId, category) {
 }
 renderCatalog();
 
+function renderSlotBar() {
+  const el = document.getElementById('slotBar');
+  if (SLOT_AVAILABLE) {
+    el.textContent = 'Slot available';
+    el.className = 'slot-bar available';
+  } else {
+    el.textContent = 'No slot available right now';
+    el.className = 'slot-bar unavailable';
+  }
+}
+renderSlotBar();
 /* ============================================================
    CUSTOM GRID CALCULATOR
    ============================================================ */
 function renderGridCalc() {
+  // Allowed grid counts: multiples of 2, 3, 5, 7 up to 256 — no random values
+  const GRID_STEPS = [
+    ...[2,4,8,16,32,64,128,256],
+    ...[3,6,12,24,48,96,192],
+    ...[5,10,20,40,80,160],
+    ...[7,14,28,56,112,224],
+  ].sort((a,b) => a - b);
+
   const el = document.getElementById('gridCalc');
   el.innerHTML = `
     <div class="grid-calc-controls">
@@ -874,19 +916,22 @@ function renderGridCalc() {
       </select>
 
       <label for="gcCount">Grid lines per side <span id="gcCountVal">16</span></label>
-      <input type="range" id="gcCount" min="2" max="256" value="16" step="1">
+      <input type="range" id="gcCount" min="0" max="${GRID_STEPS.length - 1}" value="${GRID_STEPS.indexOf(16)}" step="1">
 
       <div class="grid-readout" id="gcReadout"></div>
       <div class="grid-cta">
         <button type="button" class="btn btn-primary" id="gcRequestBtn">Request this grid</button>
       </div>
     </div>
-    <div class="grid-visual"><svg id="gcSvg" viewBox="0 0 200 200"></svg></div>
   `;
+
+  function currentCount() {
+    return GRID_STEPS[parseInt(document.getElementById('gcCount').value)];
+  }
 
   function update() {
     const size = parseFloat(document.getElementById('gcSize').value);
-    const count = parseInt(document.getElementById('gcCount').value);
+    const count = currentCount();
     document.getElementById('gcCountVal').textContent = count;
     const spacingCm = size / count;
     const spacingMm = spacingCm * 10;
@@ -896,17 +941,6 @@ function renderGridCalc() {
       <div class="grid-readout-row"><span>Grid lines</span><span>${count} × ${count}</span></div>
       <div class="grid-readout-row"><span>Cell spacing</span><span>${spacingCm.toFixed(2)}cm (${spacingMm.toFixed(1)}mm)</span></div>
     `;
-
-    // Simplified visual preview — capped at 32 lines so it stays legible
-    const previewCount = Math.min(count, 32);
-    const svg = document.getElementById('gcSvg');
-    let lines = '';
-    for (let i = 0; i <= previewCount; i++) {
-      const p = (i / previewCount) * 200;
-      lines += `<line x1="${p}" y1="0" x2="${p}" y2="200" stroke="var(--line-strong)" stroke-width="0.5"/>`;
-      lines += `<line x1="0" y1="${p}" x2="200" y2="${p}" stroke="var(--line-strong)" stroke-width="0.5"/>`;
-    }
-    svg.innerHTML = `<rect x="0" y="0" width="200" height="200" fill="#fff"/>${lines}`;
   }
 
   document.getElementById('gcSize').addEventListener('input', update);
@@ -915,7 +949,7 @@ function renderGridCalc() {
   document.getElementById('gcRequestBtn').addEventListener('click', () => {
     const size = parseFloat(document.getElementById('gcSize').value);
     const colour = document.getElementById('gcColour').value;
-    const count = parseInt(document.getElementById('gcCount').value);
+    const count = currentCount();
     const spacingCm = (size / count).toFixed(2);
     openModal({
       type: 'custom_grid',
@@ -930,7 +964,6 @@ function renderGridCalc() {
 
   update();
 }
-renderGridCalc();
 
 /* ============================================================
    PREMIUM SECTION
