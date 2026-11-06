@@ -1,0 +1,25 @@
+.split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: var(--s-7); align-items: start; }
+@media (max-width: 899px) { .split { grid-template-columns: minmax(0, 1fr); } }
+.policy { max-width: var(--measure); }
+.policy h2 { font-size: var(--step-2); margin: var(--s-7) 0 var(--s-3); }
+.policy h3 { font-size: var(--step-1); margin: var(--s-5) 0 var(--s-2); }
+.policy ul { padding-left: 1.2em; }
+.about-hero { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: var(--gutter); align-items: end; padding-block: var(--s-6); }
+.about-hero img { width: 100%; max-width: 26rem; }
+@media (max-width: 760px) { .about-hero { grid-template-columns: minmax(0, 1fr); } .about-hero img { max-width: 18rem; } }
+.statement { font-family: var(--font-display); font-size: var(--step-3); line-height: 1.2; max-width: 26ch; border-left: 1px solid var(--accent); padding-left: var(--s-5); margin: 0; }
+.works-index { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
+.works-index a { display: grid; grid-template-columns: 4.5rem 1fr auto; gap: var(--s-3); padding: var(--s-3) 0; border-bottom: 1px solid var(--rule); text-decoration: none; align-items: baseline; }
+.works-index b { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; }
+.works-index a:hover b { color: var(--accent); }
+.steps { list-style: none; counter-reset: step; padding: 0; margin: 0; display: grid; gap: 0; }
+.steps li { counter-increment: step; display: grid; grid-template-columns: 3rem 1fr; padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); }
+.steps li::before { content: counter(step, decimal-leading-zero); font-family: var(--font-mono); color: var(--ink-3); padding-top: 0.2rem; }
+.steps h3 { font-size: var(--step-1); margin-bottom: var(--s-2); }
+.steps p { margin: 0; color: var(--ink-2); }
+.press-copy { background: var(--sheet); border: 1px solid var(--rule); padding: var(--s-5); max-width: var(--measure); }
+.press-images { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); gap: var(--gutter); }
+.press-images li { display: grid; gap: var(--s-2); }
+.search-results { list-style: none; padding: 0; margin: var(--s-5) 0 0; border-top: 1px solid var(--ink); }
+.search-results a { display: grid; gap: var(--s-1); padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.search-results b { font-family: var(--font-display); font-weight: 400; font-size: var(--step-1); }

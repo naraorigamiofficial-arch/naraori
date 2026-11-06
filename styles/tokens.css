@@ -1,0 +1,61 @@
+/*
+ * NARA ORIGAMI: design tokens ("Washi & Ink" system; see PROJECT_DECISIONS.md §Visual system)
+ * Paper-toned walls, ink type, one restrained sindoor accent. Artworks sit on their own dark
+ * mount fields, so colour on the page comes from the sculptures, not the interface.
+ */
+:root {
+  color-scheme: light;
+
+  /* Paper */
+  --paper: #f3efe7;        /* gallery wall */
+  --paper-deep: #e9e3d7;   /* recessed areas */
+  --sheet: #fbf9f4;        /* raised sheet / inputs */
+  /* Ink */
+  --ink: #1c1a17;
+  --ink-2: #47423b;        /* 8.9:1 on --paper */
+  --ink-3: #655e54;        /* 5.6:1 on --paper, captions & metadata */
+  /* Lines */
+  --rule: #d6cdbd;
+  --crease: #bfb39f;
+  /* Accent: sindoor / burgundy. Used sparingly: active marks, focus, primary action. */
+  --accent: #7a2e24;       /* 8.0:1 on --paper */
+  --accent-ink: #fbf9f4;
+  --copper: #93582c;
+  --ok: #2f5d3a;
+  --warn: #8a5a00;
+  /* Mount fields (artwork backgrounds) default */
+  --field: #26282c;
+  --on-field: #ece7de;
+  --on-field-2: #b9b2a6;
+
+  /* Type */
+  --font-display: var(--ff-display), Georgia, "Times New Roman", serif;
+  --font-text: var(--ff-text), "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Fluid scale (min @ 360px → max @ 1440px) */
+  --step--1: clamp(0.84rem, 0.82rem + 0.1vw, 0.9rem);
+  --step-0: clamp(1.03rem, 0.99rem + 0.18vw, 1.15rem);
+  --step-1: clamp(1.22rem, 1.13rem + 0.4vw, 1.5rem);
+  --step-2: clamp(1.5rem, 1.32rem + 0.8vw, 2.1rem);
+  --step-3: clamp(1.9rem, 1.55rem + 1.55vw, 3rem);
+  --step-4: clamp(2.35rem, 1.75rem + 2.7vw, 4.4rem);
+  --step-5: clamp(2.8rem, 1.9rem + 4.2vw, 6.2rem);
+  --mono-size: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+
+  /* Space */
+  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem; --s-5: 1.5rem;
+  --s-6: 2rem; --s-7: 3rem; --s-8: 4.5rem; --s-9: 7rem;
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --measure: 66ch;
+  --rail: 0px;
+
+  /* Motion */
+  --ease-fold: cubic-bezier(0.3, 0.7, 0.1, 1);
+  --t-fast: 160ms;
+  --t-fold: 380ms;
+}
+
+@media (min-width: 1100px) {
+  :root { --rail: 3.25rem; }
+}

@@ -1,0 +1,13 @@
+@import "./atlas.css";
+.studio { padding-block: var(--s-5) var(--s-8); }
+.studio-nav { display: flex; flex-wrap: wrap; gap: var(--s-4); align-items: center; padding-bottom: var(--s-4); border-bottom: 1px solid var(--ink); margin-bottom: var(--s-6); }
+.studio-nav .eyebrow { margin: 0 auto 0 0; }
+.studio-login { max-width: 30rem; display: grid; gap: var(--s-3); padding-block: var(--s-7); }
+.studio-grid { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: var(--s-7); margin-top: var(--s-5); }
+@media (max-width: 999px) { .studio-grid { grid-template-columns: minmax(0, 1fr); } }
+.plain { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-2); }
+.studio-product { border-top: 1px solid var(--ink); padding-block: var(--s-5); }
+.studio-product header { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s-3); align-items: center; }
+.studio-option { display: grid; grid-template-columns: minmax(10rem, 2fr) repeat(3, minmax(5rem, 1fr)) minmax(9rem, 1.5fr) auto; gap: var(--s-3); align-items: end; padding: var(--s-3) 0; border-bottom: 1px solid var(--rule); }
+.studio-option label { display: grid; gap: 0.2rem; font-size: 0.9rem; }
+@media (max-width: 900px) { .studio-option { grid-template-columns: 1fr 1fr; } }

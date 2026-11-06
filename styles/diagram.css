@@ -1,0 +1,11 @@
+.sheet-diagram { width: 100%; height: auto; font-family: var(--font-mono); overflow: visible; }
+.sheet-diagram .sd-grid line { stroke: var(--rule); stroke-width: 0.15; }
+.sheet-diagram .sd-sheet rect { fill: none; stroke: var(--ink-2); stroke-width: 0.35; transition: stroke var(--t-fast); }
+.sheet-diagram .sd-sheet text { font-size: 3.6px; fill: var(--ink-3); }
+.sheet-diagram .sd-sheet .sd-diag { stroke: var(--crease); stroke-width: 0.15; stroke-dasharray: 1 1.2; }
+.sheet-diagram .sd-sheet.is-selected rect { stroke: var(--accent); stroke-width: 1.6; }
+.sheet-diagram .sd-sheet.is-selected text { fill: var(--accent); font-weight: 600; font-size: 4.2px; }
+.sheet-diagram .sd-selected { fill: color-mix(in srgb, var(--accent) 9%, var(--sheet)); transition: transform var(--t-fold) var(--ease-fold); }
+.sheet-diagram .sd-a4 rect { fill: var(--sheet); stroke: var(--ink-3); stroke-width: 0.35; stroke-dasharray: 1.2 0.8; }
+.sheet-diagram .sd-a4 text, .sheet-diagram .sd-scale text { font-size: 3.6px; fill: var(--ink-3); }
+.sheet-diagram .sd-scale line { stroke: var(--ink-3); stroke-width: 0.3; }
