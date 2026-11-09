@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import "@/styles/editorial.css";
@@ -45,7 +46,16 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
                 {s.body.map((b, i) => <p key={i}>{b}</p>)}
               </section>
             ))}
-            {!p.image && <div className="placeholder-plate" style={{ marginTop: "2rem" }}>Project photographs to be added</div>}
+            {p.image ? (
+              <figure className="prose-figure">
+                <a href={p.image.src} data-zoom className="zoomable" aria-label={`Open photograph: ${p.title}`}>
+                  <Image src={p.image.src} alt={p.image.alt} width={p.image.width} height={p.image.height} sizes="(min-width: 900px) 720px, 100vw" />
+                </a>
+                {p.image.caption && <figcaption>{p.image.caption}</figcaption>}
+              </figure>
+            ) : (
+              <div className="placeholder-plate" style={{ marginTop: "2rem" }}>Project photographs to be added</div>
+            )}
           </div>
           <aside className="reading-aside">
             <h2 className="eyebrow">Progress log</h2>

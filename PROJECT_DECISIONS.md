@@ -14,16 +14,9 @@ The owner asked for a fresh website and **no changes to that workspace**. So:
 
 ## 2. Visual system
 
-Two directions were compared against the real photographs:
+**Current system: "Studio Black"** (chosen by the owner, November 2026). The whole site sits on `#11100f`, the black of the studio backdrop the sculptures are photographed against, so the homepage turntable video melts into the page. Type is warm light (`#ece7de`, `#c4bdb1`, `#9b9387`) and the single accent is a lifted sindoor `#de8058`. Every text colour was checked against every background: all are 5.7:1 or better (WCAG AA needs 4.5:1).
 
-| | A. "Washi and Ink" (chosen) | B. "Mineral Night" |
-|---|---|---|
-| Ground | Warm paper `#f3efe7` | Charcoal `#18191b` |
-| Artwork | Each sculpture on its own dark mount field | Sculptures directly on the dark page |
-| Strength | Reads as an exhibition: pale walls, dark mounts. Gold, copper, yellow and white works all hold up. Long-form reading is comfortable. | Dramatic for gold and copper works |
-| Weakness | Needs care so mounts do not look like cards | White Monkey King and the crease-pattern drawing lose contrast; long articles and the shop are tiring to read; looks like a generic "luxury" template |
-
-The photographs are cut-outs (transparent backgrounds), which made A possible: each work gets a mount colour tuned to it (slate for the white Monkey King, umber for the gold Rama, indigo-ink for the yellow Sunstriker). Colour on the page comes from the sculptures; the interface stays ink, paper and one sindoor accent `#7a2e24`.
+The first version used "Washi and Ink" (warm paper `#f3efe7`, ink type, dark mounts). It was replaced because the owner wanted one continuous black ground. Artwork mounts keep their individual colours, which now read as slightly lifted panels on the black.
 
 **Design grammar** (what makes it this site and not a template):
 
@@ -37,6 +30,8 @@ The photographs are cut-outs (transparent backgrounds), which made A possible: e
 **Typography**: Newsreader (editorial serif, display and long reading), Source Sans 3 (interface), IBM Plex Mono (catalogue metadata). All SIL Open Font License, self-hosted from `app/fonts/`, latin subset only, with metric-matched fallbacks so nothing jumps when fonts arrive.
 
 ## 3. Motion
+
+- **Homepage turntable**: the artist's 360° studio video, converted to 180 WebP stills (one every 2°), drawn on a canvas. Scroll position chooses the angle; neighbouring frames are cross-blended so the motion is continuous between stills; easing is time-based (same feel at 60 Hz and 120 Hz); the scroll position is computed from cached geometry (no layout reads while scrolling); frames load coarse-to-fine and the canvas never jumps more than 6° while loading. Measured draw cost: about 0.1 ms per frame. Reduced motion gets a slider; no JavaScript gets a still.
 
 - **Fold transition** between pages: the old page folds shut toward a vertical crease at 38% of the width (about 170 ms), the new page opens from that crease (about 380 ms). It uses React's `<ViewTransition>` and the browser View Transitions API: no animation library, no WebGL.
 - **Shared element**: an artwork image morphs from the archive into its Fold File.

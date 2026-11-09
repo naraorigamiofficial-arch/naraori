@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { turntable as tt } from "@/content/turntable";
 
@@ -30,74 +31,35 @@ export function Turntable({ children, footer }: { children: ReactNode; footer?: 
     if (mode === "static") return;
     const cv = canvas.current!;
     const st = stage.current!;
+    const tr = track.current!;
     const ctx = cv.getContext("2d", { alpha: false });
     if (!ctx) return;
+    ctx.imageSmoothingQuality = "high";
 
+    const N = tt.frames;
     const size: 720 | 1280 = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) > 1100 ? 1280 : 720;
-    const frames: (HTMLImageElement | null)[] = new Array(tt.frames).fill(null);
+    const frames: (HTMLImageElement | null)[] = new Array(N).fill(null);
+    let bg = "#11100f";
     let target = 0;
     let current = 0;
-    let drawn = -1;
+    let lastDrawn = -1; // fractional frame position last painted
+    let lastDeg = -1;
     let raf = 0;
+    let lastT = 0;
     let disposed = false;
 
-    const nearestLoaded = (i: number) => {
-      for (let d = 0; d < tt.frames; d++) {
-        const a = frames[(i + d) % tt.frames];
-        if (a) return a;
-        const b = frames[(i - d + tt.frames) % tt.frames];
-        if (b) return b;
-      }
-      return null;
-    };
+    // ---- Geometry, measured on resize only (never during scrolling) ----
+    let box = { x: 0, y: 0, w: 0, h: 0 };
+    let trackTop = 0;
+    let span = 1;
+    let stickTop = 0;
+    const overlay = document.createElement("canvas"); // feathered frame edges, drawn once per resize
 
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const measure = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
       const r = st.getBoundingClientRect();
-      cv.width = Math.round(r.width * dpr);
-      cv.height = Math.round(r.height * dpr);
-      drawn = -1;
-    };
-
-    // The video's own backdrop colour, sampled from the first frame, so the stage and the
-    // frame edges blend into one surface.
-    let bg = "#121110";
-    const sampleBackground = (img: HTMLImageElement) => {
-      try {
-        const c = document.createElement("canvas");
-        c.width = 32;
-        c.height = 18;
-        const x = c.getContext("2d")!;
-        x.drawImage(img, 0, 0, 32, 18);
-        const d = x.getImageData(0, 0, 32, 3).data; // top rows: backdrop cloth only
-        let r = 0, g = 0, b = 0;
-        for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
-        const n = d.length / 4;
-        bg = `rgb(${Math.round(r / n)}, ${Math.round(g / n)}, ${Math.round(b / n)})`;
-        st.style.setProperty("--stage-bg", bg);
-      } catch {
-        /* keep default */
-      }
-    };
-
-    const feather = (x: number, y: number, w: number, h: number) => {
-      const edge = (x0: number, y0: number, x1: number, y1: number) => {
-        const g = ctx.createLinearGradient(x0, y0, x1, y1);
-        g.addColorStop(0, bg);
-        g.addColorStop(1, "rgba(0,0,0,0)");
-        return g;
-      };
-      const fy = h * 0.16;
-      const fx = w * 0.12;
-      ctx.fillStyle = edge(0, y, 0, y + fy); ctx.fillRect(x, y, w, fy);
-      ctx.fillStyle = edge(0, y + h, 0, y + h - fy); ctx.fillRect(x, y + h - fy, w, fy);
-      ctx.fillStyle = edge(x, 0, x + fx, 0); ctx.fillRect(x, y, fx, h);
-      ctx.fillStyle = edge(x + w, 0, x + w - fx, 0); ctx.fillRect(x + w - fx, y, fx, h);
-    };
-
-    const draw = (index: number) => {
-      const img = nearestLoaded(index);
-      if (!img) return;
+      cv.width = Math.min(2400, Math.round(r.width * dpr));
+      cv.height = Math.round((cv.width / r.width) * r.height);
       const cw = cv.width;
       const ch = cv.height;
       const wide = cw / ch > 1.25;
@@ -106,90 +68,178 @@ export function Turntable({ children, footer }: { children: ReactNode; footer?: 
       const w = tt.width * s;
       const h = tt.height * s;
       // Wide screens: sculpture right of centre, leaving the left for the name.
-      const x = (wide ? cw * 0.6 : cw / 2) - w / 2;
-      const y = (wide ? (ch - h) / 2 + ch * 0.02 : (ch - h) / 2 - ch * 0.1);
-      ctx.fillStyle = bg;
-      ctx.fillRect(0, 0, cw, ch);
-      ctx.drawImage(img, x, y, w, h);
-      feather(x, y, w, h);
-      cv.dataset.ready = "1";
+      box = { w, h, x: (wide ? cw * 0.6 : cw / 2) - w / 2, y: wide ? (ch - h) / 2 + ch * 0.02 : (ch - h) / 2 - ch * 0.1 };
+      overlay.width = cw;
+      overlay.height = ch;
+      paintOverlay();
+      stickTop = parseFloat(getComputedStyle(st).top) || 0;
+      trackTop = tr.getBoundingClientRect().top + window.scrollY;
+      span = Math.max(1, tr.offsetHeight - st.offsetHeight);
+      lastDrawn = -1;
     };
 
-    const progress = () => {
-      const t = track.current!;
-      const r = t.getBoundingClientRect();
-      const stageH = st.offsetHeight;
-      const span = Math.max(1, r.height - stageH);
-      return Math.min(1, Math.max(0, (st.getBoundingClientRect().top - r.top) / span));
+    const paintOverlay = () => {
+      const o = overlay.getContext("2d")!;
+      o.clearRect(0, 0, overlay.width, overlay.height);
+      const { x, y, w, h } = box;
+      const edge = (x0: number, y0: number, x1: number, y1: number) => {
+        const g = o.createLinearGradient(x0, y0, x1, y1);
+        g.addColorStop(0, bg);
+        g.addColorStop(1, "rgba(0,0,0,0)");
+        return g;
+      };
+      const fy = h * 0.16;
+      const fx = w * 0.12;
+      o.fillStyle = edge(0, y, 0, y + fy); o.fillRect(x, y, w, fy);
+      o.fillStyle = edge(0, y + h, 0, y + h - fy); o.fillRect(x, y + h - fy, w, fy);
+      o.fillStyle = edge(x, 0, x + fx, 0); o.fillRect(x, y, fx, h);
+      o.fillStyle = edge(x + w, 0, x + w - fx, 0); o.fillRect(x + w - fx, y, fx, h);
     };
 
-    const tick = () => {
+    // The video's own backdrop colour, so frame edges and stage are one surface.
+    const sampleBackground = (img: HTMLImageElement) => {
+      try {
+        const c = document.createElement("canvas");
+        c.width = 32;
+        c.height = 18;
+        const x = c.getContext("2d")!;
+        x.drawImage(img, 0, 0, 32, 18);
+        const d = x.getImageData(0, 0, 32, 3).data;
+        let r = 0, g = 0, b = 0;
+        for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
+        const n = d.length / 4;
+        bg = `rgb(${Math.round(r / n)}, ${Math.round(g / n)}, ${Math.round(b / n)})`;
+        st.style.setProperty("--stage-bg", bg);
+        paintOverlay();
+      } catch {
+        /* keep default */
+      }
+    };
+
+    // A loaded frame within `reach` of i, or null (never jump far while frames are loading).
+    const near = (i: number, reach: number) => {
+      for (let d = 0; d <= reach; d++) {
+        const a = frames[Math.min(N - 1, i + d)];
+        if (a) return a;
+        const b = frames[Math.max(0, i - d)];
+        if (b) return b;
+      }
+      return null;
+    };
+
+    const paint = (pos: number) => {
+      const i0 = Math.floor(pos);
+      const f = pos - i0;
+      const A = frames[i0];
+      const B = frames[Math.min(N - 1, i0 + 1)];
+      const { x, y, w, h } = box;
+      if (A && B) {
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, cv.width, cv.height);
+        // Blend neighbouring frames: continuous motion between the 2-degree steps.
+        ctx.globalAlpha = 1;
+        ctx.drawImage(A, x, y, w, h);
+        if (f > 0.02 && B !== A) {
+          ctx.globalAlpha = f;
+          ctx.drawImage(B, x, y, w, h);
+          ctx.globalAlpha = 1;
+        }
+      } else {
+        const img = near(Math.round(pos), 3);
+        if (!img) return false;
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, cv.width, cv.height);
+        ctx.drawImage(img, x, y, w, h);
+      }
+      ctx.drawImage(overlay, 0, 0);
+      if (!cv.dataset.ready) cv.dataset.ready = "1";
+      return true;
+    };
+
+    const readTarget = () =>
+      mode === "scroll"
+        ? Math.min(1, Math.max(0, (window.scrollY + stickTop - trackTop) / span)) * (N - 1)
+        : manual.current * (N - 1);
+
+    const tick = (t: number) => {
       raf = 0;
       if (disposed) return;
-      if (mode === "scroll") target = progress() * (tt.frames - 1);
-      else target = manual.current * (tt.frames - 1);
-      // Ease toward the target: gives the turn a weight, like a real turntable.
-      current += (target - current) * (mode === "scroll" ? 0.16 : 0.35);
-      if (Math.abs(target - current) < 0.02) current = target;
-      const index = Math.round(current);
-      if (index !== drawn) {
-        draw(index);
-        drawn = index;
+      target = readTarget();
+      const dt = lastT ? Math.min(64, t - lastT) : 16;
+      lastT = t;
+      // Time-based easing: same feel on 60 Hz and 120 Hz screens.
+      const k = 1 - Math.exp(-dt / (mode === "scroll" ? 110 : 60));
+      current += (target - current) * k;
+      if (Math.abs(target - current) < 0.003) current = target;
+      if (Math.abs(current - lastDrawn) > 0.004 && paint(current)) lastDrawn = current;
+      const p = current / (N - 1);
+      st.style.setProperty("--p", p.toFixed(3));
+      const deg = Math.round(p * 360);
+      if (deg !== lastDeg && degrees.current) {
+        degrees.current.textContent = `${String(deg).padStart(3, "0")}°`;
+        lastDeg = deg;
       }
-      const p = current / (tt.frames - 1);
-      st.style.setProperty("--p", p.toFixed(4));
-      if (degrees.current) degrees.current.textContent = `${String(Math.round(p * 360)).padStart(3, "0")}°`;
-      if (current !== target) raf = requestAnimationFrame(tick);
+      if (current !== target || lastDrawn !== current) raf = requestAnimationFrame(tick);
+      else lastT = 0;
     };
     const schedule = () => {
       if (!raf) raf = requestAnimationFrame(tick);
     };
 
-    // Progressive loading: every 8th frame first, then fill the gaps. Starts only when near.
-    let started = false;
-    const load = () => {
-      if (started) return;
-      started = true;
-      const order: number[] = [];
-      for (const step of [8, 4, 2, 1]) for (let i = 0; i < tt.frames; i += step) if (!order.includes(i)) order.push(i);
-      let next = 0;
-      const worker = async () => {
-        while (!disposed && next < order.length) {
-          const i = order[next++];
-          const img = new Image();
-          img.src = tt.src(size, i);
-          try {
-            await img.decode();
-            if (i === 0) sampleBackground(img);
-            frames[i] = img;
-            if (Math.abs(i - Math.round(current)) < 4 || drawn === -1) {
-              drawn = -1;
-              schedule();
-            }
-          } catch {
-            /* skip a frame that fails to load */
+    // Loading: every 4th frame first (gaps of at most 8 degrees), then every 2nd, then all.
+    const order: number[] = [];
+    const seen = new Set<number>();
+    for (const step of [4, 2, 1]) for (let i = 0; i < N; i += step) if (!seen.has(i)) { seen.add(i); order.push(i); }
+    let next = 0;
+    const worker = async () => {
+      while (!disposed && next < order.length) {
+        const i = order[next++];
+        const img = new Image();
+        img.decoding = "async";
+        img.src = tt.src(size, i);
+        try {
+          await img.decode();
+          if (i === 0) sampleBackground(img);
+          frames[i] = img;
+          if (Math.abs(i - current) < 4) {
+            lastDrawn = -1;
+            schedule();
           }
+        } catch {
+          /* skip a frame that fails to load */
         }
-      };
-      for (let k = 0; k < 4; k++) void worker();
+      }
     };
-    const io = new IntersectionObserver((e) => e.some((x) => x.isIntersecting) && load(), { rootMargin: "600px" });
-    io.observe(track.current!);
+    for (let k = 0; k < 6; k++) void worker();
 
-    resize();
+    measure();
+    let lastW = window.innerWidth;
+    let lastH = window.innerHeight;
     const onResize = () => {
-      resize();
+      // Mobile address bars change the height while scrolling: only re-measure scroll positions
+      // for that, and rebuild the canvas only for real size changes (no mid-scroll hitch).
+      const big = window.innerWidth !== lastW || Math.abs(window.innerHeight - lastH) > 160;
+      if (big) {
+        lastW = window.innerWidth;
+        lastH = window.innerHeight;
+        measure();
+      } else {
+        trackTop = tr.getBoundingClientRect().top + window.scrollY;
+        span = Math.max(1, tr.offsetHeight - st.offsetHeight);
+      }
       schedule();
     };
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", onResize);
+    const ro = new ResizeObserver(onResize);
+    ro.observe(tr);
     const onManual = () => schedule();
     st.addEventListener("tt-manual", onManual);
     schedule();
     return () => {
       disposed = true;
-      io.disconnect();
       cancelAnimationFrame(raf);
+      ro.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", onResize);
       st.removeEventListener("tt-manual", onManual);
@@ -214,9 +264,10 @@ export function Turntable({ children, footer }: { children: ReactNode; footer?: 
         <canvas ref={canvas} className="tt-canvas" aria-hidden="true" />
         <div className="tt-vignette" aria-hidden="true" />
         <div className="tt-content">{children}</div>
-        <div className="tt-meter" aria-hidden={mode === "manual" ? undefined : "true"}>
-          <span className="tt-label">{tt.title ?? tt.label}</span>
-          <span ref={degrees} className="tt-deg">000°</span>
+        <div className="tt-meter">
+          {tt.title && (tt.href ? <Link href={tt.href} className="tt-title">{tt.title}</Link> : <span className="tt-title">{tt.title}</span>)}
+          <span className="tt-label">{tt.label}</span>
+          <span ref={degrees} className="tt-deg" aria-hidden="true">000°</span>
         </div>
         {mode === "scroll" && (
           <p className="tt-hint" aria-hidden="true">

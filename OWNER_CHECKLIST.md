@@ -28,7 +28,7 @@ For every work, if you can: whether cuts, glue or MC were used, your design meth
 
 ## Photographs
 
-- [ ] **Homepage turntable video.** Which sculpture is the white horse and rider? It is labelled only "Horse and rider" until you confirm (set `title` in `content/turntable.ts`). If it is the Shivaji Maharaj re-design, say so and it will link to that project.
+- [x] **Homepage turntable video**: confirmed as the Chhatrapati Shivaji Maharaj re-design; the homepage label links to that project.
 
 - [ ] **Studio project photos.** Your earlier workspace had photos for Instinct vs Honour, Shivaji re-design (cover and the collapsed horse) and Vajrabhairava. They are in the old Supabase storage, which could not be reached from the build environment. Download and send them (or upload to `public/media/studio/`).
 - [ ] Detail shots and other angles of each finished sculpture (the Fold File pages support several images).

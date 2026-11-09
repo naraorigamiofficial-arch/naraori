@@ -131,6 +131,7 @@ test.describe("Homepage turntable", () => {
   test("turns with scroll and stops when scrolling stops", async ({ page }) => {
     await page.goto("/");
     const deg = page.locator(".tt-deg");
+    await expect(page.locator(".tt-track.tt-scroll")).toBeAttached(); // wait for the live (scroll-driven) mode
     await expect(deg).toHaveText("000°");
     const span = await page.evaluate(() => document.querySelector<HTMLElement>(".tt-track")!.offsetHeight - document.querySelector<HTMLElement>(".tt-stage")!.offsetHeight);
     await page.evaluate((y) => window.scrollTo(0, y), Math.round(span / 2));

@@ -43,7 +43,7 @@
 .layer > summary::-webkit-details-marker { display: none; }
 .layer > summary::after { content: "+"; font-family: var(--font-mono); color: var(--ink-3); }
 .layer[open] > summary::after { content: "−"; }
-.layer[open] { border-color: var(--crease); box-shadow: 0 1px 0 var(--rule), 0 8px 20px -16px rgba(28, 26, 23, 0.35); }
+.layer[open] { border-color: var(--crease); box-shadow: 0 1px 0 var(--rule), 0 10px 24px -18px rgba(0, 0, 0, 0.9); }
 .layer[open]::before { content: ""; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 2px; background: var(--accent); }
 .layer-title { font-family: var(--font-display); font-size: var(--step-1); }
 .layer-body { padding: 0 var(--s-5) var(--s-4) calc(6.5rem + var(--s-5) + var(--s-3)); max-width: 70ch; }

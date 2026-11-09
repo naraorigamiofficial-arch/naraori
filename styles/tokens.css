@@ -1,28 +1,28 @@
 /*
- * NARA ORIGAMI: design tokens ("Washi & Ink" system; see PROJECT_DECISIONS.md §Visual system)
- * Paper-toned walls, ink type, one restrained sindoor accent. Artworks sit on their own dark
- * mount fields, so colour on the page comes from the sculptures, not the interface.
+ * NARA ORIGAMI: design tokens ("Studio Black" system; see PROJECT_DECISIONS.md §Visual system)
+ * A black ground matched to the studio backdrop, warm light type, one sindoor accent.
+ * Artworks sit on slightly lifted mount fields, so colour comes from the sculptures.
  */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  /* Paper */
-  --paper: #f3efe7;        /* gallery wall */
-  --paper-deep: #e9e3d7;   /* recessed areas */
-  --sheet: #fbf9f4;        /* raised sheet / inputs */
-  /* Ink */
-  --ink: #1c1a17;
-  --ink-2: #47423b;        /* 8.9:1 on --paper */
-  --ink-3: #655e54;        /* 5.6:1 on --paper, captions & metadata */
+  /* Ground: the black of the studio backdrop the sculptures are photographed against */
+  --paper: #11100f;        /* page */
+  --paper-deep: #181715;   /* recessed bands */
+  --sheet: #1d1b19;        /* raised sheet / inputs / panels */
+  /* Ink (light on dark) */
+  --ink: #ece7de;          /* 15.4:1 on --paper */
+  --ink-2: #c4bdb1;        /* 10.2:1 */
+  --ink-3: #9b9387;        /* 6.3:1 captions & metadata */
   /* Lines */
-  --rule: #d6cdbd;
-  --crease: #bfb39f;
-  /* Accent: sindoor / burgundy. Used sparingly: active marks, focus, primary action. */
-  --accent: #7a2e24;       /* 8.0:1 on --paper */
-  --accent-ink: #fbf9f4;
-  --copper: #93582c;
-  --ok: #2f5d3a;
-  --warn: #8a5a00;
+  --rule: #2d2a27;
+  --crease: #45413b;
+  /* Accent: warm sindoor, lifted for a dark ground. Active marks, focus, primary hover. */
+  --accent: #de8058;       /* 6.6:1 on --paper */
+  --accent-ink: #11100f;
+  --copper: #c88a5a;
+  --ok: #8cc29a;
+  --warn: #e0b35a;
   /* Mount fields (artwork backgrounds) default */
   --field: #26282c;
   --on-field: #ece7de;

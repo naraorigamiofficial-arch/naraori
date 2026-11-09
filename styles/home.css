@@ -1,10 +1,10 @@
 /* ---------- Opening stage: scroll-driven turntable ---------- */
-.home-stage { --stage-top: 4rem; background: #121110; color: #ece7de; }
-.tt-stage { background: var(--stage-bg, #121110); }
+.home-stage { --stage-top: 4rem; background: var(--paper); color: var(--ink); }
+.tt-stage { background: var(--stage-bg, var(--paper)); }
 .tt-track { position: relative; }
 .tt-track.tt-scroll { height: 340vh; }
 @media (max-width: 760px) { .tt-track.tt-scroll { height: 260vh; } }
-.tt-stage { --p: 0; position: relative; height: calc(100svh - var(--stage-top)); min-height: 30rem; overflow: hidden; isolation: isolate; }
+.tt-stage { --p: 0; position: relative; height: calc(100lvh - var(--stage-top)); height: calc(100svh - var(--stage-top)); min-height: 30rem; overflow: hidden; isolation: isolate; }
 .tt-scroll .tt-stage { position: sticky; top: var(--stage-top); }
 .tt-poster, .tt-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
 .tt-poster { object-fit: cover; object-position: 50% 60%; z-index: 0; }
@@ -16,15 +16,17 @@
 /* Soften the edges of the frame into the stage, and keep text legible. */
 .tt-vignette { position: absolute; inset: 0; z-index: 2; pointer-events: none;
   background:
-    radial-gradient(ellipse 75% 85% at 55% 45%, transparent 60%, var(--stage-bg, #121110) 100%),
-    linear-gradient(to top, var(--stage-bg, #121110), transparent 36%),
-    linear-gradient(to bottom, rgba(18, 17, 16, 0.6), transparent 22%); }
+    radial-gradient(ellipse 75% 85% at 55% 45%, transparent 60%, var(--stage-bg, var(--paper)) 100%),
+    linear-gradient(to top, var(--stage-bg, var(--paper)), transparent 36%),
+    linear-gradient(to bottom, rgba(17, 16, 15, 0.6), transparent 22%); }
 .tt-content { position: absolute; z-index: 3; left: calc(var(--rail) + var(--gutter)); bottom: 6.5rem; max-width: min(34rem, 80vw);
   transform: translateY(calc(var(--p) * -1.5rem)); opacity: calc(1 - var(--p) * 0.35); }
 .tt-content .eyebrow { color: #a49c8f; }
 .stage-name { font-size: clamp(2.6rem, 1.2rem + 4.6vw, 6rem); line-height: 0.96; letter-spacing: -0.03em; color: #f3efe7; }
 .stage-role { font-family: var(--font-display); font-style: italic; font-size: var(--step-1); color: #c9c1b4; margin: var(--s-3) 0 0; max-width: 26ch; }
 .tt-meter { position: absolute; z-index: 3; right: var(--gutter); top: var(--s-5); display: grid; justify-items: end; gap: 0.15rem; font-family: var(--font-mono); }
+.tt-title { font-family: var(--font-display); font-size: var(--step-0); color: #ece7de; text-decoration: none; text-align: right; }
+.tt-title:hover { text-decoration: underline; text-underline-offset: 0.25em; }
 .tt-label { font-size: var(--mono-size); letter-spacing: 0.12em; text-transform: uppercase; color: #a49c8f; }
 .tt-deg { font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.6rem); color: #f3efe7; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
 .tt-hint { position: absolute; z-index: 3; right: var(--gutter); bottom: 6.5rem; text-align: right; margin: 0; font-family: var(--font-mono);

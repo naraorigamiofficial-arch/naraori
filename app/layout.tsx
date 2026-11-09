@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
 };
 
-export const viewport: Viewport = { themeColor: "#f3efe7", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#11100f", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
