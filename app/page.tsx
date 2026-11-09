@@ -6,7 +6,8 @@ import { ArchivalCaption } from "@/components/ArchivalCaption";
 import { ArtworkMount } from "@/components/ArtworkMount";
 import { Folio } from "@/components/Folio";
 import { SheetDiagram } from "@/components/SheetDiagram";
-import { getArtwork, publishedArtworks } from "@/content/artworks";
+import { Turntable } from "@/components/Turntable";
+import { getArtwork } from "@/content/artworks";
 import { products } from "@/content/catalogue";
 import { identity } from "@/content/identity";
 import { publishedProjects } from "@/content/projects";
@@ -21,7 +22,6 @@ export const metadata = pageMetadata({
 
 export default async function Home() {
   const hero = getArtwork("sun-wukong-the-monkey-king")!;
-  const works = publishedArtworks();
   const [rama, agniv, sun] = ["maryada-purushottam", "agniv-the-monk-of-fire", "sunstriker"].map((s) => getArtwork(s)!);
   const [learn, journal] = await Promise.all([getLearn(), getJournal()]);
   const projects = publishedProjects();
@@ -29,67 +29,27 @@ export default async function Home() {
 
   return (
     <Folio>
-      {/* ---------- Opening exhibition ---------- */}
-      <section className="frame home-open" aria-labelledby="home-title">
-        <div className="home-id">
-          <span className="eyebrow">Nara Origami · An archive of paper sculpture</span>
-          <h1 id="home-title" className="display">
-            {identity.person.name}
-          </h1>
-          <p className="home-role">Origami artist &amp; designer, India</p>
-          <p className="lede">
-            Complex original sculptures of deities, warriors and characters from history and legend, each folded from a single sheet of paper.
-          </p>
-          <nav aria-label="Where to begin" className="entry-index">
-            <ol>
-              <li>
-                <Link href="/artworks">
-                  <span className="mono">I</span>
-                  <b>Explore the artwork</b>
-                  <span className="muted">The Fold Files: every sculpture, documented</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/shop">
-                  <span className="mono">II</span>
-                  <b>Find paper</b>
-                  <span className="muted">The Paper Atlas: treated double tissue, 10 cm to 6 m</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/learn">
-                  <span className="mono">III</span>
-                  <b>Learn origami design</b>
-                  <span className="muted">Grids, structure and process</span>
-                </Link>
-              </li>
-            </ol>
-          </nav>
-        </div>
-        <figure className="home-exhibit">
-          <ArtworkMount artwork={hero} aspect="4 / 5" sizes="(min-width: 900px) 58vw, 100vw" priority />
-          <figcaption className="home-exhibit-cap">
-            <Link href={`/artworks/${hero.slug}`}>
-              <span className="mono">{hero.catalogueNo}</span> <b>{hero.title}</b> <i>{hero.alternateTitle}</i>
-            </Link>
-            <span className="mono">{hero.intro}</span>
-          </figcaption>
-        </figure>
-        <aside className="home-index" aria-label="Index of works">
-          <span className="eyebrow">Index of works</span>
-          <ol>
-            {works
-              .slice()
-              .sort((a, b) => a.catalogueNo.localeCompare(b.catalogueNo))
-              .map((w) => (
-                <li key={w.slug}>
-                  <Link href={`/artworks/${w.slug}`}>
-                    <span className="mono">{w.catalogueNo.replace("NO. ", "")}</span> {w.title}
-                  </Link>
-                </li>
-              ))}
-          </ol>
-        </aside>
+      {/* ---------- Opening: the sculpture turns as you scroll ---------- */}
+      <section className="home-stage" aria-labelledby="home-title">
+        <Turntable
+          footer={
+            <nav aria-label="Where to begin" className="stage-routes">
+              <Link href="/artworks"><span className="mono">I</span> Explore the artwork</Link>
+              <Link href="/shop"><span className="mono">II</span> Find paper</Link>
+              <Link href="/learn"><span className="mono">III</span> Learn origami design</Link>
+            </nav>
+          }
+        >
+          <span className="eyebrow">Nara Origami</span>
+          <h1 id="home-title" className="stage-name">{identity.person.name}</h1>
+          <p className="stage-role">Original origami sculpture, from a single sheet of paper.</p>
+        </Turntable>
+      </section>
+
+      <section className="frame home-intro" aria-label="Introduction">
+        <p className="home-statement">
+          Deities, warriors and characters from history and legend, designed on grids of up to 128 divisions and folded from sheets as large as two metres.
+        </p>
       </section>
 
       {/* ---------- Selected works ---------- */}
@@ -110,6 +70,10 @@ export default async function Home() {
           <article className="wc wc-sun">
             <ArchivalCaption artwork={sun} />
             <ArtworkMount artwork={sun} aspect="4 / 5" sizes="(min-width: 900px) 44vw, 100vw" />
+          </article>
+          <article className="wc wc-wukong">
+            <ArtworkMount artwork={hero} aspect="4 / 5" sizes="(min-width: 900px) 40vw, 100vw" />
+            <ArchivalCaption artwork={hero} />
           </article>
         </div>
         <p className="section-foot">

@@ -126,3 +126,28 @@ test.describe("Visitor F: accessibility", () => {
     await expect(page.getByText(/your enquiry has reached the studio/i)).toBeVisible();
   });
 });
+
+test.describe("Homepage turntable", () => {
+  test("turns with scroll and stops when scrolling stops", async ({ page }) => {
+    await page.goto("/");
+    const deg = page.locator(".tt-deg");
+    await expect(deg).toHaveText("000°");
+    const span = await page.evaluate(() => document.querySelector<HTMLElement>(".tt-track")!.offsetHeight - document.querySelector<HTMLElement>(".tt-stage")!.offsetHeight);
+    await page.evaluate((y) => window.scrollTo(0, y), Math.round(span / 2));
+    await expect(deg).toHaveText(/^1[78]\d°$/);
+    await page.waitForTimeout(1200); // let the easing finish
+    const settled = await deg.textContent();
+    await page.waitForTimeout(600);
+    await expect(deg).toHaveText(settled!);
+  });
+
+  test("reduced motion: no scroll coupling, a slider turns the sculpture", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    const slider = page.getByRole("slider", { name: "Turn the sculpture" });
+    await expect(slider).toBeVisible();
+    await slider.focus();
+    for (let i = 0; i < 90; i++) await page.keyboard.press("ArrowRight");
+    await expect(page.locator(".tt-deg")).toHaveText(/^0(8|9)\d°$/);
+  });
+});

@@ -1,47 +1,59 @@
-/* ---------- Opening exhibition ---------- */
-.home-open {
-  display: grid;
-  grid-template-columns: minmax(0, 4.2fr) minmax(0, 7fr) minmax(0, 1.6fr);
-  gap: var(--gutter);
-  padding-top: var(--s-7);
-  padding-bottom: var(--s-7);
-  align-items: start;
-}
-.home-id { padding-top: var(--s-5); position: sticky; top: 6rem; }
-.home-id .display { font-size: clamp(2.6rem, 1.4rem + 3.4vw, 5.2rem); }
-.home-role { font-family: var(--font-display); font-style: italic; font-size: var(--step-1); color: var(--ink-2); margin: var(--s-3) 0 var(--s-6); }
-.entry-index { margin-top: var(--s-7); }
-.entry-index ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
-.entry-index a { display: grid; grid-template-columns: 2.2rem 1fr; column-gap: var(--s-2); padding: var(--s-4) 0; border-bottom: 1px solid var(--rule); text-decoration: none; transition: padding var(--t-fast) var(--ease-fold); }
-.entry-index a b { font-family: var(--font-display); font-weight: 400; font-size: var(--step-1); }
-.entry-index a .muted { grid-column: 2; font-size: 0.95rem; }
-.entry-index a .mono { padding-top: 0.35rem; }
-.entry-index a:hover { padding-left: var(--s-2); }
-.entry-index a:hover b { color: var(--accent); }
-.home-exhibit { margin: 0; }
-.home-exhibit-cap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-2) var(--s-5); padding-top: var(--s-3); border-top: 1px solid var(--ink); margin-top: var(--s-3); }
-.home-exhibit-cap a { text-decoration: none; }
-.home-exhibit-cap b { font-family: var(--font-display); font-weight: 400; font-size: var(--step-1); }
-.home-exhibit-cap i { font-family: var(--font-display); color: var(--ink-3); }
-.home-index { padding-top: var(--s-5); }
-.home-index ol { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-3); }
-.home-index a { text-decoration: none; font-family: var(--font-display); font-size: 1.05rem; line-height: 1.25; display: grid; gap: 0.1rem; }
-.home-index a:hover { color: var(--accent); }
-
-
-@media (max-width: 1099px) {
-  .home-open { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
-  .home-index { grid-column: 1 / -1; }
-  .home-index ol { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); }
-}
+/* ---------- Opening stage: scroll-driven turntable ---------- */
+.home-stage { --stage-top: 4rem; background: #121110; color: #ece7de; }
+.tt-stage { background: var(--stage-bg, #121110); }
+.tt-track { position: relative; }
+.tt-track.tt-scroll { height: 340vh; }
+@media (max-width: 760px) { .tt-track.tt-scroll { height: 260vh; } }
+.tt-stage { --p: 0; position: relative; height: calc(100svh - var(--stage-top)); min-height: 30rem; overflow: hidden; isolation: isolate; }
+.tt-scroll .tt-stage { position: sticky; top: var(--stage-top); }
+.tt-poster, .tt-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tt-poster { object-fit: cover; object-position: 50% 60%; z-index: 0; }
+.tt-canvas { z-index: 1; opacity: 0; transition: opacity 600ms var(--ease-fold); }
+.tt-canvas[data-ready] { opacity: 1; }
+@media (min-width: 761px) { .tt-poster { object-position: 70% 55%; } }
+.tt-static .tt-canvas { display: none; }
+@media (max-width: 760px) { .tt-poster { object-fit: contain; } }
+/* Soften the edges of the frame into the stage, and keep text legible. */
+.tt-vignette { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    radial-gradient(ellipse 75% 85% at 55% 45%, transparent 60%, var(--stage-bg, #121110) 100%),
+    linear-gradient(to top, var(--stage-bg, #121110), transparent 36%),
+    linear-gradient(to bottom, rgba(18, 17, 16, 0.6), transparent 22%); }
+.tt-content { position: absolute; z-index: 3; left: calc(var(--rail) + var(--gutter)); bottom: 6.5rem; max-width: min(34rem, 80vw);
+  transform: translateY(calc(var(--p) * -1.5rem)); opacity: calc(1 - var(--p) * 0.35); }
+.tt-content .eyebrow { color: #a49c8f; }
+.stage-name { font-size: clamp(2.6rem, 1.2rem + 4.6vw, 6rem); line-height: 0.96; letter-spacing: -0.03em; color: #f3efe7; }
+.stage-role { font-family: var(--font-display); font-style: italic; font-size: var(--step-1); color: #c9c1b4; margin: var(--s-3) 0 0; max-width: 26ch; }
+.tt-meter { position: absolute; z-index: 3; right: var(--gutter); top: var(--s-5); display: grid; justify-items: end; gap: 0.15rem; font-family: var(--font-mono); }
+.tt-label { font-size: var(--mono-size); letter-spacing: 0.12em; text-transform: uppercase; color: #a49c8f; }
+.tt-deg { font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.6rem); color: #f3efe7; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.tt-hint { position: absolute; z-index: 3; right: var(--gutter); bottom: 6.5rem; text-align: right; margin: 0; font-family: var(--font-mono);
+  font-size: var(--mono-size); letter-spacing: 0.18em; text-transform: uppercase; color: #a49c8f; opacity: max(0, calc(1 - var(--p) * 14)); }
+.tt-hint::after { content: ""; display: block; width: 1px; height: 2.2rem; margin: 0.6rem 0 0 auto; background: linear-gradient(#a49c8f, transparent);
+  animation: hint 1.8s var(--ease-fold) infinite; transform-origin: top; }
+@keyframes hint { 0% { transform: scaleY(0); } 60% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+@media (max-width: 760px) { .tt-hint { display: none; } }
+/* The crease: a hairline that draws across the stage as the sculpture turns. */
+.tt-line { position: absolute; z-index: 3; left: 0; right: 0; bottom: 4.6rem; height: 1px; background: rgba(236, 231, 222, 0.14); }
+.tt-line::after { content: ""; position: absolute; inset: 0; background: #ece7de; transform: scaleX(var(--p)); transform-origin: left; }
+.tt-footer { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; height: 4.6rem; display: flex; align-items: center; padding-left: calc(var(--rail) + var(--gutter)); padding-right: var(--gutter); }
+.stage-routes { display: flex; gap: clamp(1rem, 3vw, 3.5rem); flex-wrap: wrap; }
+.stage-routes a { color: #ece7de; text-decoration: none; font-size: 0.98rem; display: inline-flex; gap: 0.6rem; align-items: baseline; }
+.stage-routes a .mono { color: #8f887d; }
+.stage-routes a:hover { color: #fff; text-decoration: underline; text-underline-offset: 0.3em; }
+.tt-range { position: absolute; z-index: 4; right: var(--gutter); bottom: 6.5rem; display: grid; gap: 0.4rem; font-size: 0.9rem; color: #c9c1b4; width: min(18rem, 60vw); }
+.tt-range input { accent-color: #ece7de; width: 100%; }
 @media (max-width: 760px) {
-  .home-open { grid-template-columns: minmax(0, 1fr); padding-top: var(--s-5); }
-  .home-id { position: static; padding-top: 0; }
-  .entry-index { margin-top: var(--s-5); }
-  .home-exhibit { order: 2; }
-  .home-exhibit .mount { aspect-ratio: 1 / 1 !important; }
-  .home-index { order: 3; }
+  .tt-content { bottom: 8.5rem; }
+  .tt-line { bottom: 6.4rem; }
+  .tt-footer { height: 6.4rem; align-items: center; }
+  .stage-routes { flex-direction: column; gap: 0.35rem; }
+  .tt-meter { top: var(--s-4); }
+  .tt-range { bottom: auto; top: 5.5rem; }
 }
+
+.home-intro { padding-block: var(--s-8) var(--s-4); }
+.home-statement { font-family: var(--font-display); font-size: var(--step-3); line-height: 1.18; letter-spacing: -0.015em; max-width: 30ch; margin: 0; color: var(--ink); }
 
 /* ---------- Selected works: each piece composed for itself ---------- */
 .works-composition { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-8) var(--gutter); margin-top: var(--s-7); }
@@ -50,13 +62,14 @@
 .wc-rama .archival { position: relative; }
 .wc-agniv { grid-column: 3 / span 10; }
 .wc-sun { grid-column: 2 / span 9; grid-template-columns: minmax(0, 4fr) minmax(0, 5fr); align-items: end; }
+.wc-wukong { grid-column: 6 / span 6; }
 @media (min-width: 900px) {
   .wc-rama { grid-template-columns: minmax(0, 1fr) 15rem; align-items: end; grid-column: 1 / span 9; }
   .wc-agniv .archival { max-width: 32rem; margin-left: auto; text-align: right; }
 }
 @media (max-width: 899px) {
   .works-composition { grid-template-columns: minmax(0, 1fr); gap: var(--s-7); }
-  .wc-rama, .wc-agniv, .wc-sun { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr); }
+  .wc-rama, .wc-agniv, .wc-sun, .wc-wukong { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr); }
   .wc-sun .archival { order: 2; }
 }
 .section-foot { margin-top: var(--s-7); }
