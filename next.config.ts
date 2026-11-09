@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
+      // Photographs and turntable frames: let browsers keep them for a week (smooth scrolling on return visits).
+      { source: "/media/:path*", headers: [{ key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=86400" }] },
       // Private areas must never be indexed, even if a link leaks.
       { source: "/studio/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] },
       { source: "/order-request/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
