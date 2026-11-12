@@ -1,0 +1,133 @@
+1
+00:00:00,400 --> 00:00:04,700
+This entire figure begins with
+something surprisingly simple: flaps.
+
+2
+00:00:05,300 --> 00:00:11,400
+A flap is a section of the folded base
+that projects from the rest of the paper,
+
+3
+00:00:11,400 --> 00:00:15,600
+giving us material we can
+move and shape.
+
+4
+00:00:16,300 --> 00:00:21,400
+An arm, a leg, a wing, or a tail
+might all begin as flaps.
+
+5
+00:00:21,400 --> 00:00:25,700
+But a flap isn't automatically
+any of those features.
+
+6
+00:00:26,300 --> 00:00:28,900
+And don't confuse it with a crease.
+
+7
+00:00:28,900 --> 00:00:32,100
+A crease is a line
+where paper bends.
+
+8
+00:00:32,100 --> 00:00:36,600
+A flap is a region of paper.
+
+9
+00:00:37,300 --> 00:00:41,400
+To plan the structure, designers
+sometimes use a tree.
+
+10
+00:00:41,400 --> 00:00:43,400
+Its lines represent lengths
+
+11
+00:00:43,400 --> 00:00:47,600
+and its junctions show
+connections between parts.
+
+12
+00:00:48,300 --> 00:00:50,400
+Look at this arm.
+
+13
+00:00:50,400 --> 00:00:53,800
+In the tree it's a
+terminal branch.
+
+14
+00:00:53,800 --> 00:00:57,400
+In the base it's a
+projecting flap.
+
+15
+00:00:57,400 --> 00:01:01,800
+With shaping, it starts
+to look like an arm.
+
+16
+00:01:02,300 --> 00:01:04,500
+So how do we create one?
+
+17
+00:01:04,500 --> 00:01:08,000
+We organise the sheet
+into a crease pattern:
+
+18
+00:01:08,000 --> 00:01:12,600
+the folds that allow
+a base to collapse.
+
+19
+00:01:13,300 --> 00:01:18,200
+In box pleating, the design is
+built around a square grid,
+
+20
+00:01:18,200 --> 00:01:22,800
+with horizontal, vertical and
+forty-five-degree creases.
+
+21
+00:01:23,300 --> 00:01:27,000
+Another common approach uses
+twenty-two-and-a-half-degree
+
+22
+00:01:27,000 --> 00:01:30,800
+geometry, which offers different
+crease arrangements.
+
+23
+00:01:31,300 --> 00:01:36,000
+And after collapsing, we can
+narrow, bend or spread a flap
+
+24
+00:01:36,000 --> 00:01:39,700
+to give it its final form.
+
+25
+00:01:40,300 --> 00:01:43,400
+Remember: the tree
+describes the structure,
+
+26
+00:01:43,400 --> 00:01:46,400
+the crease pattern
+organizes the paper,
+
+27
+00:01:46,400 --> 00:01:49,800
+and the flap is
+what we shape.
+
+28
+00:01:50,300 --> 00:01:54,000
+Next: how long can
+a flap actually be?
