@@ -54,11 +54,11 @@ export const projects: StudioProject[] = [
       { heading: "Design notes", body: ["I am going to use 1m x 2m paper for it, with a 56 x 112 grid."] },
     ],
     image: {
-      src: "/media/turntable/1280/001.webp",
+      src: "/media/studio/shivaji-redesign-poster-1280.webp",
       width: 1280,
       height: 720,
       alt: "The Chhatrapati Shivaji Maharaj re-design in progress: a white origami horse and rider on a dark studio table",
-      caption: "Still from the studio turntable video. Scroll the homepage to see it turn.",
+      caption: "Still from the studio film. The full turn plays at the top of the homepage.",
     },
   },
   {

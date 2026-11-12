@@ -1,57 +1,48 @@
-/* ---------- Opening stage: scroll-driven turntable ---------- */
+/* ---------- Opening stage: the studio film ---------- */
 .home-stage { --stage-top: 4rem; background: var(--paper); color: var(--ink); }
-.tt-stage { background: var(--stage-bg, var(--paper)); }
-.tt-track { position: relative; }
-.tt-track.tt-scroll { height: 340vh; }
-@media (max-width: 760px) { .tt-track.tt-scroll { height: 260vh; } }
-.tt-stage { --p: 0; position: relative; height: calc(100lvh - var(--stage-top)); height: calc(100svh - var(--stage-top)); min-height: 30rem; overflow: hidden; isolation: isolate; }
-.tt-scroll .tt-stage { position: sticky; top: var(--stage-top); }
-.tt-poster, .tt-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.tt-poster { object-fit: cover; object-position: 50% 60%; z-index: 0; }
-.tt-canvas { z-index: 1; opacity: 0; transition: opacity 600ms var(--ease-fold); }
-.tt-canvas[data-ready] { opacity: 1; }
-@media (min-width: 761px) { .tt-poster { object-position: 70% 55%; } }
-.tt-static .tt-canvas { display: none; }
-@media (max-width: 760px) { .tt-poster { object-fit: contain; } }
-/* Soften the edges of the frame into the stage, and keep text legible. */
-.tt-vignette { position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background:
-    radial-gradient(ellipse 75% 85% at 55% 45%, transparent 60%, var(--stage-bg, var(--paper)) 100%),
-    linear-gradient(to top, var(--stage-bg, var(--paper)), transparent 36%),
-    linear-gradient(to bottom, rgba(17, 16, 15, 0.6), transparent 22%); }
-.tt-content { position: absolute; z-index: 3; left: calc(var(--rail) + var(--gutter)); bottom: 6.5rem; max-width: min(34rem, 80vw);
-  transform: translateY(calc(var(--p) * -1.5rem)); opacity: calc(1 - var(--p) * 0.35); }
-.tt-content .eyebrow { color: #a49c8f; }
+.sv-stage { --p: 0; position: relative; height: calc(100svh - var(--stage-top)); min-height: 32rem; max-height: 62rem; overflow: hidden; isolation: isolate; background: var(--paper); }
+/* The film sits right of centre on wide screens, edges feathered into the black. */
+.sv-media { position: absolute; z-index: 0; top: 0; bottom: 0; right: 0; width: 74%;
+  -webkit-mask-image: radial-gradient(ellipse 50% 54% at 50% 50%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 54% at 50% 50%, #000 62%, transparent 100%); }
+.sv-poster, .sv-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
+.sv-video { opacity: 0; transition: opacity 700ms var(--ease-fold); }
+.sv-stage[data-ready] .sv-video { opacity: 1; }
+@media (max-width: 760px) {
+  .sv-media { width: 150%; right: -25%; top: 4%; bottom: auto; aspect-ratio: 16 / 9;
+    -webkit-mask-image: radial-gradient(ellipse 46% 50% at 50% 50%, #000 60%, transparent 100%);
+    mask-image: radial-gradient(ellipse 46% 50% at 50% 50%, #000 60%, transparent 100%); }
+}
+.sv-vignette { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, var(--paper), transparent 34%), linear-gradient(to right, var(--paper) 18%, transparent 46%); }
+@media (max-width: 760px) { .sv-vignette { background: linear-gradient(to top, var(--paper) 38%, transparent 62%); } }
+.sv-content { position: absolute; z-index: 2; left: calc(var(--rail) + var(--gutter)); bottom: 6.5rem; max-width: min(34rem, 80vw); }
+.sv-content .eyebrow { color: #a49c8f; }
 .stage-name { font-size: clamp(2.6rem, 1.2rem + 4.6vw, 6rem); line-height: 0.96; letter-spacing: -0.03em; color: #f3efe7; }
 .stage-role { font-family: var(--font-display); font-style: italic; font-size: var(--step-1); color: #c9c1b4; margin: var(--s-3) 0 0; max-width: 26ch; }
-.tt-meter { position: absolute; z-index: 3; right: var(--gutter); top: var(--s-5); display: grid; justify-items: end; gap: 0.15rem; font-family: var(--font-mono); }
-.tt-title { font-family: var(--font-display); font-size: var(--step-0); color: #ece7de; text-decoration: none; text-align: right; }
-.tt-title:hover { text-decoration: underline; text-underline-offset: 0.25em; }
-.tt-label { font-size: var(--mono-size); letter-spacing: 0.12em; text-transform: uppercase; color: #a49c8f; }
-.tt-deg { font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.6rem); color: #f3efe7; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
-.tt-hint { position: absolute; z-index: 3; right: var(--gutter); bottom: 6.5rem; text-align: right; margin: 0; font-family: var(--font-mono);
-  font-size: var(--mono-size); letter-spacing: 0.18em; text-transform: uppercase; color: #a49c8f; opacity: max(0, calc(1 - var(--p) * 14)); }
-.tt-hint::after { content: ""; display: block; width: 1px; height: 2.2rem; margin: 0.6rem 0 0 auto; background: linear-gradient(#a49c8f, transparent);
-  animation: hint 1.8s var(--ease-fold) infinite; transform-origin: top; }
-@keyframes hint { 0% { transform: scaleY(0); } 60% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
-@media (max-width: 760px) { .tt-hint { display: none; } }
-/* The crease: a hairline that draws across the stage as the sculpture turns. */
-.tt-line { position: absolute; z-index: 3; left: 0; right: 0; bottom: 4.6rem; height: 1px; background: rgba(236, 231, 222, 0.14); }
-.tt-line::after { content: ""; position: absolute; inset: 0; background: #ece7de; transform: scaleX(var(--p)); transform-origin: left; }
-.tt-footer { position: absolute; z-index: 3; left: 0; right: 0; bottom: 0; height: 4.6rem; display: flex; align-items: center; padding-left: calc(var(--rail) + var(--gutter)); padding-right: var(--gutter); }
+.sv-meter { position: absolute; z-index: 2; right: var(--gutter); top: var(--s-5); display: grid; justify-items: end; gap: 0.2rem; font-family: var(--font-mono); text-align: right; }
+.sv-title { font-family: var(--font-display); font-size: var(--step-0); color: #ece7de; text-decoration: none; }
+.sv-title:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+.sv-label { font-size: var(--mono-size); letter-spacing: 0.12em; text-transform: uppercase; color: #a49c8f; }
+.sv-deg { font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.6rem); color: #f3efe7; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.sv-toggle { position: absolute; z-index: 3; right: var(--gutter); bottom: 6.2rem; background: transparent; border: 1px solid rgba(236, 231, 222, 0.35); color: #ece7de;
+  font-family: var(--font-mono); font-size: var(--mono-size); letter-spacing: 0.12em; text-transform: uppercase; padding: 0.45rem 0.9rem; cursor: pointer; }
+.sv-toggle:hover { border-color: #ece7de; }
+/* The crease: a hairline that draws across the stage as the film plays. */
+.sv-line { position: absolute; z-index: 2; left: 0; right: 0; bottom: 4.6rem; height: 1px; background: rgba(236, 231, 222, 0.14); }
+.sv-line::after { content: ""; position: absolute; inset: 0; background: #ece7de; transform: scaleX(var(--p)); transform-origin: left; }
+.sv-footer { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; height: 4.6rem; display: flex; align-items: center; padding-left: calc(var(--rail) + var(--gutter)); padding-right: var(--gutter); }
 .stage-routes { display: flex; gap: clamp(1rem, 3vw, 3.5rem); flex-wrap: wrap; }
 .stage-routes a { color: #ece7de; text-decoration: none; font-size: 0.98rem; display: inline-flex; gap: 0.6rem; align-items: baseline; }
 .stage-routes a .mono { color: #8f887d; }
 .stage-routes a:hover { color: #fff; text-decoration: underline; text-underline-offset: 0.3em; }
-.tt-range { position: absolute; z-index: 4; right: var(--gutter); bottom: 6.5rem; display: grid; gap: 0.4rem; font-size: 0.9rem; color: #c9c1b4; width: min(18rem, 60vw); }
-.tt-range input { accent-color: #ece7de; width: 100%; }
 @media (max-width: 760px) {
-  .tt-content { bottom: 8.5rem; }
-  .tt-line { bottom: 6.4rem; }
-  .tt-footer { height: 6.4rem; align-items: center; }
+  .sv-content { bottom: 8.5rem; }
+  .sv-line { bottom: 6.4rem; }
+  .sv-footer { height: 6.4rem; }
   .stage-routes { flex-direction: column; gap: 0.35rem; }
-  .tt-meter { top: var(--s-4); }
-  .tt-range { bottom: auto; top: 5.5rem; }
+  .sv-meter { top: var(--s-4); }
+  .sv-toggle { bottom: auto; top: 7.5rem; }
 }
 
 .home-intro { padding-block: var(--s-8) var(--s-4); }

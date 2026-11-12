@@ -31,7 +31,7 @@ The first version used "Washi and Ink" (warm paper `#f3efe7`, ink type, dark mou
 
 ## 3. Motion
 
-- **Homepage turntable**: the artist's 360° studio video, converted to 180 WebP stills (one every 2°), drawn on a canvas. Scroll position chooses the angle; neighbouring frames are cross-blended so the motion is continuous between stills; easing is time-based (same feel at 60 Hz and 120 Hz); the scroll position is computed from cached geometry (no layout reads while scrolling); frames load coarse-to-fine and the canvas never jumps more than 6° while loading. Measured draw cost: about 0.1 ms per frame. Reduced motion gets a slider; no JavaScript gets a still.
+- **Homepage film**: the artist's 360° studio video of the Chhatrapati Shivaji Maharaj re-design plays at its filmed speed (original 25 fps, no re-timing) while at least half of the stage is visible, and pauses when the visitor scrolls away; it plays once and rests on its last frame. VP9 WebM first (0.96 MB desktop, 0.48 MB phone) with an H.264 MP4 fallback, fetched only when the stage is near. A hairline and a degree counter follow playback. An earlier scroll-scrubbed version (frames driven by scroll position) was replaced at the owner's request: it never moved at the natural filmed speed. Reduced motion: never plays by itself; a Play button is offered. No JavaScript: a still poster.
 
 - **Fold transition** between pages: the old page folds shut toward a vertical crease at 38% of the width (about 170 ms), the new page opens from that crease (about 380 ms). It uses React's `<ViewTransition>` and the browser View Transitions API: no animation library, no WebGL.
 - **Shared element**: an artwork image morphs from the archive into its Fold File.

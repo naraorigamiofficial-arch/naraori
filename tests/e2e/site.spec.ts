@@ -127,28 +127,31 @@ test.describe("Visitor F: accessibility", () => {
   });
 });
 
-test.describe("Homepage turntable", () => {
-  test("turns with scroll and stops when scrolling stops", async ({ page }) => {
+test.describe("Homepage film", () => {
+  test("plays at filmed speed while in view, pauses when scrolled away", async ({ page }) => {
     await page.goto("/");
-    const deg = page.locator(".tt-deg");
-    await expect(page.locator(".tt-track.tt-scroll")).toBeAttached(); // wait for the live (scroll-driven) mode
-    await expect(deg).toHaveText("000°");
-    const span = await page.evaluate(() => document.querySelector<HTMLElement>(".tt-track")!.offsetHeight - document.querySelector<HTMLElement>(".tt-stage")!.offsetHeight);
-    await page.evaluate((y) => window.scrollTo(0, y), Math.round(span / 2));
-    await expect(deg).toHaveText(/^1[78]\d°$/);
-    await page.waitForTimeout(1200); // let the easing finish
-    const settled = await deg.textContent();
-    await page.waitForTimeout(600);
-    await expect(deg).toHaveText(settled!);
+    const video = page.locator("video.sv-video");
+    await expect(video).toBeAttached();
+    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused && v.currentTime > 0.3), { timeout: 10_000 }).toBe(true);
+    await expect(page.locator(".sv-deg")).not.toHaveText("000°");
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight / 2));
+    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
+    const t = await video.evaluate((v: HTMLVideoElement) => v.currentTime);
+    await page.waitForTimeout(500);
+    expect(await video.evaluate((v: HTMLVideoElement) => v.currentTime)).toBe(t);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused)).toBe(true);
   });
 
-  test("reduced motion: no scroll coupling, a slider turns the sculpture", async ({ page }) => {
+  test("reduced motion: never plays by itself; Play button starts it", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
-    const slider = page.getByRole("slider", { name: "Turn the sculpture" });
-    await expect(slider).toBeVisible();
-    await slider.focus();
-    for (let i = 0; i < 90; i++) await page.keyboard.press("ArrowRight");
-    await expect(page.locator(".tt-deg")).toHaveText(/^0(8|9)\d°$/);
+    const video = page.locator("video.sv-video");
+    await expect(video).toBeAttached();
+    await page.waitForTimeout(1500);
+    expect(await video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
+    await page.getByRole("button", { name: "Play the film" }).click();
+    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused)).toBe(true);
+    await expect(page.getByRole("button", { name: "Pause the film" })).toBeVisible();
   });
 });

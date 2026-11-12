@@ -6,7 +6,7 @@ import { ArchivalCaption } from "@/components/ArchivalCaption";
 import { ArtworkMount } from "@/components/ArtworkMount";
 import { Folio } from "@/components/Folio";
 import { SheetDiagram } from "@/components/SheetDiagram";
-import { Turntable } from "@/components/Turntable";
+import { StageVideo } from "@/components/StageVideo";
 import { getArtwork } from "@/content/artworks";
 import { products } from "@/content/catalogue";
 import { identity } from "@/content/identity";
@@ -29,9 +29,9 @@ export default async function Home() {
 
   return (
     <Folio>
-      {/* ---------- Opening: the sculpture turns as you scroll ---------- */}
+      {/* ---------- Opening: the studio film plays while in view ---------- */}
       <section className="home-stage" aria-labelledby="home-title">
-        <Turntable
+        <StageVideo
           footer={
             <nav aria-label="Where to begin" className="stage-routes">
               <Link href="/artworks"><span className="mono">I</span> Explore the artwork</Link>
@@ -43,7 +43,7 @@ export default async function Home() {
           <span className="eyebrow">Nara Origami</span>
           <h1 id="home-title" className="stage-name">{identity.person.name}</h1>
           <p className="stage-role">Original origami sculpture, from a single sheet of paper.</p>
-        </Turntable>
+        </StageVideo>
       </section>
 
       <section className="frame home-intro" aria-label="Introduction">
